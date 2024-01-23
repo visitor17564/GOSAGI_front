@@ -1,0 +1,65 @@
+index.html style.css .screen {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0px 370px 0px 0px;
+  position: relative;
+  background-color: #2b2b2b;
+}
+
+.screen .frame {
+  display: flex;
+  width: 274px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  position: relative;
+  background-color: #2b2b2b;
+}
+
+.screen .view {
+  display: flex;
+  width: 45px;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.screen .text-wrapper {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen .line {
+  position: relative;
+  width: 1px;
+  height: 8px;
+}
+
+.screen .div-wrapper {
+  display: flex;
+  width: 61px;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.screen .div {
+  display: inline-flex;
+  justify-content: center;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
