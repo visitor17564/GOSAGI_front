@@ -4,6 +4,11 @@ export const generateProductCard = async (product, reviews) => {
   const productDetail = document.getElementById('product-detail');
   const productReview = document.getElementById('product-review');
   const donateValue = Math.ceil(product.point / 3) * 10;
+  const detailContent = product.productContent[0].content;
+  console.log(detailContent);
+  const fixedContent = detailContent.replaceAll('src="/upload', 'src="https://ilovegohyang.go.kr/upload');
+  console.log(fixedContent);
+
   thumbnail.innerHTML = `<img src="${product.productThumbnail[0].image_url}" class="aspect-square object-contain object-center w-full overflow-hidden max-md:max-w-full" />
   <div class="flex gap-5 flex-row overflow-auto mx-auto">
     <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/def2e378aa743fbc0525c087abe01d089289a4b23fd4da7f6ec7d5c22ead355f?" class="aspect-[0.54] object-contain object-center w-[7px] stroke-[1.5px] stroke-black overflow-hidden self-center shrink-0 max-w-full my-auto" />
@@ -78,7 +83,7 @@ export const generateProductCard = async (product, reviews) => {
     <button class="w-[30%] mx-2 text-zinc-500 text-center text-xl whitespace-nowrap items-stretch border bg-white grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">장바구니담기</button>
     <button class="w-[30%] ml-2 text-white text-center text-xl whitespace-nowrap items-stretch border bg-red-400 grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">바로구매</button>
   </div>`;
-  productDetail.innerHTML = `<div class="mt-12 flex justify-center">${product.productContent[0].content}</div>`;
+  productDetail.innerHTML = `<div class="mt-12 flex justify-center">${fixedContent}</div>`;
   productReview.innerHTML = `상품후기 (총 <span class="text-orange-400">${reviews.data.length}</span>건)`;
 };
 
