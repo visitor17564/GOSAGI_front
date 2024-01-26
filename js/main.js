@@ -187,7 +187,7 @@ loginButton.addEventListener('click', () => {
 
 logoutButton.addEventListener('click', async () => {
   try {
-    const response = await axios.get(`http://localhost:3000/auth/logout`, { withCredentials: true });
+    const response = await axios.post(`http://localhost:3000/auth/logout`, {}, { withCredentials: true });
     alert('로그아웃 성공');
     window.location.href = 'http://localhost:5500/html/index.html'; // 수정할 URL로 변경 필요
   } catch (err) {
