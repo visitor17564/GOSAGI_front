@@ -1,0 +1,65 @@
+// DOM 요소들
+const $userId = document.getElementById('user-id');
+const $nickname = document.getElementById('nickname');
+const $currentPassword = document.getElementById('current-password');
+const $newPassword = document.getElementById('new-password');
+
+const $nicknameEditBtn = document.getElementById('nickname-edit-btn');
+const $passwordEditBtn = document.getElementById('password-edit-btn');
+
+// 내 정보 조회
+document.addEventListener('DOMContentLoaded', async function () {
+  try {
+    // 회원정보 조회 API 실행
+    const response = await axios.get('http://localhost:3000/user', {
+      withCredentials: true,
+    });
+    const userInfo = response.data.data;
+    $userId.innerText = userInfo.email;
+    $nickname.value = userInfo.nickname;
+  } catch (err) {
+    // 오류 처리
+    console.log(err);
+    alert(`${err.response.data.message}`);
+  }
+});
+
+// 내 정보 수정
+$nicknameEditBtn.addEventListener('click', async function (event) {
+  try {
+    // axios를 사용하여 로그인 API 실행
+    const response = await axios.patch('http://localhost:3000/user', {
+      nickname: $nickname.value,
+    }, {
+      withCredentials: true,
+    });
+
+    alert(response.data.message);
+  } catch (err) {
+    // 오류 처리
+    alert(err.response.data.message);
+  }
+});
+
+// 비밀번호 수정
+$passwordEditBtn.addEventListener('click', async function (event) {
+  try {
+    // axios를 사용하여 로그인 API 실행
+    const response = await axios.patch('http://localhost:3000/user/password', {
+      currentPassword: $currentPassword.value,
+      newPassword: $newPassword.value
+    }, {
+      withCredentials: true,
+    });
+
+    // 입력한 정보들 초기화
+    $currentPassword.value = "";
+    $newPassword.value = "";
+
+    alert(response.data.message);
+  } catch (err) {
+    // 오류 처리
+    alert(err.response.data.message);
+  }
+});
+
