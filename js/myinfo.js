@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 // 내 정보 수정
 $nicknameEditBtn.addEventListener('click', async function (event) {
   try {
-    // axios를 사용하여 로그인 API 실행
+    // 내 정보 수정 API 실행
     const response = await axios.patch('http://localhost:3000/user', {
       nickname: $nickname.value,
     }, {
@@ -44,7 +44,7 @@ $nicknameEditBtn.addEventListener('click', async function (event) {
 // 비밀번호 수정
 $passwordEditBtn.addEventListener('click', async function (event) {
   try {
-    // axios를 사용하여 로그인 API 실행
+    // 비밀번호 수정 API 실행
     const response = await axios.patch('http://localhost:3000/user/password', {
       currentPassword: $currentPassword.value,
       newPassword: $newPassword.value
