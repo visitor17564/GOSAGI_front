@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="/js/myinfo.js"></script>
+    <script type="module" src="/js/mypage/myinfo.js"></script>
+    <script type="module" src="/js/mypage/user-secession.js"></script>
   </head>
   <body>
     <div class="flex flex-col min-h-screen">
@@ -107,22 +108,36 @@
           <!-- 마이페이지 메뉴(좌측) -->
           <div class="justify-center items-stretch flex max-w-[204px] flex-col">
             <div class="bg-white border flex w-full flex-col pl-7 pr-9 py-3 border-solid border-neutral-400">
-              <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap font-['Inter']">나의 쇼핑 정보</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">내가 찜한 상품</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">장바구니</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">주문내역/배송조회</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">취소/반품/교환</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">결제내역조회</div>
+              <button class="justify-center text-black text-base font-bold self-start whitespace-nowrap font-['Inter']">나의 쇼핑 정보</button>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/wish.html">내가 찜한 상품</a>
+              </button>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/cart.html">장바구니</a>
+              </button>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/order.html">주문내역/배송조회</a>
+              </button>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">취소/반품/교환</button>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/payment.html">결제내역조회</a>
+              </button>
               <div class="bg-stone-300 self-stretch shrink-0 h-px mt-2.5"></div>
               <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-3 font-['Inter']">나의 활동</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">1:1 문의내역</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">나의 상품후기</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">최근 본 상품</div>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/question.html"> 1:1 문의내역</a>
+              </button>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/review.html">나의 상품후기</a>
+              </button>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">최근 본 상품</button>
               <div class="bg-stone-300 self-stretch shrink-0 h-px mt-3.5"></div>
               <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-2.5 font-['Inter']">나의 정보</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">배송지 관리</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">회원정보 수정</div>
-              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">회원탈퇴</div>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">배송지 관리</button>
+              <button class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/myinfo.html">회원정보 수정</a>
+              </button>
+              <button id="secession-btn" class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">회원탈퇴</button>
             </div>
           </div>
           <!-- 기타매뉴(우측) -->
