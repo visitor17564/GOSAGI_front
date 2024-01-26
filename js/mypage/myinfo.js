@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     $nickname.value = userInfo.nickname;
   } catch (err) {
     // 오류 처리
-    console.log(err);
     alert(`${err.response.data.message}`);
   }
 });
