@@ -1,6 +1,7 @@
 const signupButton = document.getElementById('signup-button');
 const loginButton = document.getElementById('login-button');
 let page = 1;
+
 export async function signup() {
   const email = document.getElementById('signup-email').value;
   const password = document.getElementById('signup-password').value;
