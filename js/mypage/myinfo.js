@@ -1,6 +1,7 @@
 // DOM 요소들
 const $userId = document.getElementById('user-id');
 const $nickname = document.getElementById('nickname');
+const $nicknameFix = document.getElementById('nickname-fix');
 const $currentPassword = document.getElementById('current-password');
 const $newPassword = document.getElementById('new-password');
 
@@ -14,6 +15,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const response = await axios.get('http://localhost:3000/user', {
       withCredentials: true,
     });
+
+    // 조회된 정보 적용
     const userInfo = response.data.data;
     $userId.innerText = userInfo.email;
     $nickname.value = userInfo.nickname;
@@ -32,6 +35,10 @@ $nicknameEditBtn.addEventListener('click', async function (event) {
     }, {
       withCredentials: true,
     });
+
+    // 수정된 정보 적용
+    const userInfo = response.data.data;
+    $nicknameFix.innerText = userInfo.nickname;
 
     alert(response.data.message);
   } catch (err) {

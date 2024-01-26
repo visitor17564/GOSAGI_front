@@ -1,4 +1,5 @@
 // DOM 요소들
+const $nicknameFix = document.getElementById('nickname-fix');
 const $secessionBtn = document.getElementById('secession-btn');
 
 // 회원 로그인 여부 체크
@@ -8,6 +9,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const response = await axios.get('http://localhost:3000/user', {
       withCredentials: true,
     });
+
+    $nicknameFix.innerText = response.data.data.nickname;
   } catch (err) {
     // 오류 처리
     alert(`${err.response.data.message}`);
