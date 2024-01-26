@@ -1,12 +1,12 @@
 const loginButton = document.getElementById("login-button");
 const signupButton = document.getElementById("signup-button");
 
-export function login() {
+export async function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = axios.post(
+    const response = await axios.post(
       "http://localhost:3000/auth/login",
       {
         email,
@@ -16,12 +16,13 @@ export function login() {
         withCredentials: true,
       }
     );
-    alert("로그인 성공: " + response);
+
+    alert(response.data.message);
     // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = "http://localhost:5500/html/index.html"; // 수정할 URL로 변경 필요
+    // window.location.href = "http://localhost:5500/html/index.html"; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
-    alert("로그인 실패: " + err);
+    alert(err.response.data.message);
   }
 }
 
