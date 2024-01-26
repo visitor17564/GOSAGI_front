@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const wishs = response.data.data.data;
 
     let count = 0;
-    if (wishs.length > 1) {
+    if (wishs.length >= 1) {
 
       $wishList.innerHTML = '';
       wishs.forEach(wish => {
@@ -66,7 +66,6 @@ async function createCart() {
     button.addEventListener("click", async function (e) {
       const wishId = e.target.id.split('-')[2]; // 찜 ID 추출
       const productId = e.target.id.split('-')[3]; // 찜 ID 추출
-      // 상품 ID도 추출해야함
       // 장바구니 추가 API
       try {
         // 찜에서 삭제 후 장바구니에 추가
