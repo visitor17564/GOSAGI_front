@@ -11,6 +11,13 @@ const signupButton = document.getElementById('signup-button');
 const loginButton = document.getElementById('login-button');
 const logoutButton = document.getElementById('logout');
 
+let isLoggedIn = false;
+if (document.cookie.includes('authorization')) {
+  isLoggedIn = true;
+} else {
+  isLoggedIn = false;
+}
+
 signupButton.addEventListener('click', () => {
   signup();
 });
@@ -105,14 +112,6 @@ function updateLoginButton() {
     logoutDiv.style.display = 'none';
     logoutBar.style.display = 'none ';
   }
-}
-
-let isLoggedIn = false;
-
-if (document.cookie.includes('authorization')) {
-  isLoggedIn = true;
-} else {
-  isLoggedIn = false;
 }
 
 updateLoginButton(isLoggedIn);

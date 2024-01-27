@@ -2,8 +2,9 @@ import { searchProduct } from './search/search.js';
 
 let page = 1;
 
-export const generateProductCards = async (products) => {
-  const productWrap = document.getElementById('product-wrap');
+const productWrap = document.getElementById('product-wrap');
+
+export const generateProductCards = async (products, productWrap) => {
   productWrap.innerHTML = products
     .map((product) => {
       const localesPoint = product.point.toLocaleString();
@@ -79,7 +80,9 @@ if (decodeURI(window.location.search.split('=')[0]) === '?keyword' && decodeURI(
   const keyword = decodeURI(window.location.search.split('=')[1]);
   searchProduct(keyword);
 } else if (decodeURI(window.location.search.split('=')[0]) === '?productId') {
+} else if (window.location.href.includes('search')) {
 } else {
   const products = await getProduct();
-  generateProductCards(products);
+  console.log(products);
+  generateProductCards(products, productWrap);
 }
