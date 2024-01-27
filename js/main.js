@@ -1,120 +1,10 @@
-const signupButton = document.getElementById('signup-button');
-const loginButton = document.getElementById('login-button');
-const logoutButton = document.getElementById('logout');
-
-const loginDiv = document.getElementById('login');
-const loginBar = document.getElementById('login-bar');
-const signupDiv = document.getElementById('signup');
-const signupBar = document.getElementById('signup-bar');
-const logoutDiv = document.getElementById('logout');
-const logoutBar = document.getElementById('logout-bar');
-const myPageDiv = document.getElementById('my-page');
-
-let isLoggedIn = false;
-
-if (document.cookie.includes('authorization')) {
-  isLoggedIn = true;
-} else {
-  isLoggedIn = false;
-}
-
-console.log(isLoggedIn);
-
-updateLoginButton(isLoggedIn);
-
-// 로그인 상태에 따라 로그인 버튼의 표시 여부를 업데이트하는 함수
-function updateLoginButton() {
-  if (isLoggedIn) {
-    // 로그인 상태인 경우, 로그인 버튼을 숨깁니다.
-    loginDiv.style.display = 'none';
-    loginBar.style.display = 'none';
-    signupDiv.style.display = 'none';
-    signupBar.style.display = 'none';
-    myPageDiv.style.display = 'block';
-    logoutDiv.style.display = 'block';
-    logoutBar.style.display = 'block';
-  } else {
-    // 로그인 상태가 아닌 경우, 로그인 버튼을 표시합니다.
-    loginDiv.style.display = 'block';
-    loginBar.style.display = 'block';
-    signupDiv.style.display = 'block';
-    signupBar.style.display = 'block';
-    myPageDiv.style.display = 'none';
-    logoutDiv.style.display = 'none';
-    logoutBar.style.display = 'none ';
-  }
-}
+import { searchProduct } from './search/search.js';
 
 let page = 1;
 
-export async function signup() {
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-  const passwordConfirm = document.getElementById('signup-repeat-password').value;
-  const nickname = document.getElementById('signup-nickname').value;
+const productWrap = document.getElementById('product-wrap');
 
-  try {
-    // axios를 사용하여 로그인 API 실행
-    const response = await axios.post(
-      'http://localhost:3000/user/signup',
-      {
-        email,
-        password,
-        passwordConfirm,
-        nickname,
-      },
-      {
-        withCredentials: true,
-      },
-    );
-    alert('회원가입 성공: ' + response);
-    // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = 'http://localhost:5500/html/index.html'; // 수정할 URL로 변경 필요
-  } catch (err) {
-    // 오류 처리
-    alert('회원가입 실패: ' + err);
-  }
-}
-
-export async function login() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  try {
-    // axios를 사용하여 로그인 API 실행
-    const response = await axios.post(
-      'http://localhost:3000/auth/login',
-      {
-        email,
-        password,
-      },
-      {
-        withCredentials: true,
-      },
-    );
-    alert('로그인 성공: ' + response);
-    // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = 'http://localhost:5500/html/index.html'; // 수정할 URL로 변경 필요
-  } catch (err) {
-    // 오류 처리
-    alert('로그인 실패: ' + err);
-  }
-}
-
-export async function getProduct() {
-  try {
-    // axios를 사용하여 로그인 API 실행
-
-    const response = await axios.get(`http://localhost:3000/goods/page?page=${page}`);
-    console.log(response);
-    return response.data.data;
-  } catch (err) {
-    // 오류 처리
-    alert('오류발생: ' + err);
-  }
-}
-
-export const generateProductCards = async (products) => {
-  const productWrap = document.getElementById('product-wrap');
+export const generateProductCards = async (products, productWrap) => {
   productWrap.innerHTML = products
     .map((product) => {
       const localesPoint = product.point.toLocaleString();
@@ -174,24 +64,25 @@ export const generateProductCards = async (products) => {
     .join('');
 };
 
-const products = await getProduct();
-generateProductCards(products);
-
-signupButton.addEventListener('click', () => {
-  signup();
-});
-
-loginButton.addEventListener('click', () => {
-  login();
-});
-
-logoutButton.addEventListener('click', async () => {
+export async function getProduct() {
   try {
-    const response = await axios.post(`http://localhost:3000/auth/logout`, {}, { withCredentials: true });
-    alert('로그아웃 성공');
-    window.location.href = 'http://localhost:5500/html/index.html'; // 수정할 URL로 변경 필요
+    // axios를 사용하여 로그인 API 실행
+
+    const response = await axios.get(`http://localhost:3000/goods/page?page=${page}`);
+    return response.data.data;
   } catch (err) {
     // 오류 처리
     alert('오류발생: ' + err);
   }
-});
+}
+
+if (decodeURI(window.location.search.split('=')[0]) === '?keyword' && decodeURI(window.location.search.split('=')[1]) !== 'undefined') {
+  const keyword = decodeURI(window.location.search.split('=')[1]);
+  searchProduct(keyword);
+} else if (decodeURI(window.location.search.split('=')[0]) === '?productId') {
+} else if (window.location.href.includes('search')) {
+} else {
+  const products = await getProduct();
+  console.log(products);
+  generateProductCards(products, productWrap);
+}

@@ -1,3 +1,5 @@
+const productQuestionButton = document.getElementById('product-question-button');
+
 export const generateProductCard = async (product, reviews) => {
   const thumbnail = document.getElementById('product-thumbnail');
   const basicInfo = document.getElementById('product-basic-info');
@@ -5,9 +7,13 @@ export const generateProductCard = async (product, reviews) => {
   const productReview = document.getElementById('product-review');
   const donateValue = Math.ceil(product.point / 3) * 10;
   const detailContent = product.productContent[0].content;
-  console.log(detailContent);
   const fixedContent = detailContent.replaceAll('src="/upload', 'src="https://ilovegohyang.go.kr/upload');
-  console.log(fixedContent);
+
+  let pushCart = '';
+  if (product.store_id === 1 || product.store_id === 2) {
+    pushCart = 'hidden ';
+  }
+  console.log(product);
 
   thumbnail.innerHTML = `<img src="${product.productThumbnail[0].image_url}" class="aspect-square object-contain object-center w-full overflow-hidden max-md:max-w-full" />
   <div class="flex gap-5 flex-row overflow-auto mx-auto">
@@ -73,15 +79,15 @@ export const generateProductCard = async (product, reviews) => {
     </div>
   </div>
   <div class="items-stretch flex justify-between mt-5 max-md:max-w-full max-md:flex-wrap">
-    <div class="w-[10%] mr-2 flex justify-center items-center border bg-white basis-[0%] flex-col px-2.5 py-1.5 rounded-md border-solid border-neutral-400">
+    <div class="w-grow mr-2 flex justify-center items-center border bg-white basis-[0%] flex-col px-2.5 py-1.5 rounded-md border-solid border-neutral-400">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
       </svg>  
       <div class="justify-center text-black text-center text-xs self-stretch whitespace-nowrap font-['Inter']">1,234</div>
     </div>
     <a href="https://ilovegohyang.go.kr/items/details-main.html?code=G${product.code}" target="_blank" class="w-[30%] mx-2 text-zinc-500 text-center text-xl whitespace-nowrap items-stretch border bg-white grow justify-center px-5 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">기부하러가기</a>
-    <button class="w-[30%] mx-2 text-zinc-500 text-center text-xl whitespace-nowrap items-stretch border bg-white grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">장바구니담기</button>
-    <button class="w-[30%] ml-2 text-white text-center text-xl whitespace-nowrap items-stretch border bg-red-400 grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">바로구매</button>
+    <button class="${pushCart}w-[30%] mx-2 text-zinc-500 text-center text-xl whitespace-nowrap items-stretch border bg-white grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">장바구니담기</button>
+    <button class="${pushCart}w-[30%] ml-2 text-white text-center text-xl whitespace-nowrap items-stretch border bg-red-400 grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">바로구매</button>
   </div>`;
   productDetail.innerHTML = `<div class="mt-12 flex justify-center">${fixedContent}</div>`;
   productReview.innerHTML = `상품후기 (총 <span class="text-orange-400">${reviews.data.length}</span>건)`;
@@ -126,17 +132,26 @@ export const generateProductQuestions = async (questions) => {
   if (questions.length === 0) {
     return;
   }
+  for (let i = 0; i < questions.length; i++) {
+    questions[i].number = i + 1;
+  }
   const productQuestionTable = document.getElementById('product-question-table');
   productQuestionTable.innerHTML = questions
     .map((question) => {
+      let waitAnswer = '';
+      let completeAnswer = 'hidden ';
+      if (question.status === '답변완료') {
+        waitAnswer = 'hidden ';
+        completeAnswer = '';
+      }
       return `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-      <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white font-['Inter']">1</th>
-      <td class="px-6 py-4 font-['Inter'] text-center">1주일째 상품이 안와요</td>
-      <td class="px-6 py-4 font-['Inter'] text-center">정창일</td>
+      <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white font-['Inter']">${question.number}</th>
+      <td class="px-6 py-4 font-['Inter'] text-center">${question.question.title}</td>
+      <td class="px-6 py-4 font-['Inter'] text-center">${question.question.user_id}</td>
       <td class="px-6 py-4 font-['Inter'] text-center">2024-01-01</td>
       <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
-        <button class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>
-        <button class="h-5 w-1/2 justify-center hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기중</button>
+        <button class="h-5 w-1/2 ${completeAnswer}justify-center hover:bg-orange-400 hover:text-white text-xs border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>
+        <button class="h-5 w-1/2 ${waitAnswer}justify-center hover:bg-gray-400 hover:text-white text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기</button>
       </td>
     </tr>`;
     })
@@ -189,3 +204,28 @@ const questions = await getProductQuestion(productId);
 generateProductCard(product, reviews);
 generateProductQuestions(questions);
 generateProductReviews(reviews);
+
+productQuestionButton.addEventListener('click', async () => {
+  const title = document.getElementById('question-title').value;
+  console.log('🚀 ~ productQuestionButton.addEventListener ~ title:', title);
+  const content = document.getElementById('question-content').value;
+  console.log('🚀 ~ productQuestionButton.addEventListener ~ content:', content);
+  const isPrivate = document.getElementById('secret').checked;
+  console.log('🚀 ~ productQuestionButton.addEventListener ~ isPrivate:', isPrivate);
+  try {
+    await axios.post(
+      `http://localhost:3000/question`,
+      {
+        productId,
+        title,
+        content,
+        isPrivate,
+      },
+      { withCredentials: true },
+    );
+    alert('문의글 등록 성공');
+    location.reload();
+  } catch (err) {
+    alert('오류발생: ' + err);
+  }
+});
