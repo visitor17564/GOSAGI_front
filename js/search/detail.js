@@ -5,9 +5,7 @@ export const generateProductCard = async (product, reviews) => {
   const productReview = document.getElementById('product-review');
   const donateValue = Math.ceil(product.point / 3) * 10;
   const detailContent = product.productContent[0].content;
-  console.log(detailContent);
   const fixedContent = detailContent.replaceAll('src="/upload', 'src="https://ilovegohyang.go.kr/upload');
-  console.log(fixedContent);
 
   thumbnail.innerHTML = `<img src="${product.productThumbnail[0].image_url}" class="aspect-square object-contain object-center w-full overflow-hidden max-md:max-w-full" />
   <div class="flex gap-5 flex-row overflow-auto mx-auto">
