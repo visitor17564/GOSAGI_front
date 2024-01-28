@@ -1,19 +1,48 @@
 const productQuestionButton = document.getElementById('product-question-button');
 
+const thumbnail = document.getElementById('product-thumbnail');
+const basicInfo = document.getElementById('product-basic-info');
+const productDetail = document.getElementById('product-detail');
+const productReview = document.getElementById('product-review');
+const wishDiv = document.getElementById('wish-div');
+let isMyWish = false;
+let myWishId;
+
+wishDiv.addEventListener('click', async function (event) {
+  let clickedElementId = event.currentTarget.id;
+  if (isMyWish === false) {
+    console.log('찜없음');
+    try {
+      await axios.post(`http://localhost:3000/wish`, { product_id: productId }, { withCredentials: true });
+      alert('찜하기 성공');
+      const wish = await getProductWish(productId);
+      generateProductWish(wish);
+    } catch (err) {
+      alert('오류발생: ' + err);
+    }
+  } else if (isMyWish === true) {
+    console.log('찜있음');
+    try {
+      await axios.delete(`http://localhost:3000/wish/${myWishId}`, { withCredentials: true });
+      alert('찜취소 성공');
+      const wish = await getProductWish(productId);
+      generateProductWish(wish);
+    } catch (err) {
+      alert('오류발생: ' + err);
+    }
+  }
+});
+
 export const generateProductCard = async (product, reviews) => {
-  const thumbnail = document.getElementById('product-thumbnail');
-  const basicInfo = document.getElementById('product-basic-info');
-  const productDetail = document.getElementById('product-detail');
-  const productReview = document.getElementById('product-review');
   const donateValue = Math.ceil(product.point / 3) * 10;
   const detailContent = product.productContent[0].content;
-  const fixedContent = detailContent.replaceAll('src="/upload', 'src="https://ilovegohyang.go.kr/upload');
+  const imgFixedContent = detailContent.replaceAll('src="/upload', 'src="https://ilovegohyang.go.kr/upload');
+  const embedFixedContent = imgFixedContent.replaceAll('watch?v=-', 'embed/');
 
   let pushCart = '';
   if (product.store_id === 1 || product.store_id === 2) {
     pushCart = 'hidden ';
   }
-  console.log(product);
 
   thumbnail.innerHTML = `<img src="${product.productThumbnail[0].image_url}" class="aspect-square object-contain object-center w-full overflow-hidden max-md:max-w-full" />
   <div class="flex gap-5 flex-row overflow-auto mx-auto">
@@ -38,8 +67,8 @@ export const generateProductCard = async (product, reviews) => {
       포인트를 얻을 수 있어요)
     </div>
   </div>
-  <div class="justify-center items-stretch flex gap-0 mt-3 self-start">
-    <div class="justify-center text-black text-2xl font-bold grow whitespace-nowrap font-['Inter']">40,000</div>
+  <div class="${pushCart}justify-center items-stretch flex gap-0 mt-3 self-start">
+    <div class="justify-center text-black text-2xl font-bold grow whitespace-nowrap font-['Inter']">${product.price.toLocaleString()}</div>
     <div class="text-zinc-500 text-base grow whitespace-nowrap mt-2.5 self-start font-['Inter']">&nbsp실구매가&nbsp</div>
   </div>
   <div class="items-stretch flex gap-3 mt-3 self-start">
@@ -59,7 +88,7 @@ export const generateProductCard = async (product, reviews) => {
   <div class="text-zinc-500 text-base self-start max-md:mt-10 font-['Inter']">판매자 : 판매자 샘플</div>
   <div class="text-zinc-500 text-base mt-2.5 self-start font-['Inter']">배송방법 : 택배(우체국택배)</div>
   <div class="text-zinc-500 text-base mt-2.5 self-start font-['Inter']">배송비 : 무료</div>
-  <div class="items-stretch bg-gray-200 flex flex-col mt-6 px-3.5 py-2.5 rounded-2xl max-md:max-w-full">
+  <div class="${pushCart}items-stretch bg-gray-200 flex flex-col mt-6 px-3.5 py-2.5 rounded-2xl max-md:max-w-full">
     <div class="text-black text-base max-md:max-w-full font-['Inter']">${product.name}</div>
     <div class="justify-between items-stretch flex w-full gap-5 mt-3 max-md:max-w-full max-md:flex-wrap">
       <div class="relative flex items-center justify-center">
@@ -78,18 +107,8 @@ export const generateProductCard = async (product, reviews) => {
       <div class="text-black text-right text-xl text-base font-bold self-center w-60 my-auto font-['Inter']">30,000</div>
     </div>
   </div>
-  <div class="items-stretch flex justify-between mt-5 max-md:max-w-full max-md:flex-wrap">
-    <div class="w-grow mr-2 flex justify-center items-center border bg-white basis-[0%] flex-col px-2.5 py-1.5 rounded-md border-solid border-neutral-400">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-      </svg>  
-      <div class="justify-center text-black text-center text-xs self-stretch whitespace-nowrap font-['Inter']">1,234</div>
-    </div>
-    <a href="https://ilovegohyang.go.kr/items/details-main.html?code=G${product.code}" target="_blank" class="w-[30%] mx-2 text-zinc-500 text-center text-xl whitespace-nowrap items-stretch border bg-white grow justify-center px-5 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">기부하러가기</a>
-    <button class="${pushCart}w-[30%] mx-2 text-zinc-500 text-center text-xl whitespace-nowrap items-stretch border bg-white grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">장바구니담기</button>
-    <button class="${pushCart}w-[30%] ml-2 text-white text-center text-xl whitespace-nowrap items-stretch border bg-red-400 grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">바로구매</button>
-  </div>`;
-  productDetail.innerHTML = `<div class="mt-12 flex justify-center">${fixedContent}</div>`;
+`;
+  productDetail.innerHTML = `<div class="mt-12 flex justify-center">${embedFixedContent}</div>`;
   productReview.innerHTML = `상품후기 (총 <span class="text-orange-400">${reviews.data.length}</span>건)`;
 };
 
@@ -158,6 +177,28 @@ export const generateProductQuestions = async (questions) => {
     .join('');
 };
 
+export const generateProductWish = async (wish) => {
+  let fill = 'none';
+  let stroke = 'currentColor';
+
+  if (wish.isMyWish === true) {
+    fill = '#ff0000';
+    stroke = '#ff0000';
+    isMyWish = true;
+    myWishId = wish.myWishId;
+  } else {
+    isMyWish = false;
+  }
+
+  wishDiv.innerHTML = `<div title="wish-${wish.isMyWish}=${wish.myWishId}">
+  <svg id="wish-${wish.isMyWish}=${wish.myWishId}" xmlns="http://www.w3.org/2000/svg" fill="${fill}" viewBox="0 0 24 24" stroke-width="1.5" stroke="${stroke}" class="w-6 h-6">
+    <path id="path-wish-${wish.isMyWish}=${wish.myWishId}" stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+  </svg>
+  </div>
+  <div title="wish-${wish.isMyWish}=${wish.myWishId}" class="justify-center text-black text-center text-xs self-stretch whitespace-nowrap font-['Inter']">${wish.wishes_count}</div>
+  `;
+};
+
 let queryString = window.location.search;
 // URLSearchParams 객체를 사용하여 쿼리 문자열을 파싱합니다
 let searchParams = new URLSearchParams(queryString);
@@ -175,7 +216,7 @@ export async function getProduct(productId) {
   }
 }
 
-export async function getProductReview() {
+export async function getProductReview(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
     const review = await axios.get(`http://localhost:3000/review/product/${productId}`, { withCredentials: true });
@@ -186,7 +227,7 @@ export async function getProductReview() {
   }
 }
 
-export async function getProductQuestion() {
+export async function getProductQuestion(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
     const questions = await axios.get(`http://localhost:3000/question/productList/${productId}`, { withCredentials: true });
@@ -197,21 +238,31 @@ export async function getProductQuestion() {
   }
 }
 
+export async function getProductWish(productId) {
+  try {
+    // axios를 사용하여 로그인 API 실행
+    const wishCount = await axios.get(`http://localhost:3000/wish/${productId}`, { withCredentials: true });
+    return wishCount.data.data;
+  } catch (err) {
+    // 오류 처리
+    alert('오류발생: ' + err);
+  }
+}
+
 const product = await getProduct(productId);
 const reviews = await getProductReview(productId);
 const questions = await getProductQuestion(productId);
+const wish = await getProductWish(productId);
 
 generateProductCard(product, reviews);
 generateProductQuestions(questions);
 generateProductReviews(reviews);
+generateProductWish(wish);
 
 productQuestionButton.addEventListener('click', async () => {
   const title = document.getElementById('question-title').value;
-  console.log('🚀 ~ productQuestionButton.addEventListener ~ title:', title);
   const content = document.getElementById('question-content').value;
-  console.log('🚀 ~ productQuestionButton.addEventListener ~ content:', content);
   const isPrivate = document.getElementById('secret').checked;
-  console.log('🚀 ~ productQuestionButton.addEventListener ~ isPrivate:', isPrivate);
   try {
     await axios.post(
       `http://localhost:3000/question`,

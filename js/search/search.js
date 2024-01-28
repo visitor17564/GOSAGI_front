@@ -3,6 +3,8 @@ import { generateProductCards } from '../main.js';
 const searchButton = document.getElementById('search-button');
 const searchInput = document.getElementById('search-input');
 
+const productWrap = document.getElementById('product-wrap');
+
 export async function searchProduct(keyword) {
   try {
     const response = await axios.get(`http://localhost:3000/goods/keyword?keyword=${keyword}`, { withCredentials: true });
@@ -10,7 +12,7 @@ export async function searchProduct(keyword) {
       alert('검색결과가 없습니다.');
       window.location.href = `http://localhost:5500/html/index.html`;
     }
-    generateProductCards(response.data.data);
+    await generateProductCards(response.data.data, productWrap);
   } catch (err) {
     // 오류 처리
     alert('오류발생: ' + err);
