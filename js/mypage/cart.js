@@ -1,18 +1,26 @@
 // DOM 요소들
 const $cartList = document.getElementById('cart-list');
-const $totalPoint = document.getElementById('total-point');
+const $totalPrice = document.getElementById('total-price');
 const $selectDeleteBtn = document.getElementById('select-delete-btn');
 const $selectBuyBtn = document.getElementById('select-buy-btn');
+const $allBuyBtn = document.getElementById('all-buy-btn');
 
+const $buyBtn = document.getElementById('buy-btn');
+const $allSelectCheckbox = document.getElementById('all-select-checkbox');
+
+
+const $cartModalOrderListBottom = document.getElementById('cart-modal-order-list-bottom');
+const $cartModalTotalPrice = document.getElementById('cart-modal-total-price');
 
 document.addEventListener('DOMContentLoaded', async function () {
   await drawCartList();
   await quantityBtn();
-  await updateProductTotalPoint();
-  await updateTotalPoint();
+  await updateProductTotalPrice();
+  await updateTotalPrice();
   await checkboxUpdate();
 });
 
+// 장바구니 목록 조회
 async function drawCartList() {
   try {
     // 회원정보 조회 API 실행
@@ -39,7 +47,7 @@ async function drawCartList() {
             </th>
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-center">
               <img src="/sourse/image/sample.png" class="aspect-square object-contain object-center w-32 overflow-hidden" />
-              <div class="w-full ml-5">${cart.productName}</div>
+              <div product-name class="w-full ml-5">${cart.productName}</div>
             </td>
             <td class="px-6 py-4 font-['Inter'] text-center">
               <form class="max-w-xs mx-auto">
@@ -60,12 +68,12 @@ async function drawCartList() {
             </td>
             <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
               <div class="flex justify-center items-center">
-                <div id="point-${cart.id}" point class=" text-right ml-5 text-2xl">${cart.productPoint.toLocaleString('ko-KR')}</div>
+                <div id="price-${cart.id}" price class=" text-right ml-5 text-2xl">${cart.productPrice.toLocaleString('ko-KR')}</div>
               </div>
             </td>
             <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
               <div class="flex justify-center items-center">
-                <div product-total-point class="text-right ml-5 text-2xl">${(cart.quantity * cart.productPoint).toLocaleString('ko-KR')}</div>
+                <div product-total-price class="text-right ml-5 text-2xl">${(cart.quantity * cart.productPrice).toLocaleString('ko-KR')}</div>
               </div>
             </td>
           </tr>
@@ -86,20 +94,84 @@ async function drawCartList() {
   }
 }
 
+// 선택 상품 구매
+// 여기 토스 결제 페이지랑 연동도 해야함
+$selectBuyBtn.addEventListener('click', async function (e) {
+  drawSelectCart();
+});
+
+// 전체 상품 구매
+$allBuyBtn.addEventListener('click', async function (e) {
+  $allSelectCheckbox.checked = true; // 상품 합계 가격 수정 함수 호출
+  selectAllCheckbox();
+  drawSelectCart();
+});
+
+
+// 선택 장바구니 목록 조회
+async function drawSelectCart() {
+  const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]:checked');
+
+  const $orderSelectInfo = document.querySelectorAll('[order-select-info]');
+  $orderSelectInfo.forEach(element => {
+    element.remove();
+  });
+
+  try {
+    $allCheckboxes.forEach(async (checkbox) => {
+      const currentRow = checkbox.closest('tr'); // 가장 가까운 태그 조회
+      const cartId = currentRow.id;
+      const productName = currentRow.querySelector('[product-name]').innerHTML;
+      const quantity = currentRow.querySelector('[quantity]').value;
+      const productTotalPrice = currentRow.querySelector('[product-total-price]').innerHTML;
+
+      let tempHtml = `
+        <div order-select-info class="mb-5 w-full">
+          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-['Inter']">상품명</label>
+          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" value="${productName}" disabled />
+        </div>
+        <div order-select-info class="mb-5 w-full">
+          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-['Inter']">가격</label>
+          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" value="${productTotalPrice}" disabled />
+        </div>
+        <div order-select-info class="mb-5 w-full">
+          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-['Inter']">수량</label>
+          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" value="${quantity}" disabled />
+        </div>
+      `;
+
+      $cartModalOrderListBottom.insertAdjacentHTML("beforebegin", tempHtml);
+      $cartModalTotalPrice.value = $totalPrice.textContent;
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// 상품 구매
+$buyBtn.addEventListener('click', function (e) {
+  toss();
+});
 
 // 전체 선택
-document.getElementById('all').addEventListener('click', function () {
+$allSelectCheckbox.addEventListener('click', function () {
+  selectAllCheckbox();
+});
+
+async function selectAllCheckbox() {
   const allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]');
   allCheckboxes.forEach(checkbox => {
-    checkbox.checked = this.checked;
+    checkbox.checked = $allSelectCheckbox.checked;
   });
-});
+  updateTotalPrice();
+}
 
 // 개별 선택
 function updateAllCheckbox() {
   const allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]');
   const allChecked = Array.from(allCheckboxes).every(checkbox => checkbox.checked);
-  document.getElementById('all').checked = allChecked;
+  $allSelectCheckbox.checked = allChecked;
+  updateTotalPrice();
 }
 
 // 개별 선택
@@ -138,51 +210,33 @@ $selectDeleteBtn.addEventListener('click', async function (e) {
   }
 });
 
+// 상품 구매 함수
+async function buyProduct() {
+  // try {
+  //   // 장바구니에서 삭제 후 주문 내역에 추가
+  //   // 장바구니 삭제 API
+  //   await axios.delete(`http://localhost:3000/cart/${cartId}`, {
+  //     withCredentials: true,
+  //   });
 
+  //   // 주문 내역 저장 API
+  //   const response = await axios.post(`http://localhost:3000/order`, {
+  //     product_id: 8,
+  //     quantity: 4,
+  //     receiver: "배고파",
+  //     receiver_phone_number: "010-1111-1111",
+  //     delivery_name: "집",
+  //     delivery_address: "서울시 강남구",
+  //     post_code: "03045"
+  //   }, {
+  //     withCredentials: true,
+  //   });
 
-// 선택 상품 구매
-// 여기 토스 결제 페이지랑 연동도 해야함
-$selectBuyBtn.addEventListener('click', async function (e) {
-  const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]:checked');
-
-  try {
-    $allCheckboxes.forEach(async (checkbox) => {
-      const currentRow = checkbox.closest('tr'); // 가장 가까운 태그 조회
-      const cartId = currentRow.id;
-
-      try {
-        // 장바구니에서 삭제 후 주문 내역에 추가
-        // 장바구니 삭제 API
-        await axios.delete(`http://localhost:3000/cart/${cartId}`, {
-          withCredentials: true,
-        });
-
-        // 주문 내역 저장 API
-        const response = await axios.post(`http://localhost:3000/order`, {
-          product_id: 8,
-          quantity: 4,
-          receiver: "배고파",
-          receiver_phone_number: "010-1111-1111",
-          delivery_name: "집",
-          delivery_address: "서울시 강남구",
-          post_code: "03045"
-        }, {
-          withCredentials: true,
-        });
-
-        currentRow.remove(); // 삭제한 상품 html 제거
-      } catch (err) {
-        alert(response.data.message);
-      };
-    });
-    alert('선택 상품 주문이 완료되었습니다');
-
-  } catch (err) {
-    console.log(err);
-  }
-});
-// 전체 상품 구매
-
+  //   currentRow.remove(); // 삭제한 상품 html 제거
+  // } catch (err) {
+  //   alert(response.data.message);
+  // };
+}
 // 수량 증가 버튼 함수
 async function quantityBtn() {
   document.querySelectorAll('[quantity-decrement="quantity"]').forEach(button => {
@@ -212,28 +266,64 @@ async function quantityBtn() {
 }
 
 // 상품 합계 가격 수정
-async function updateProductTotalPoint() {
+async function updateProductTotalPrice() {
   document.querySelectorAll('[quantity]').forEach(input => {
     input.addEventListener('change', function () {
       const currentRow = this.closest('tr'); // 가장 가까운 태그 조회
 
       const quantity = Number(currentRow.querySelector('[quantity]').value);
-      const point = Number(currentRow.querySelector('[point]').textContent.replace(/,/g, '')); // 가격에서 쉼표 제외
-      const totalPointElement = currentRow.querySelector('[product-total-point]');
+      const price = Number(currentRow.querySelector('[price]').textContent.replace(/,/g, '')); // 가격에서 쉼표 제외
+      const totalPriceElement = currentRow.querySelector('[product-total-price]');
 
-      totalPointElement.textContent = (quantity * point).toLocaleString('ko-KR');
-      updateTotalPoint();
+      totalPriceElement.textContent = (quantity * price).toLocaleString('ko-KR');
+      updateTotalPrice();
     });
   });
 }
 
 // 총 결제 금액 수정
-async function updateTotalPoint() {
-  let totalPoint = 0;
-  document.querySelectorAll('[product-total-point]').forEach(element => {
-    const value = Number(element.textContent.replace(/,/g, '')); // 가격에서 쉼표 제외
-    totalPoint += value;
+async function updateTotalPrice() {
+  let totalPrice = 0;
+
+  document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+    const parentRow = checkbox.closest('tr'); // 체크박스가 위치한 행 찾기
+    const productPriceElement = parentRow.querySelector('[product-total-price]');
+
+    if (productPriceElement) {
+      const value = Number(productPriceElement.textContent.replace(/,/g, ''));
+      totalPrice += value;
+    }
   });
 
-  $totalPoint.textContent = totalPoint.toLocaleString('ko-KR');
+  $totalPrice.textContent = totalPrice.toLocaleString('ko-KR');
+}
+
+
+async function toss() {
+  // 토스 결제 ㅠㅠ
+  const $nicknameFix = document.getElementById('nickname-fix');
+
+  const clientKey = 'test_ck_d46qopOB89xOpm5zBqZYrZmM75y0';
+  const customerKey = $nicknameFix.textContent;; // 고객 ID
+
+  const button = document.getElementById('payment-request-button');
+  const generateRandomString = () => window.btoa(Math.random()).slice(0, 20);
+  // ------  결제위젯 초기화 ------
+  // 비회원 결제에는 customerKey 대신 ANONYMOUS를 사용하세요.
+  const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
+  // ------  결제위젯 렌더링 ------
+  paymentWidget.renderPaymentMethods('#payment-method', { value: $totalPrice.textContent }); // 금액
+  // ------  이용약관 렌더링 ------
+  paymentWidget.renderAgreement('#agreement');
+
+  // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
+  button.addEventListener('click', function () {
+    paymentWidget.requestPayment({
+      orderId: generateRandomString(),
+      orderName: '테스트 외 1건', // 주문명
+      successUrl: 'http://localhost:5500/html/mypage/payment.html', // 결제에 성공하면 이동하는 페이지
+      failUrl: 'http://localhost:5500/html/mypage/cart.html', // 결제에 실패하면 이동하는 페이지
+      customerName: $nicknameFix.textContent,
+    });
+  });
 }
