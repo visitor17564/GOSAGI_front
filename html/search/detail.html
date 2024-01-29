@@ -372,11 +372,11 @@
                 </div>
                 <div class="mb-5 w-full">
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">제목</label>
-                  <input type="text" id="question-title" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input type="text" id="question-title" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                 </div>
                 <div class="mb-5 w-full">
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">내용</label>
-                  <input type="text" id="question-content" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input type="text" id="question-content" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                 </div>
                 <div class="w-full flex items-start mb-5">
                   <div class="flex items-center h-5">
@@ -385,6 +385,34 @@
                   <label for="secret" class="ms-2 text-sm font-medium text-gray-900 font-['Inter']"> 비밀글 </label>
                 </div>
                 <button type="button" id="product-question-button" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">상품문의 작성</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- 질문 조회/수정/삭제모달-->
+        <div id="question-view-modal-wrap"></div>
+        <div id="question-view-modal" tabindex="-1" question-view-modal aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+          <form class="bg-white flex w-1/4 justify-center items-stretch">
+            <div class="border bg-white flex w-full flex-col items-center px-5 py-9 rounded-md border-solid border-zinc-300 max-md:max-w-full">
+              <div class="justify-center text-black text-center text-4xl font-bold font-['Inter']">문의 조회</div>
+              <div class="self-stretch flex w-full flex-col items-stretch mt-11 px-7 max-md:max-w-full max-md:mt-10 max-md:px-5">
+                <div class="mb-5 w-full">
+                  <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">제목</label>
+                  <input type="text" id="question-view-title" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled />
+                </div>
+                <div class="mb-5 w-full">
+                  <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">내용</label>
+                  <input type="text" id="question-view-content" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled />
+                </div>
+                <div id="question-view-modal-answer" class="hidden items-center mt-5 bg-gray-200 rounded-lg p-5">
+                  <div class="text-xl mb-2 max-md:max-w-full font-['Inter']">
+                    <strong>답변확인</strong>
+                  </div>
+                  <div class="mb-5 w-full">
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']" disabled>내용</label>
+                    <input type="text" readonly id="answer-content" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                  </div>
+                </div>
               </div>
             </div>
           </form>
@@ -456,6 +484,7 @@
             </div>
           </div>
         </div>
+        <!-- 문의 모달 -->
       </main>
       <!-- 가장많은찜수 -->
       <footer class="text-white mt-10">

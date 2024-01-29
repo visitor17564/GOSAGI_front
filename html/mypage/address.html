@@ -6,239 +6,140 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/js/mypage/common.js"></script>
+    <script type="module" src="/js/mypage/address.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   </head>
   <body>
     <div class="flex flex-col min-h-screen">
       <header>
-        <!-- 헤더 -->
-        <!-- 상단 바 -->
-        <div class="w-full h-5 bg-zinc-800 flex items-center justify-center">
-          <div class="w-3/4 relative justify-end inline-flex">
-            <div class="h-3.5 justify-end items-center gap-1 flex">
-              <div class="h-3.5 justify-between items-center flex">
-                <div
-                  class="text-center text-white text-xs font-normal font-['Inter']"
-                >
-                  로그아웃
+        <div class="flex flex-col">
+          <!-- 최상단 헤더 -->
+          <div class="w-full h-5 bg-zinc-800 flex items-center justify-center">
+            <div class="w-8/12 relative justify-end inline-flex">
+              <div class="h-3.5 justify-end items-center gap-1 flex">
+                <!-- <div class="h-3.5 justify-between items-center flex">
+                  <button type="button" id="signup" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-xs font-normal font-['Inter']">회원가입</button>
                 </div>
-              </div>
-              <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-              <div class="h-3.5 justify-between items-center flex">
-                <div
-                  class="text-center text-white text-xs font-normal font-['Inter']"
-                >
-                  장바구니(0)
+                <div id="signup-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
+                <div class="h-3.5 justify-between items-center flex">
+                  <button id="login" data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-xs font-normal font-['Inter']">로그인</button>
                 </div>
-              </div>
-              <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-              <div class="justify-center items-center gap-2.5 flex">
-                <div
-                  class="text-center text-white text-xs font-normal font-['Inter']"
-                >
-                  마이페이지 ▼
+                <div id="login-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div> -->
+                <div class="h-3.5 justify-between items-center flex">
+                  <button type="submit" id="logout" class="text-center text-white text-xs font-normal font-['Inter']">로그아웃</button>
                 </div>
-              </div>
-              <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-              <div class="justify-center items-center gap-2.5 flex">
-                <div
-                  class="text-center text-white text-xs font-normal font-['Inter']"
-                >
-                  홈페이지소개
+                <div id="logout-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
+                <div class="h-3.5 justify-between items-center flex">
+                  <button class="text-center text-white text-xs font-normal font-['Inter']"><a href="/html/mypage/cart.html">장바구니(0)</a></button>
+                </div>
+                <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
+                <div class="justify-center items-center gap-2.5 flex">
+                  <button id="my-page" class="text-center text-white text-xs font-normal font-['Inter']"><a href="/html/mypage/myinfo.html">마이페이지 ▼</a></button>
+                </div>
+                <div id="my-page-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
+                <div class="justify-center items-center gap-2.5 flex">
+                  <button class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- 로고 -->
-        <div
-          class="w-full h-44 flex-col justify-center items-center gap-2.5 inline-flex"
-        >
-          <!-- 로고이미지 -->
-          <div class="h-24 justify-center items-center gap-2.5 flex">
-            <img class="w-32 h-32" src="/sourse/image/gola.png" alt=""/>
-          </div>
-          <!-- 사업자전용 미팅 -->
-          <div class="w-3/4 h-5 flex-col flex">
-            <div class="w-20 h-5 relative items-center">
-              <div
-                class="w-20 h-5 flex-col justify-center bg-orange-300 rounded-2xl"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-4 h-4"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-                  />
-                </svg>
-                <div
-                  class="w-14 h-4 left-[19px] top-[3px] absolute text-center text-black text-xs font-normal font-['Inter']"
-                >
-                  사업자 전용
+          <!-- 로고 -->
+          <div class="w-full h-44 flex-col justify-center items-center gap-2.5 inline-flex">
+            <!-- 로고이미지 -->
+            <a href="/html/index.html" title="main" class="h-24 justify-center items-center gap-2.5 flex">
+              <img class="w-64 h-64" src="/sourse/image/gola.png" alt="logo" />
+            </a>
+            <!-- 사업자전용 미팅 -->
+            <div class="w-8/12 h-5 flex-col flex">
+              <div class="w-24 h-5 relative items-center">
+                <div class="w-24 h-5 flex justify-center items-center bg-orange-300 rounded-2xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+                    />
+                  </svg>
+                  <div class="w-14 h-4 text-black text-xs font-normal font-['Inter']">사업자 전용</div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- 메뉴 -->
-        <div
-          class="w-full justify-center items-center border bg-white flex flex-col py-2.5 border-solid border-stone-300 max-md:px-5"
-        >
-          <div
-            class="flex w-3/4 max-w-full justify-between gap-5 items-start max-md:flex-wrap"
-          >
-            <!-- 고향사랑기부제 메뉴 -->
-            <div class="justify-center items-stretch flex gap-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-
-              <div
-                class="justify-center text-black text-center text-base grow whitespace-nowrap self-start font-['Inter']"
-              >
-                고향사랑기부제
+          <!-- 메뉴 -->
+          <div class="w-full justify-center items-center flex flex-col py-2.5 max-md:px-5 border">
+            <div class="flex w-8/12 max-w-full justify-between gap-5 items-start max-md:flex-wrap">
+              <!-- 고향사랑기부제 메뉴 -->
+              <div class="w-full justify-center items-center flex flex-col py-2.5 max-md:px-5">
+                <div class="flex w-full max-w-full justify-between gap-5 items-start max-md:flex-wrap">
+                  <!-- 고향사랑기부제 메뉴 -->
+                  <div class="flex justify-end-reverse items-start w-1/5 gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                    <div class="justify-center text-black text-center text-base whitespace-nowrap font-['Inter']">고향사랑기부제</div>
+                  </div>
+                  <!-- 사이트메뉴 -->
+                  <div class="flex justify-center w-3/5 px-5">
+                    <a href="/html/index.html" title="all" class="justify-center text-center text-base grow whitespace-nowrap font-['Inter']"> 전체상품 </a>
+                    <a href="/html/search/search-for-theme.html" title="theme" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 테마별 </a>
+                    <a href="/html/search/search-for-cartegory.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 품목별 </a>
+                    <a href="/html/search/search-for-region.html" title="region" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 지역별 </a>
+                    <a href="#" title="faq" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> FAQ </a>
+                  </div>
+                  <!-- 검색창 -->
+                  <div class="justify-between border w-1/5 flex gap-5 px-5 rounded-2xl border-solid border-zinc-300">
+                    <input aria-label="검색어를 입력하세요" class="items-stretch border-solid border-zinc-300 w-full" />
+                    <div id="search">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <!-- 사이트메뉴 -->
-            <div
-              class="justify-between items-stretch self-center flex gap-28 my-auto max-md:max-w-full max-md:flex-wrap"
-            >
-              <div
-                class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"
-              >
-                전체상품
-              </div>
-              <div
-                class="justify-center text-black text-center text-base font-['Inter']"
-              >
-                테마별
-              </div>
-              <div
-                class="justify-center text-black text-center text-base font-['Inter']"
-              >
-                품목별
-              </div>
-              <div
-                class="justify-center text-black text-center text-base font-['Inter']"
-              >
-                지역별
-              </div>
-              <div
-                class="justify-center text-black text-center text-base grow whitespace-nowrap"
-              >
-                FAQ
-              </div>
-            </div>
-            <!-- 검색창 -->
-            <div class="justify-between items-stretch border bg-white self-stretch flex gap-5 px-5 rounded-2xl border-solid border-zinc-300">
-              <input aria-label="검색어를 입력하세요"
-              class="items-stretch bg-white border-solid border-zinc-300"
-            >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-            </div>
-            </input>
           </div>
         </div>
       </header>
       <!-- 마이페이지기본창 -->
       <main class="flex-grow flex justify-center items-start mt-24">
-        <div class="w-3/4 flex justify-between">
+        <div class="w-8/12 flex justify-between">
           <!-- 마이페이지 메뉴(좌측) -->
-          <div class="justify-center items-stretch flex max-w-[204px] flex-col">
-            <div
-              class="bg-white border flex w-full flex-col pl-7 pr-9 py-3 border-solid border-neutral-400"
-            >
-              <div
-                class="justify-center text-black text-base font-bold self-start whitespace-nowrap font-['Inter']"
-              >
-                나의 쇼핑 정보
+          <div class="justify-start items-stretch flex max-w-[204px] flex-col">
+            <div class="bg-white border flex w-full flex-col pl-7 pr-9 py-3 border-solid border-neutral-400">
+              <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap font-['Inter']">나의 쇼핑 정보</div>
+              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/wish.html">내가 찜한 상품</a>
               </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                내가 찜한 상품
+              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/cart.html">장바구니</a>
               </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                장바구니
+              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/order.html">주문내역/배송조회</a>
               </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                주문내역/배송조회
-              </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                취소/반품/교환
-              </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                결제내역조회
+              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">취소/반품/교환</div>
+              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/payment.html">결제내역조회</a>
               </div>
               <div class="bg-stone-300 self-stretch shrink-0 h-px mt-2.5"></div>
-              <div
-                class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-3 font-['Inter']"
-              >
-                나의 활동
+              <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-3 font-['Inter']">나의 활동</div>
+              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/question.html"> 1:1 문의내역</a>
               </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                1:1 문의내역
-              </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                나의 상품후기
-              </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                최근 본 상품
+              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/review.html">나의 상품후기</a>
               </div>
               <div class="bg-stone-300 self-stretch shrink-0 h-px mt-3.5"></div>
-              <div
-                class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-2.5 font-['Inter']"
-              >
-                나의 정보
+              <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-2.5 font-['Inter']">나의 정보</div>
+              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/address.html">배송지 관리</a>
               </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                배송지 관리
+              <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
+                <a href="/html/mypage/myinfo.html">회원정보 수정</a>
               </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                회원정보 수정
-              </div>
-              <div
-                class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']"
-              >
-                회원탈퇴
-              </div>
+              <button id="secession-btn" class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">회원탈퇴</button>
             </div>
           </div>
           <!-- 기타매뉴(우측) -->
@@ -246,104 +147,130 @@
             <!-- 홍길동님 환영합니다 -->
             <div class="flex w-full flex-col items-start">
               <div class="flex items-stretch gap-3.5">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/1b822012f92fe433b436287ac77e43250c54208b8eb06f4b3db8dcc08467d6cd?"
-                  class="aspect-square object-contain object-center w-[41px] overflow-hidden shrink-0 max-w-full" alt=""
-                />
-                <div
-                  class="text-black text-4xl font-extralight self-center grow whitespace-nowrap my-auto font-['Inter']"
-                >
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/1b822012f92fe433b436287ac77e43250c54208b8eb06f4b3db8dcc08467d6cd?" class="aspect-square object-contain object-center w-[41px] overflow-hidden shrink-0 max-w-full" alt="" />
+                <div class="text-black text-4xl font-extralight self-center grow whitespace-nowrap my-auto font-['Inter']">
                   <strong>마이페이지</strong>
                 </div>
               </div>
-              <div
-                class="text-black text-base bg-gray-200 self-stretch w-full justify-center mt-6 pl-3.5 pr-16 py-6 rounded-2xl items-start max-md:max-w-full max-md:pr-5 font-['Inter']"
-              >
-                <span class="font-bold text-xl font-['Inter']">홍길동</span>
+              <div class="text-black text-base bg-gray-200 self-stretch w-full justify-center mt-6 pl-3.5 pr-16 py-6 rounded-2xl items-start max-md:max-w-full max-md:pr-5 font-['Inter']">
+                <span id="nickname-fix" class="font-bold text-xl font-['Inter']"></span>
                 님 환영합니다.
               </div>
             </div>
             <!-- 배송지관리(제목) -->
-            <div class="justify-center mt-12 text-black text-2xl font-bold self-start whitespace-nowrap font-['Inter']">
-              배송지관리
-            </div>
+            <div class="justify-center mt-12 text-black text-2xl font-bold self-start whitespace-nowrap font-['Inter']">배송지관리</div>
             <!-- 배송지관리 -->
             <div class="mt-5 relative overflow-x-auto">
-              <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                  <thead class="text-xs items-center text-gray-700 uppercase bg-gray-50  ">
-                      <tr>
-                          <th scope="col" class="text-center px-6 py-3 font-['Inter']">
-                              배송지명
-                          </th>
-                          <th scope="col" class="text-center px-6 py-3 font-['Inter']">
-                              수령인
-                          </th>
-                          <th scope="col" class="text-center px-6 py-3 font-['Inter']">
-                            주소
-                          </th>
-                          <th scope="col" class="text-center px-6 py-3 font-['Inter']">
-                              연락처
-                          </th>
-                          <th scope="col" class="text-center px-6 py-3 font-['Inter']">
-                              관리
-                          </th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr class="bg-white border-b ">
-                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">
-                          <p>[기본배송지]</p>
-                          <p>우리집</p>
-                        </th>
-                        <td class="px-6 py-4 font-['Inter'] text-center">
-                            홍길동
-                        </td>
-                        <td class="px-6 py-4 font-['Inter'] text-center">
-                          집주소
-                        </td>
-                        <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
-                          010-1234-5678
-                        </td>
-                        <td class="text-center px-6 py-3 gap-2 flex flex-col justify-center items-center">
-                          <button class="h-5 w-10 hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">
-                            수정
-                          </button>
-                          <button class="h-5 w-10 hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">
-                            삭제
-                          </button>
-                        </td>
-                      </tr>
-                  </tbody>
+              <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead class="text-xs items-center text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th scope="col" class="text-center px-6 py-3 font-['Inter']">배송지명</th>
+                    <th scope="col" class="text-center px-6 py-3 font-['Inter']">수령인</th>
+                    <th scope="col" class="text-center px-6 py-3 font-['Inter']">주소</th>
+                    <th scope="col" class="text-center px-6 py-3 font-['Inter']">연락처</th>
+                    <th scope="col" class="text-center px-6 py-3 font-['Inter']">관리</th>
+                  </tr>
+                </thead>
+                <tbody id="address-wrap"></tbody>
               </table>
               <div class="flex items-center justify-end">
-                <button class="h-8 w-32 mt-10 mr-5 justify-center hover:bg-white hover:text-orange-400 border border-orange-400 text-white text-center bg-orange-400 items-center rounded-2xl max-md:max-w-full max-md:px-5 font-['Inter']">
-                  배송지 추가
-                </button>
+                <button type="button" id="" data-modal-target="add-address-modal" data-modal-toggle="add-address-modal" class="h-8 w-32 mt-10 mr-5 justify-center hover:bg-white hover:text-orange-400 border border-orange-400 text-white text-center bg-orange-400 items-center rounded-2xl max-md:max-w-full max-md:px-5 font-['Inter']">배송지 추가</button>
               </div>
             </div>
+            <!-- 여기서부터 모달임 -->
+            <!-- 배송지 등록 모달 -->
+            <div id="add-address-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+              <form class="bg-white w-1/3 flex justify-center items-stretch">
+                <div class="border bg-white flex w-full flex-col items-center px-5 py-9 rounded-md border-solid border-zinc-300 max-md:max-w-full">
+                  <div class="justify-center text-black text-center text-4xl font-bold font-['Inter']">배송지 추가</div>
+                  <div class="self-stretch flex w-full flex-col items-stretch mt-11 px-7 max-md:max-w-full max-md:mt-10 max-md:px-5">
+                    <div class="flex justify-between items-center">
+                      <div class="text-xl mb-2 max-md:max-w-full font-['Inter']">
+                        <strong>배송정보</strong>
+                      </div>
+                    </div>
+                    <div class="mb-5 w-full">
+                      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">배송지이름</label>
+                      <input type="text" id="address-name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="배송지명을 입력해주세요" required />
+                    </div>
+                    <div class="mb-5 w-full">
+                      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수령인</label>
+                      <input type="text" id="address-recipient" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="수령인을 입력해주세요" required />
+                    </div>
+                    <div class="mb-5 w-full">
+                      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수령인 연락처</label>
+                      <input type="text" id="address-phone-number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="연락처를 입력해주세요" required />
+                    </div>
+                    <div class="mb-5 w-full">
+                      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">배송지주소</label>
+                      <div class="flex">
+                        <input type="text" id="postcode" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5" placeholder="우편번호를 입력해주세요" required disabled />
+                        <button type="button" id="address-search-btn" class="w-1/4 justify-center text-white text-center text-xl bg-orange-400 items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">주소 검색</button>
+                      </div>
+                      <input type="text" id="address" class="mt-1 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="배송지를 입력해주세요" required disabled />
+                      <input type="text" id="detail-address" class="mt-1 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="상세 주소를 입력해주세요" required />
+                    </div>
+                    <button type="button" id="add-address-button" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">배송지 추가</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- 배송지 수정 모달 -->
+            <div id="fix-address-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+              <form class="bg-white w-1/3 flex justify-center items-stretch">
+                <div class="border bg-white flex w-full flex-col items-center px-5 py-9 rounded-md border-solid border-zinc-300 max-md:max-w-full">
+                  <div class="justify-center text-black text-center text-4xl font-bold font-['Inter']">배송지 수정</div>
+                  <div class="self-stretch flex w-full flex-col items-stretch mt-11 px-7 max-md:max-w-full max-md:mt-10 max-md:px-5">
+                    <div class="flex justify-between items-center">
+                      <div class="text-xl mb-2 max-md:max-w-full font-['Inter']">
+                        <strong>배송정보</strong>
+                      </div>
+                    </div>
+                    <div class="mb-5 w-full">
+                      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">배송지이름</label>
+                      <input type="text" id="fix-address-name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="배송지명을 입력해주세요" required />
+                    </div>
+                    <div class="mb-5 w-full">
+                      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수령인</label>
+                      <input type="text" id="fix-address-recipient" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="수령인을 입력해주세요" required />
+                    </div>
+                    <div class="mb-5 w-full">
+                      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수령인 연락처</label>
+                      <input type="text" id="fix-address-phone-number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="연락처를 입력해주세요" required />
+                    </div>
+                    <div class="mb-5 w-full">
+                      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">배송지주소</label>
+                      <div class="flex">
+                        <input type="text" id="fix-postcode" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5" placeholder="우편번호를 입력해주세요" required disabled />
+                        <button type="button" id="fix-address-search-btn" class="w-1/4 justify-center text-white text-center text-xl bg-orange-400 items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">주소 검색</button>
+                      </div>
+                      <input type="text" id="fix-address" class="mt-1 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="배송지를 입력해주세요" required disabled />
+                      <input type="text" id="fix-detail-address" class="mt-1 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="상세 주소를 입력해주세요" required />
+                    </div>
+                    <button type="button" id="fix-add-address-button" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">배송지 수정</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- 닉네임관리(제목) -->
           </div>
         </div>
       </main>
-    
+
       <footer class="text-white">
         <!-- 푸터 -->
-        <div
-        class="items-center bg-zinc-800 flex flex-col justify-center"
-      >
-        <div
-          class="flex w-3/4 max-w-full justify-between gap-5 items-start max-md:flex-wrap"
-        >
-          <div class="text-white text-base grow shrink basis-auto">
-            팀명 : 2거4조
-            <br />
-            소속 : 스파르타 내일배움캠프 Node.js 3기
+        <div class="items-center bg-zinc-800 flex flex-col justify-center">
+          <div class="flex w-8/12 max-w-full justify-between gap-5 items-start max-md:flex-wrap">
+            <div class="text-white text-base grow shrink basis-auto">
+              팀명 : 2거4조
+              <br />
+              소속 : 스파르타 내일배움캠프 Node.js 3기
+            </div>
+            <img src="/sourse/image/git.png" class="aspect-square object-contain object-center w-[38px] overflow-hidden self-stretch shrink-0 max-w-full" alt="" />
           </div>
-          <img
-            src="/sourse/image/git.png" class="aspect-square object-contain object-center w-[38px] overflow-hidden self-stretch shrink-0 max-w-full" alt=""
-          />
-        </div>
         </div>
       </footer>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
   </body>
 </html>

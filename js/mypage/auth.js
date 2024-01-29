@@ -2,7 +2,7 @@ const logoutButton = document.getElementById('logout');
 
 if (!document.cookie.includes('authorization')) {
   alert('로그인 후 이용 가능합니다.');
-  window.location.href = 'http://localhost:5500/html/index.html';
+  // window.location.href = 'http://localhost:5500/html/index.html';
 }
 
 logoutButton.addEventListener('click', async () => {
