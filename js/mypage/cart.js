@@ -8,7 +8,6 @@ const $allBuyBtn = document.getElementById('all-buy-btn');
 const $buyBtn = document.getElementById('buy-btn');
 const $allSelectCheckbox = document.getElementById('all-select-checkbox');
 
-
 const $cartModalOrderListBottom = document.getElementById('cart-modal-order-list-bottom');
 const $cartModalTotalPrice = document.getElementById('cart-modal-total-price');
 
@@ -33,15 +32,14 @@ async function drawCartList() {
     let count = 0;
     if (carts.length >= 1) {
       $cartList.innerHTML = '';
-      carts.forEach(cart => {
+      carts.forEach((cart) => {
         count++;
-        let tempHtml =
-          `
-          <tr id="${cart.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white font-['Inter']">
+        let tempHtml = `
+          <tr id="${cart.id}" class="bg-white border-b ">
+            <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">
               <div class="w-full flex mb-5">
                 <div class="flex items-center h-5">
-                  <input id="item-${cart.id}" type="checkbox" value="" checkbox class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" title="전체선택" />
+                  <input id="item-${cart.id}" type="checkbox" value="" checkbox class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 " title="전체선택" />
                 </div>
               </div>
             </th>
@@ -52,14 +50,14 @@ async function drawCartList() {
             <td class="px-6 py-4 font-['Inter'] text-center">
               <form class="max-w-xs mx-auto">
                 <div class="relative flex items-center justify-center">
-                  <button type="button" quantity-decrement="quantity" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                    <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                  <button type="button" quantity-decrement="quantity" class="flex-shrink-0 bg-gray-100    hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100  focus:ring-2 focus:outline-none">
+                    <svg class="w-2.5 h-2.5 text-gray-900  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                     </svg>
                   </button>
-                  <input type="text" id="quantity" quantity class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="${cart.quantity}" required />
-                  <button type="button" quantity-increment="quantity" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                    <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <input type="text" id="quantity" quantity class="flex-shrink-0 text-gray-900 border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="${cart.quantity}" required />
+                  <button type="button" quantity-increment="quantity" class="flex-shrink-0 bg-gray-100    hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100  focus:ring-2 focus:outline-none">
+                    <svg class="w-2.5 h-2.5 text-gray-900  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
                     </svg>
                   </button>
@@ -79,14 +77,12 @@ async function drawCartList() {
           </tr>
           `;
 
-        $cartList.insertAdjacentHTML("beforeend", tempHtml);
+        $cartList.insertAdjacentHTML('beforeend', tempHtml);
       });
-
-
     }
     if (carts.length === 0) {
       let tempHtml = '<div>장바구니 내역이 존재하지 않습니다</div>';
-      $cartList.insertAdjacentHTML("beforeend", tempHtml);
+      $cartList.insertAdjacentHTML('beforeend', tempHtml);
     }
   } catch (err) {
     console.log('err: ', err);
@@ -107,13 +103,12 @@ $allBuyBtn.addEventListener('click', async function (e) {
   drawSelectCart();
 });
 
-
 // 선택 장바구니 목록 조회
 async function drawSelectCart() {
   const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]:checked');
 
   const $orderSelectInfo = document.querySelectorAll('[order-select-info]');
-  $orderSelectInfo.forEach(element => {
+  $orderSelectInfo.forEach((element) => {
     element.remove();
   });
 
@@ -127,20 +122,20 @@ async function drawSelectCart() {
 
       let tempHtml = `
         <div order-select-info class="mb-5 w-full">
-          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-['Inter']">상품명</label>
-          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" value="${productName}" disabled />
+          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">상품명</label>
+          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="${productName}" disabled />
         </div>
         <div order-select-info class="mb-5 w-full">
-          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-['Inter']">가격</label>
-          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" value="${productTotalPrice}" disabled />
+          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">가격</label>
+          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="${productTotalPrice}" disabled />
         </div>
         <div order-select-info class="mb-5 w-full">
-          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white font-['Inter']">수량</label>
-          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" value="${quantity}" disabled />
+          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수량</label>
+          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="${quantity}" disabled />
         </div>
       `;
 
-      $cartModalOrderListBottom.insertAdjacentHTML("beforebegin", tempHtml);
+      $cartModalOrderListBottom.insertAdjacentHTML('beforebegin', tempHtml);
       $cartModalTotalPrice.value = $totalPrice.textContent;
     });
   } catch (err) {
@@ -160,7 +155,7 @@ $allSelectCheckbox.addEventListener('click', function () {
 
 async function selectAllCheckbox() {
   const allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]');
-  allCheckboxes.forEach(checkbox => {
+  allCheckboxes.forEach((checkbox) => {
     checkbox.checked = $allSelectCheckbox.checked;
   });
   updateTotalPrice();
@@ -169,7 +164,7 @@ async function selectAllCheckbox() {
 // 개별 선택
 function updateAllCheckbox() {
   const allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]');
-  const allChecked = Array.from(allCheckboxes).every(checkbox => checkbox.checked);
+  const allChecked = Array.from(allCheckboxes).every((checkbox) => checkbox.checked);
   $allSelectCheckbox.checked = allChecked;
   updateTotalPrice();
 }
@@ -177,7 +172,7 @@ function updateAllCheckbox() {
 // 개별 선택
 async function checkboxUpdate() {
   const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]');
-  $allCheckboxes.forEach(checkbox => {
+  $allCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener('click', async function (e) {
       updateAllCheckbox(); // 전체 선택 체크박스 상태 업데이트
     });
@@ -202,7 +197,7 @@ $selectDeleteBtn.addEventListener('click', async function (e) {
         currentRow.remove(); // 삭제한 상품 html 제거
       } catch (err) {
         alert(response.data.message);
-      };
+      }
     });
     alert('선택 상품 삭제가 완료되었습니다');
   } catch (err) {
@@ -218,7 +213,6 @@ async function buyProduct() {
   //   await axios.delete(`http://localhost:3000/cart/${cartId}`, {
   //     withCredentials: true,
   //   });
-
   //   // 주문 내역 저장 API
   //   const response = await axios.post(`http://localhost:3000/order`, {
   //     product_id: 8,
@@ -231,15 +225,15 @@ async function buyProduct() {
   //   }, {
   //     withCredentials: true,
   //   });
-
   //   currentRow.remove(); // 삭제한 상품 html 제거
   // } catch (err) {
   //   alert(response.data.message);
   // };
 }
+
 // 수량 증가 버튼 함수
 async function quantityBtn() {
-  document.querySelectorAll('[quantity-decrement="quantity"]').forEach(button => {
+  document.querySelectorAll('[quantity-decrement="quantity"]').forEach((button) => {
     button.addEventListener('click', function () {
       const currentRow = this.closest('tr'); // 가장 가까운 태그 조회
       const quantity = currentRow.querySelector('[quantity]');
@@ -252,7 +246,7 @@ async function quantityBtn() {
     });
   });
 
-  document.querySelectorAll('[quantity-increment="quantity"]').forEach(button => {
+  document.querySelectorAll('[quantity-increment="quantity"]').forEach((button) => {
     button.addEventListener('click', function () {
       const currentRow = this.closest('tr'); // 가장 가까운 태그 조회
       const quantity = currentRow.querySelector('[quantity]');
@@ -260,14 +254,13 @@ async function quantityBtn() {
 
       quantity.value = currentValue + 1;
       quantity.dispatchEvent(new Event('change')); // 상품 합계 가격 수정 함수 호출
-
     });
   });
 }
 
 // 상품 합계 가격 수정
 async function updateProductTotalPrice() {
-  document.querySelectorAll('[quantity]').forEach(input => {
+  document.querySelectorAll('[quantity]').forEach((input) => {
     input.addEventListener('change', function () {
       const currentRow = this.closest('tr'); // 가장 가까운 태그 조회
 
@@ -285,7 +278,7 @@ async function updateProductTotalPrice() {
 async function updateTotalPrice() {
   let totalPrice = 0;
 
-  document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+  document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
     const parentRow = checkbox.closest('tr'); // 체크박스가 위치한 행 찾기
     const productPriceElement = parentRow.querySelector('[product-total-price]');
 
@@ -298,13 +291,12 @@ async function updateTotalPrice() {
   $totalPrice.textContent = totalPrice.toLocaleString('ko-KR');
 }
 
-
 async function toss() {
   // 토스 결제 ㅠㅠ
   const $nicknameFix = document.getElementById('nickname-fix');
 
   const clientKey = 'test_ck_d46qopOB89xOpm5zBqZYrZmM75y0';
-  const customerKey = $nicknameFix.textContent;; // 고객 ID
+  const customerKey = $nicknameFix.textContent; // 고객 ID
 
   const button = document.getElementById('payment-request-button');
   const generateRandomString = () => window.btoa(Math.random()).slice(0, 20);
