@@ -21,8 +21,16 @@ const countProductName = document.getElementById('count-product-name');
 const addCartButton = document.getElementById('add-cart-button');
 const purchaseButton = document.getElementById('purchase-button');
 
+const postcode = document.getElementById('postcode');
+
+const tossModal = document.getElementById('toss-modal');
 const address = document.getElementById('address');
+const addressDetail = document.getElementById('address-detail');
 const addressSearchBtn = document.getElementById('address-search-btn');
+const cartModalRecipient = document.getElementById('cart-modal-recipient');
+const cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
+
+const paymentBtn = document.getElementById('payment-btn');
 
 document.addEventListener('DOMContentLoaded', async function () {
   await quantityBtn();
@@ -72,15 +80,9 @@ export const generateProductCard = async (product, reviews) => {
     review_average_rate = reviews.review_average_rate;
   }
 
-  // thumbnail.innerHTML = `<img src="${product.productThumbnail[0].image_url}" class="aspect-square object-contain object-center w-full overflow-hidden max-md:max-w-full" />
-  // <div class="flex gap-5 flex-row overflow-auto mx-auto">
-  //   <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/def2e378aa743fbc0525c087abe01d089289a4b23fd4da7f6ec7d5c22ead355f?" class="aspect-[0.54] object-contain object-center w-[7px] stroke-[1.5px] stroke-black overflow-hidden self-center shrink-0 max-w-full my-auto" />
-  //   <img loading="lazy" src="../../sourse/image/sample.png" class="aspect-square object-contain object-center w-[45px] overflow-hidden self-stretch shrink-0 max-w-full" />
-  //   <img loading="lazy" src="../../sourse/image/sample.png" class="aspect-square object-contain object-center w-[45px] overflow-hidden self-stretch shrink-0 max-w-full" />
-  //   <img loading="lazy" src="../../sourse/image/sample.png" class="aspect-square object-contain object-center w-[45px] overflow-hidden self-stretch shrink-0 max-w-full" />
-  //   <img loading="lazy" src="../../sourse/image/sample.png" class="aspect-square object-contain object-center w-[45px] overflow-hidden self-stretch shrink-0 max-w-full" />
-  //   <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/e665837b135b992643a03878e60fe369904b32f45282902b681e572d86844c1f?" class="aspect-[0.46] object-contain object-center w-1.5 stroke-[1.5px] stroke-black overflow-hidden self-center shrink-0 max-w-full my-auto" />
-  // </div>`;
+  thumbnail.innerHTML = `<img src="${product.productThumbnail[0].image_url}" class="aspect-square object-contain object-center w-full overflow-hidden max-md:max-w-full" />
+  <div class="flex gap-5 flex-row overflow-auto mx-auto">
+  </div>`;
   console.log(product);
   // thumbnail.innerHTML = product.productThumbnail
   //   .map((Thumbnail) => {
@@ -199,7 +201,7 @@ export const generateProductQuestions = async (questions) => {
       <td class="px-6 py-4 font-['Inter'] text-center">${question.question.created_at.slice(0, 10)}</td>
       <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
         <button class="h-5 w-1/2 ${completeAnswer}justify-center hover:bg-orange-400 hover:text-white text-xs border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>
-        <button class="h-5 w-1/2 ${waitAnswer}justify-center hover:bg-gray-400 hover:text-white text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기</button>
+        <button style="cursor: default;" class="h-5 w-1/2 ${waitAnswer}justify-center text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기</button>
       </td>
     </tr>`;
     })
@@ -287,6 +289,7 @@ generateProductQuestions(questions);
 generateProductReviews(reviews);
 generateProductWish(wish);
 
+// 문의 글 저장
 productQuestionButton.addEventListener('click', async () => {
   const title = document.getElementById('question-title').value;
   const content = document.getElementById('question-content').value;
@@ -411,17 +414,96 @@ addressSearchBtn.addEventListener('click', () => {
           extraAddr = ' (' + extraAddr + ')';
         }
         // 조합된 참고항목을 해당 필드에 넣는다.
-        document.getElementById('sample6_extraAddress').value = extraAddr;
+        addressDetail.value = extraAddr;
       } else {
-        document.getElementById('sample6_extraAddress').value = '';
+        addressDetail.value = '';
       }
 
       // 우편번호와 주소 정보를 해당 필드에 넣는다.
-      document.getElementById('sample6_postcode').value = data.zonecode;
-      document.getElementById('sample6_address').value = addr;
+      postcode.value = data.zonecode;
+      address.value = addr;
       // 커서를 상세주소 필드로 이동한다.
-      document.getElementById('sample6_detailAddress').focus();
+      addressDetail.focus();
     },
   }).open();
 });
-async function getPostcode() {}
+
+// 토스 결제 버튼 클릭 이벤트
+paymentBtn.addEventListener('click', function () {
+  if (cartModalRecipient.value && cartModalPhonenumber.value && postcode.value && address.value) {
+    tossModal.classList.remove('hidden');
+    toss();
+  } else {
+    alert('수령인, 연락처, 주소를 입력해주세요');
+  }
+});
+
+// 토스 결제 API
+function toss() {
+  const productName = document.getElementById('product-name');
+
+  console.log('정신차려');
+  // 토스 결제 ㅠㅠ
+  // const $nicknameFix = document.getElementById('nickname-fix');
+  const clientKey = 'test_ck_d46qopOB89xOpm5zBqZYrZmM75y0';
+  const customerKey = '12345678'; // 고객 ID
+  console.log(productName.innerText);
+  const button = document.getElementById('payment-request-button');
+  const generateRandomString = () => window.btoa(Math.random()).slice(0, 20);
+  // ------  결제위젯 초기화 ------
+  // 비회원 결제에는 customerKey 대신 ANONYMOUS를 사용하세요.
+  const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
+  // ------  결제위젯 렌더링 ------
+  paymentWidget.renderPaymentMethods('#payment-method', { value: productTotalPrice.innerText.replace(/,/g, '') }); // 금액
+  // ------  이용약관 렌더링 ------
+  paymentWidget.renderAgreement('#agreement');
+
+  // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
+  button.addEventListener('click', async function () {
+    try {
+      await paymentWidget.requestPayment({
+        orderId: generateRandomString(),
+        orderName: productName.innerText, // 주문명
+      });
+      paymentProduct(); // 주문 목록에 저장
+    } catch (err) {
+      if (err === 'Error: 사용자가 결제를 취소하였습니다') {
+        alert('결제가 취소되었습니다.');
+      } else {
+        alert('결제 오류가 발생하였습니다.');
+      }
+    } finally {
+      tossModal.classList.add('hidden');
+    }
+  });
+}
+
+// 주문 내역 저장 함수
+async function paymentProduct() {
+  const deliveryRequest = document.getElementById('delivery-request');
+  console.log(deliveryRequest.value);
+  try {
+    // 주문 내역 저장 API
+    const response = await axios.post(
+      `http://localhost:3000/order`,
+      {
+        product_id: productId,
+        status: '결제완료',
+        quantity: quantity.value,
+        receiver: cartModalRecipient.value,
+        receiver_phone_number: cartModalPhonenumber.value,
+        post_code: postcode.value,
+        delivery_name: '집',
+        delivery_address: address.value,
+        delivery_request: deliveryRequest.value,
+      },
+      {
+        withCredentials: true,
+      },
+    );
+
+    window.location.href = "'http://localhost:5500/html/mypage/payment.html',";
+  } catch (err) {
+    alert(err.response.data.message);
+  }
+}

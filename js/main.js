@@ -68,7 +68,7 @@ export async function getProduct() {
   try {
     // axios를 사용하여 로그인 API 실행
 
-    const response = await axios.get(`http://localhost:3000/goods/page?page=${page}`);
+    const response = await axios.get(`http://localhost:3000/goods/?page=${page}`);
     return response.data.data;
   } catch (err) {
     // 오류 처리
