@@ -13,6 +13,7 @@ const quantity = document.getElementById('quantity');
 const quantityDecreaseBtn = document.getElementById('quantity-decrease-btn');
 const quantityIncrementBtn = document.getElementById('quantity-increment-btn');
 
+let userId;
 let isMyWish = false;
 let myWishId;
 
@@ -31,6 +32,16 @@ const cartModalRecipient = document.getElementById('cart-modal-recipient');
 const cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
 
 const paymentBtn = document.getElementById('payment-btn');
+
+//
+
+const $questionTitle = document.getElementById('question-title');
+const $questionContent = document.getElementById('question-content');
+const $answerContent = document.getElementById('answer-content');
+
+const $questionViewModalAnswer = document.getElementById('question-view-modal-answer');
+const $questionViewTitle = document.getElementById('question-view-title');
+const $questionViewContent = document.getElementById('question-view-content');
 
 document.addEventListener('DOMContentLoaded', async function () {
   await quantityBtn();
@@ -166,6 +177,22 @@ export const generateProductReviews = async (reviews) => {
     .join('');
 };
 
+async function getUserId() {
+  // 회원 로그인 id 조회 체크(닉네임으로 수정 필요 - 아영)
+  try {
+    // 회원정보 조회 API 실행
+    const response = await axios.get('http://localhost:3000/user', {
+      withCredentials: true,
+    });
+
+    userId = response.data.data.id;
+  } catch (err) {
+    // 오류 처리
+    alert(`${err.response.data.message}`);
+  }
+}
+await getUserId();
+
 export const generateProductQuestions = async (questions) => {
   console.log(questions);
   if (questions.length === 0) {
@@ -177,37 +204,56 @@ export const generateProductQuestions = async (questions) => {
   const productQuestionTable = document.getElementById('product-question-table');
   productQuestionTable.innerHTML = questions
     .map((question) => {
-      let waitAnswer = '';
-      let completeAnswer = 'hidden ';
-      if (question.status === '답변완료') {
-        waitAnswer = 'hidden ';
-        completeAnswer = '';
+      const isPrivate = question.question.is_private === true ? ',' : 'hidden';
+
+      let questionBtnHtml;
+      // 답변 전일때
+      if (question.status === '답변대기') {
+        // 비밀글이고 내 글이거나 비밀글이 아닐 때
+        if ((question.question.is_private === true && userId == question.question.user_id) || question.question.is_private === false) {
+          questionBtnHtml = `<button question-detail-btn data-modal-target="question-view-modal" data-modal-toggle="question-view-modal" class="h-5 w-1/2 justify-center text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기</button>`;
+        }
+        // 비밀글이고 내 글이 아닐 떼
+        if (question.question.is_private === true && userId != question.question.user_id) {
+          questionBtnHtml = `<button class="h-5 w-1/2 justify-center text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']" style="cursor: default;">비밀글</button>`;
+        }
       }
-      let isPrivate = 'hidden';
-      if (question.question.is_private === true) {
-        isPrivate = '';
+
+      // 답변 후일때
+      if (question.status !== '답변대기') {
+        // 비밀글이고 내 글이거나 비밀글이 아닐 때
+        if ((question.question.is_private === true && userId == question.question.user_id) || question.question.is_private === false) {
+          questionBtnHtml = `<button question-detail-btn data-modal-target="question-view-modal" data-modal-toggle="question-view-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white text-xs border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>`;
+        }
+        // 비밀글이고 내 글이 아닐 떼
+        if (question.question.is_private === true && userId != question.question.user_id) {
+          questionBtnHtml = `<button class="h-5 w-1/2 justify-center text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']" style="cursor: default;">비밀글</button>`;
+        }
       }
-      return `<tr class="bg-white border-b ">
-      <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">${question.number}</th>
-      <td class="flex justify-center items-center px-6 py-4 font-['Inter'] text-center">\
-      <div class="${isPrivate}">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-        </svg>  
-      </div>
-      <div>&nbsp;&nbsp;${question.question.title}</div>
-      </td>
-      <td class="px-6 py-4 font-['Inter'] text-center">${question.question.user_id}</td>
-      <td class="px-6 py-4 font-['Inter'] text-center">${question.question.created_at.slice(0, 10)}</td>
-      <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
-        <button class="h-5 w-1/2 ${completeAnswer}justify-center hover:bg-orange-400 hover:text-white text-xs border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>
-        <button style="cursor: default;" class="h-5 w-1/2 ${waitAnswer}justify-center text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기</button>
-      </td>
-    </tr>`;
+
+      return `
+      <tr id="${question.question.id}" class="bg-white border-b ">
+        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">${question.number}</th>
+        <td class="flex justify-center items-center px-6 py-4 font-['Inter'] text-center">\
+        <div class="${isPrivate}">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>  
+        </div>
+        <div>&nbsp;&nbsp;${question.question.title}</div>
+        </td>
+        <td class="px-6 py-4 font-['Inter'] text-center">${question.question.user_id}</td>
+        <td class="px-6 py-4 font-['Inter'] text-center">${question.question.created_at.slice(0, 10)}</td>
+        <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
+          ${questionBtnHtml}
+          </td>
+      </tr>`;
     })
     .join('');
+  drawSelectQuestion();
 };
 
+// 좋아요 토글
 export const generateProductWish = async (wish) => {
   let fill = 'none';
   let stroke = 'currentColor';
@@ -284,10 +330,10 @@ const reviews = await getProductReview(productId);
 const questions = await getProductQuestion(productId);
 const wish = await getProductWish(productId);
 
-generateProductCard(product, reviews);
-generateProductQuestions(questions);
-generateProductReviews(reviews);
-generateProductWish(wish);
+await generateProductCard(product, reviews);
+await generateProductQuestions(questions);
+await generateProductReviews(reviews);
+await generateProductWish(wish);
 
 // 문의 글 저장
 productQuestionButton.addEventListener('click', async () => {
@@ -442,9 +488,8 @@ paymentBtn.addEventListener('click', function () {
 function toss() {
   const productName = document.getElementById('product-name');
 
-  console.log('정신차려');
   // 토스 결제 ㅠㅠ
-  // const $nicknameFix = document.getElementById('nickname-fix');
+  // const $nicknameFix = document.getElementById('id-fix');
   const clientKey = 'test_ck_d46qopOB89xOpm5zBqZYrZmM75y0';
   const customerKey = '12345678'; // 고객 ID
   console.log(productName.innerText);
@@ -506,4 +551,41 @@ async function paymentProduct() {
   } catch (err) {
     alert(err.response.data.message);
   }
+}
+
+// 문의 글 조회
+// 문의 글 상세 조회
+async function drawSelectQuestion() {
+  const $questionBtns = document.querySelectorAll('[question-detail-btn]');
+
+  $questionBtns.forEach((button) => {
+    button.addEventListener('click', async function () {
+      const currentRow = button.closest('tr');
+      const questionId = currentRow.id;
+
+      try {
+        // 문의 글 상세 조회 API 실행
+        const response = await axios.get(`http://localhost:3000/question/detail/${questionId}`, {
+          withCredentials: true,
+        });
+
+        const question = response.data.data;
+        console.log(question.question.title);
+        $questionViewTitle.value = question.question.title;
+        $questionViewContent.value = question.question.content;
+
+        if (!question.answer) {
+          $questionViewModalAnswer.classList.add('hidden');
+
+          $answerContent.value = '';
+        } else {
+          $questionViewModalAnswer.classList.remove('hidden');
+
+          $answerContent.value = question.answer.content;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  });
 }
