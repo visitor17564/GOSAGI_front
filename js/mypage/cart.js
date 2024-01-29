@@ -2,10 +2,10 @@
 const $cartList = document.getElementById('cart-list');
 const $totalPrice = document.getElementById('total-price');
 const $selectDeleteBtn = document.getElementById('select-delete-btn');
-const $selectBuyBtn = document.getElementById('select-buy-btn');
-const $allBuyBtn = document.getElementById('all-buy-btn');
+const $selectBuyBtn = document.getElementById('select-payment-btn');
+const $allBuyBtn = document.getElementById('all-payment-btn');
 
-const $buyBtn = document.getElementById('buy-btn');
+const $paymentBtn = document.getElementById('payment-btn');
 const $allSelectCheckbox = document.getElementById('all-select-checkbox');
 
 const $cartModalOrderListBottom = document.getElementById('cart-modal-order-list-bottom');
@@ -39,25 +39,25 @@ async function drawCartList() {
             <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">
               <div class="w-full flex mb-5">
                 <div class="flex items-center h-5">
-                  <input id="item-${cart.id}" type="checkbox" value="" checkbox class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 " title="전체선택" />
+                  <input id="item-${cart.id}" type="checkbox" value="" checkbox class="w-4 h-4 border border-gray-300 rounded bg-gray-50 " title="전체선택" />
                 </div>
               </div>
             </th>
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-center">
-              <img src="/sourse/image/sample.png" class="aspect-square object-contain object-center w-32 overflow-hidden" />
+              <img src="${cart.productThumbnail}" class="aspect-square object-contain object-center w-32 overflow-hidden" />
               <div product-name class="w-full ml-5">${cart.productName}</div>
             </td>
             <td class="px-6 py-4 font-['Inter'] text-center">
               <form class="max-w-xs mx-auto">
                 <div class="relative flex items-center justify-center">
                   <button type="button" quantity-decrement="quantity" class="flex-shrink-0 bg-gray-100    hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100  focus:ring-2 focus:outline-none">
-                    <svg class="w-2.5 h-2.5 text-gray-900  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                    <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                     </svg>
                   </button>
                   <input type="text" id="quantity" quantity class="flex-shrink-0 text-gray-900 border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="${cart.quantity}" required />
                   <button type="button" quantity-increment="quantity" class="flex-shrink-0 bg-gray-100    hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100  focus:ring-2 focus:outline-none">
-                    <svg class="w-2.5 h-2.5 text-gray-900  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
                     </svg>
                   </button>
@@ -106,7 +106,11 @@ $allBuyBtn.addEventListener('click', async function (e) {
 // 선택 장바구니 목록 조회
 async function drawSelectCart() {
   const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]:checked');
-
+  if ($allCheckboxes.length === 0) {
+    alert('선택된 상품이 없습니다.');
+    location.reload();
+    return;
+  }
   const $orderSelectInfo = document.querySelectorAll('[order-select-info]');
   $orderSelectInfo.forEach((element) => {
     element.remove();
@@ -123,15 +127,15 @@ async function drawSelectCart() {
       let tempHtml = `
         <div order-select-info class="mb-5 w-full">
           <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">상품명</label>
-          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="${productName}" disabled />
+          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productName}" disabled />
         </div>
         <div order-select-info class="mb-5 w-full">
           <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">가격</label>
-          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="${productTotalPrice}" disabled />
+          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productTotalPrice}" disabled />
         </div>
         <div order-select-info class="mb-5 w-full">
           <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수량</label>
-          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="${quantity}" disabled />
+          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${quantity}" disabled />
         </div>
       `;
 
@@ -144,7 +148,7 @@ async function drawSelectCart() {
 }
 
 // 상품 구매
-$buyBtn.addEventListener('click', function (e) {
+$paymentBtn.addEventListener('click', function (e) {
   toss();
 });
 
@@ -206,7 +210,7 @@ $selectDeleteBtn.addEventListener('click', async function (e) {
 });
 
 // 상품 구매 함수
-async function buyProduct() {
+async function paymentProduct() {
   // try {
   //   // 장바구니에서 삭제 후 주문 내역에 추가
   //   // 장바구니 삭제 API
