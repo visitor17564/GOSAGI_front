@@ -12,14 +12,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     let count = 0;
     if (wishs.length >= 1) {
-
       $wishList.innerHTML = '';
-      wishs.forEach(wish => {
+      wishs.forEach((wish) => {
         count++;
-        let tempHtml =
-          `
-          <tr id="wish-id-${wish.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white font-['Inter']">${count}</th>
+        let tempHtml = `
+          <tr id="wish-id-${wish.id}" class="bg-white border-b ">
+            <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">${count}</th>
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-center">
               <img src="/sourse/image/sample.png" class="aspect-square object-contain object-center w-32 overflow-hidden" />
               <div class="w-full ml-5">${count}</div>
@@ -42,12 +40,12 @@ document.addEventListener('DOMContentLoaded', async function () {
           </tr>
           `;
 
-        $wishList.insertAdjacentHTML("beforeend", tempHtml);
+        $wishList.insertAdjacentHTML('beforeend', tempHtml);
       });
     }
     if (wishs.length === 0) {
       let tempHtml = '<div> 찜 내역이 존재하지 않습니다 </div>';
-      $wishList.insertAdjacentHTML("beforeend", tempHtml);
+      $wishList.insertAdjacentHTML('beforeend', tempHtml);
     }
 
     deleteWish();
@@ -57,13 +55,12 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 });
 
-
 // 장바구니에 추가하기
 async function createCart() {
   const $cartBtns = document.querySelectorAll('.cart-btn');
 
   $cartBtns.forEach(function (button) {
-    button.addEventListener("click", async function (e) {
+    button.addEventListener('click', async function (e) {
       const wishId = e.target.id.split('-')[2]; // 찜 ID 추출
       const productId = e.target.id.split('-')[3]; // 찜 ID 추출
       // 장바구니 추가 API
@@ -73,12 +70,16 @@ async function createCart() {
           withCredentials: true,
         });
 
-        const responseCart = await axios.post(`http://localhost:3000/cart`, {
-          product_id: productId,
-          quantity: 1
-        }, {
-          withCredentials: true,
-        });
+        const responseCart = await axios.post(
+          `http://localhost:3000/cart`,
+          {
+            product_id: productId,
+            quantity: 1,
+          },
+          {
+            withCredentials: true,
+          },
+        );
 
         // 장바구니에 추가한 상품 html 제거
         document.getElementById(`wish-id-${wishId}`).remove();
@@ -86,7 +87,7 @@ async function createCart() {
         alert(responseCart.data.message);
       } catch (err) {
         alert(responseCart.data.message);
-      };
+      }
     });
   });
 }
@@ -98,7 +99,7 @@ async function deleteWish() {
   const $deleteBtns = document.querySelectorAll('.wish-delete-btn');
 
   $deleteBtns.forEach(function (button) {
-    button.addEventListener("click", async function (e) {
+    button.addEventListener('click', async function (e) {
       const wishId = e.target.id.split('-')[2]; // 찜 ID 추출
       // 찜 삭제 API
       try {
@@ -112,9 +113,7 @@ async function deleteWish() {
         alert(response.data.message);
       } catch (err) {
         alert(response.data.message);
-      };
+      }
     });
   });
 }
-
-
