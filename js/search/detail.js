@@ -1,4 +1,5 @@
 const productQuestionButton = document.getElementById('product-question-button');
+console.log('안녕하쎄용 ~~');
 
 const thumbnail = document.getElementById('product-thumbnail');
 const basicInfo = document.getElementById('product-basic-info');
@@ -43,9 +44,9 @@ const $questionViewModalAnswer = document.getElementById('question-view-modal-an
 const $questionViewTitle = document.getElementById('question-view-title');
 const $questionViewContent = document.getElementById('question-view-content');
 
-document.addEventListener('DOMContentLoaded', async function () {
-  await quantityBtn();
-});
+// document.addEventListener('DOMContentLoaded', async function () {
+//   await quantityBtn();
+// });
 
 wishDiv.addEventListener('click', async function (event) {
   let clickedElementId = event.currentTarget.id;
@@ -334,6 +335,7 @@ await generateProductCard(product, reviews);
 await generateProductQuestions(questions);
 await generateProductReviews(reviews);
 await generateProductWish(wish);
+await quantityBtn();
 
 // 문의 글 저장
 productQuestionButton.addEventListener('click', async () => {
@@ -386,6 +388,8 @@ async function createCart() {
 // 수량 증가 버튼 함수
 async function quantityBtn() {
   const productPrice = document.getElementById('product-price');
+  console.log(productPrice);
+  const productTotalPrice = document.getElementById('product-total-price');
 
   // 수량 증가 버튼
   quantityIncrementBtn.addEventListener('click', function () {
