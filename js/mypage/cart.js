@@ -5,11 +5,21 @@ const $selectDeleteBtn = document.getElementById('select-delete-btn');
 const $selectBuyBtn = document.getElementById('select-payment-btn');
 const $allBuyBtn = document.getElementById('all-payment-btn');
 
-const $paymentBtn = document.getElementById('payment-btn');
 const $allSelectCheckbox = document.getElementById('all-select-checkbox');
 
 const $cartModalOrderListBottom = document.getElementById('cart-modal-order-list-bottom');
 const $cartModalTotalPrice = document.getElementById('cart-modal-total-price');
+
+const $cartModalReceiver = document.getElementById('cart-modal-receiver');
+const $cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
+
+const $postcode = document.getElementById('postcode');
+const $address = document.getElementById('address');
+const $deliveryRequest = document.getElementById('delivery-request');
+
+
+const tossModal = document.getElementById('toss-modal');
+
 
 document.addEventListener('DOMContentLoaded', async function () {
   await drawCartList();
@@ -35,7 +45,7 @@ async function drawCartList() {
       carts.forEach((cart) => {
         count++;
         let tempHtml = `
-          <tr id="${cart.id}" class="bg-white border-b ">
+          <tr id="${cart.id}" class="bg-white border-b" title="${cart.product_id}">
             <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">
               <div class="w-full flex mb-5">
                 <div class="flex items-center h-5">
@@ -129,15 +139,15 @@ async function drawSelectCart() {
       let tempHtml = `
         <div order-select-info class="mb-5 w-full">
           <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">상품명</label>
-          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productName}" disabled />
+          <input cart-modal-product-name type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productName}" disabled />
         </div>
         <div order-select-info class="mb-5 w-full">
           <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">가격</label>
-          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productTotalPrice}" disabled />
+          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productTotalPrice}" disabled />
         </div>
         <div order-select-info class="mb-5 w-full">
           <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수량</label>
-          <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${quantity}" disabled />
+          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${quantity}" disabled />
         </div>
       `;
 
@@ -149,10 +159,6 @@ async function drawSelectCart() {
   }
 }
 
-// 상품 구매
-$paymentBtn.addEventListener('click', function (e) {
-  toss();
-});
 
 // 전체 선택
 $allSelectCheckbox.addEventListener('click', function () {
@@ -211,31 +217,6 @@ $selectDeleteBtn.addEventListener('click', async function (e) {
   }
 });
 
-// 상품 구매 함수
-async function paymentProduct() {
-  // try {
-  //   // 장바구니에서 삭제 후 주문 내역에 추가
-  //   // 장바구니 삭제 API
-  //   await axios.delete(`http://localhost:3000/cart/${cartId}`, {
-  //     withCredentials: true,
-  //   });
-  //   // 주문 내역 저장 API
-  //   const response = await axios.post(`http://localhost:3000/order`, {
-  //     product_id: 8,
-  //     quantity: 4,
-  //     receiver: "배고파",
-  //     receiver_phone_number: "010-1111-1111",
-  //     delivery_name: "집",
-  //     delivery_address: "서울시 강남구",
-  //     post_code: "03045"
-  //   }, {
-  //     withCredentials: true,
-  //   });
-  //   currentRow.remove(); // 삭제한 상품 html 제거
-  // } catch (err) {
-  //   alert(response.data.message);
-  // };
-}
 
 // 수량 증가 버튼 함수
 async function quantityBtn() {
@@ -297,31 +278,148 @@ async function updateTotalPrice() {
   $totalPrice.textContent = totalPrice.toLocaleString('ko-KR');
 }
 
-async function toss() {
+// 토스 결제 버튼 클릭 이벤트
+document.getElementById('payment-btn').addEventListener('click', function () {
+  if ($cartModalReceiver.value && $cartModalPhonenumber.value && $postcode.value && $address.value) {
+    tossModal.classList.remove('hidden');
+    toss();
+  } else {
+    alert('수령인, 연락처, 주소를 입력해주세요');
+  }
+});
+
+// 토스 결제 API
+function toss() {
+  const $cartModalProductNames = document.querySelectorAll('[cart-modal-product-name]');
+  const orderName = $cartModalProductNames.length === 1 ? $cartModalProductNames[0].value : `${$cartModalProductNames[1].value} 외 ${$cartModalProductNames.length - 1}`;
+
   // 토스 결제 ㅠㅠ
-  const $nicknameFix = document.getElementById('nickname-fix');
-
-  const clientKey = 'test_ck_d46qopOB89xOpm5zBqZYrZmM75y0';
-  const customerKey = $nicknameFix.textContent; // 고객 ID
-
+  // const $nicknameFix = document.getElementById('id-fix');
+  const clientKey = 'test_ck_ma60RZblrqj46Z5PLMRM8wzYWBn1';
+  const customerKey = '12345678'; // 고객 ID
   const button = document.getElementById('payment-request-button');
   const generateRandomString = () => window.btoa(Math.random()).slice(0, 20);
   // ------  결제위젯 초기화 ------
   // 비회원 결제에는 customerKey 대신 ANONYMOUS를 사용하세요.
   const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
   // ------  결제위젯 렌더링 ------
-  paymentWidget.renderPaymentMethods('#payment-method', { value: $totalPrice.textContent }); // 금액
+  paymentWidget.renderPaymentMethods('#payment-method', { value: $cartModalTotalPrice.value.replace(/,/g, '') }); // 금액
   // ------  이용약관 렌더링 ------
   paymentWidget.renderAgreement('#agreement');
 
   // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
-  button.addEventListener('click', function () {
-    paymentWidget.requestPayment({
-      orderId: generateRandomString(),
-      orderName: '테스트 외 1건', // 주문명
-      successUrl: 'http://localhost:5500/html/mypage/payment.html', // 결제에 성공하면 이동하는 페이지
-      failUrl: 'http://localhost:5500/html/mypage/cart.html', // 결제에 실패하면 이동하는 페이지
-      customerName: $nicknameFix.textContent,
-    });
+  button.addEventListener('click', async function () {
+    try {
+      await paymentWidget.requestPayment({
+        orderId: generateRandomString(),
+        orderName, // 주문명
+      });
+      paymentProduct(); // 주문 목록에 저장
+    } catch (err) {
+      console.log('err: ', err);
+      if (err === 'Error: 사용자가 결제를 취소하였습니다') {
+        alert('결제가 취소되었습니다.');
+      } else {
+        alert('결제 오류가 발생하였습니다.');
+      }
+    } finally {
+      tossModal.classList.add('hidden');
+    }
   });
 }
+
+// 주문 내역 저장 함수
+async function paymentProduct() {
+  const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]:checked');
+
+  $allCheckboxes.forEach(async (cart) => {
+    console.log('cart: ', cart);
+    const currentRow = cart.closest('tr'); // 가장 가까운 태그 조회
+    const cartId = currentRow.id;
+    const productId = currentRow.title;
+    const quantity = currentRow.querySelector('[quantity]');
+    console.log('quantity: ', quantity);
+    try {
+      // 주문 내역 저장 API
+      await axios.post(
+        `http://localhost:3000/order`,
+        {
+          product_id: productId,
+          status: 0,
+          quantity: quantity.value,
+          receiver: $cartModalReceiver.value,
+          receiver_phone_number: $cartModalPhonenumber.value,
+          post_code: $postcode.value,
+          delivery_name: '집',
+          delivery_address: $address.value,
+          delivery_request: $deliveryRequest.value,
+        },
+        {
+          withCredentials: true,
+        },
+      );
+
+      // 장바구니 삭제 API
+      await axios.delete(`http://localhost:3000/cart/${cartId}`, {
+        withCredentials: true,
+      });
+
+      window.location.href = "http://localhost:5500/html/mypage/order.html";
+    } catch (err) {
+      alert(err.response.data.message);
+    }
+  });
+}
+
+// 주소 검색
+document.getElementById('address-search-btn').addEventListener('click', () => {
+  const address = document.getElementById('address');
+  const addressDetail = document.getElementById('address-detail');
+
+  new daum.Postcode({
+    oncomplete: function (data) {
+      // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+      // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+      // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+      var addr = ''; // 주소 변수
+      var extraAddr = ''; // 참고항목 변수
+
+      //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+      if (data.userSelectedType === 'R') {
+        // 사용자가 도로명 주소를 선택했을 경우
+        addr = data.roadAddress;
+      } else {
+        // 사용자가 지번 주소를 선택했을 경우(J)
+        addr = data.jibunAddress;
+      }
+
+      // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+      if (data.userSelectedType === 'R') {
+        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+          extraAddr += data.bname;
+        }
+        // 건물명이 있고, 공동주택일 경우 추가한다.
+        if (data.buildingName !== '' && data.apartment === 'Y') {
+          extraAddr += extraAddr !== '' ? ', ' + data.buildingName : data.buildingName;
+        }
+        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+        if (extraAddr !== '') {
+          extraAddr = ' (' + extraAddr + ')';
+        }
+        // 조합된 참고항목을 해당 필드에 넣는다.
+        addressDetail.value = extraAddr;
+      } else {
+        addressDetail.value = '';
+      }
+
+      // 우편번호와 주소 정보를 해당 필드에 넣는다.
+      postcode.value = data.zonecode;
+      address.value = addr;
+      // 커서를 상세주소 필드로 이동한다.
+      addressDetail.focus();
+    },
+  }).open();
+});

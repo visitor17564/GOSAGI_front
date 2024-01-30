@@ -6,7 +6,6 @@ const $deliveryFinCnt = document.getElementById('delivery-fin-cnt');
 const $periodBtns = document.querySelectorAll('[period-btn ]');
 
 
-
 // 주문 목록 그리기
 document.addEventListener('DOMContentLoaded', async function () {
   await initalize();
@@ -174,7 +173,7 @@ async function drawCart(orderId) {
     document.getElementById('order-modal-total-price').value = order.quantity * order.product_price;
 
     // 배송 정보
-    document.getElementById('order-modal-recipient').value = order.receiver;
+    document.getElementById('order-modal-receiver').value = order.receiver;
     document.getElementById('order-modal-phonenumber').value = order.receiver_phone_number;
     document.getElementById('postcode').value = order.post_code;
     document.getElementById('address').value = order.delivery_address;
@@ -211,7 +210,7 @@ async function editOrderData(orderId) {
     try {
       // 배송지 수정 API 실행
       const response = await axios.patch(`http://localhost:3000/order/address/${orderId}`, {
-        receiver: document.getElementById('order-modal-recipient').value,
+        receiver: document.getElementById('order-modal-receiver').value,
         receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
         delivery_address: document.getElementById('address').value,
         delivery_address_detail: document.getElementById('address-detail').value,
@@ -299,7 +298,7 @@ async function returnRequest(orderId) {
         const response = await axios.patch(`http://localhost:3000/order/return/${orderId}`, {
           status: 5,
           // toss_order_id: aagsfbbs,
-          receiver: document.getElementById('order-modal-recipient').value,
+          receiver: document.getElementById('order-modal-receiver').value,
           receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
           delivery_address: document.getElementById('address').value,
           delivery_address_detail: document.getElementById('address-detail').value,
@@ -353,7 +352,7 @@ async function exchangeRequest(orderId, productId) {
           product_id: productId, // prodcut_id 반환해주는 기능이 필요함
           quantity: document.getElementById('order-modal-quantity').value,
           toss_order_id: "test",
-          receiver: document.getElementById('order-modal-recipient').value,
+          receiver: document.getElementById('order-modal-receiver').value,
           receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
           delivery_address: document.getElementById('address').value,
           delivery_address_detail: document.getElementById('address-detail').value,
@@ -459,7 +458,7 @@ document.getElementById('address-search-btn').addEventListener('click', () => {
 // 배송 정보 input 비활성화
 async function disabledDeliveryInfo() {
   // 배송 정보
-  document.getElementById('order-modal-recipient').disabled = true;
+  document.getElementById('order-modal-receiver').disabled = true;
   document.getElementById('order-modal-phonenumber').disabled = true;
   document.getElementById('address-detail').disabled = true;
   document.getElementById('delivery-request').disabled = true;
@@ -473,7 +472,7 @@ async function disabledDeliveryInfo() {
 // 배송 정보 input 활성화
 async function activateDelivertInfo() {
   // 배송 정보
-  document.getElementById('order-modal-recipient').disabled = false;
+  document.getElementById('order-modal-receiver').disabled = false;
   document.getElementById('order-modal-phonenumber').disabled = false;
   document.getElementById('address-detail').disabled = false;
   document.getElementById('delivery-request').disabled = false;
