@@ -28,11 +28,22 @@ async function drawQuestionList() {
       const category = question.question.product_id < 3 ? '이용문의' : '상품문의';
       const waitAnswer = question.status === '답변대기' ? '' : 'hidden ';
       const completeAnswer = question.status === '답변대기' ? 'hidden ' : '';
+      let isPrivate = "";
+      if (question.question.is_private === false) {
+        isPrivate = "hidden";
+      }
 
       let tempHtml = `
       <tr id='${question.question.id}' class="bg-white border-b">
-        <td scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">${category}</td>
-        <td question-list-title class="px-6 py-4 font-['Inter'] text-center">${question.question.title}</td>
+        <td scope="row" class="px-6 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">${category}</td>
+        <td class="flex justify-center py-6 font-['Inter']">
+          <div class="${isPrivate}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+            </svg> 
+          </div>
+          &emsp;${question.question.title}
+        </td>
         <td class="px-6 py-4 font-['Inter'] text-center">${question.question.created_at.slice(0, 10)}</td>
         <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
           <button question-detail-btn data-modal-target="question-modal" data-modal-toggle="question-modal" class="${completeAnswer}h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>
@@ -145,7 +156,8 @@ async function deleteQuestion(questionId, title, content) {
       );
 
       alert(response.data.message);
-      document.getElementById(`${questionId}`).remove();
+      // document.getElementById(`${questionId}`).remove();
+      window.location.reload();
     } catch (err) {
       alert(err.response.data.message);
     }
@@ -154,6 +166,7 @@ async function deleteQuestion(questionId, title, content) {
 
 // 문의 글 수정
 async function editQuestion(questionId) {
+  const $secret = document.getElementById('secret');
   try {
     // 문의 글 수정 API 실행
     const response = await axios.patch(
@@ -162,6 +175,7 @@ async function editQuestion(questionId) {
         isDeleted: false,
         title: $questionTitle.value,
         content: $questionContent.value,
+        isPrivate: $secret.checked,
       },
       {
         withCredentials: true,
@@ -169,8 +183,9 @@ async function editQuestion(questionId) {
     );
 
     alert(response.data.message);
-    const currentRow = document.getElementById(`${questionId}`);
-    currentRow.querySelector('[question-list-title]').innerText = $questionTitle.value;
+    // const currentRow = document.getElementById(`${questionId}`);
+    // currentRow.querySelector('[question-list-title]').innerText = $questionTitle.value;
+    window.location.reload();
   } catch (err) {
     alert(err.response.data.message);
   }

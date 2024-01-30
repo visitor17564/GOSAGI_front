@@ -212,7 +212,7 @@
                 <div>
                   <div class="items-stretch flex justify-between mt-5 max-md:max-w-full max-md:flex-wrap">
                     <div id="wish-div" class="w-grow mr-2 flex justify-center items-center border bg-white basis-[0%] flex-col px-2.5 py-1.5 rounded-md border-solid border-neutral-400"></div>
-                    <a rel="noopener" href="https://ilovegohyang.go.kr/items/details-main.html?code=G${product.code}" target="_blank" class="w-[30%] mx-2 text-zinc-500 text-center text-xl whitespace-nowrap items-stretch border bg-white grow justify-center px-5 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">기부하러가기</a>
+                    <a id="go-to-donation" rel="noopener" href="" target="_blank" class="w-[30%] mx-2 text-zinc-500 text-center text-xl whitespace-nowrap items-stretch border bg-white grow justify-center px-5 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">기부하러가기</a>
                     <button id="add-cart-button" class="${pushCart}w-[30%] mx-2 text-zinc-500 text-center text-xl whitespace-nowrap items-stretch border bg-white grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">장바구니담기</button>
                     <button id="purchase-button" data-modal-target="cart-modal" data-modal-toggle="cart-modal" class="${pushCart}w-[30%] ml-2 text-white text-center text-xl whitespace-nowrap items-stretch border bg-red-400 grow justify-center px-6 py-5 rounded-md border-solid border-red-500 max-md:px-5 font-['Inter']">바로구매</button>
                   </div>
@@ -222,11 +222,11 @@
           </div>
           <!-- 상세내역 -->
           <div class="w-full flex items-center mt-5 h-12">
-            <button class="h-full text-black text-center items-center border bg-white grow justify-center border-solid border-red-500 font-['Inter']">상품정보</button>
-            <button class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">상품문의(0)</button>
-            <button class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">배송/반품/교환</button>
-            <button class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">상품고시</button>
-            <button class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">상품후기(0)</button>
+            <button tyoe="button" id="product-information-div-button" class="h-full text-black text-center items-center border bg-white grow justify-center border-solid border-red-500 font-['Inter']">상품정보</button>
+            <button tyoe="button" id="product-review-div-button" class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">상품후기(0)</button>
+            <button tyoe="button" id="product-question-div-button" class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">상품문의(0)</button>
+            <button tyoe="button" id="product-notice-div-button" class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">상품고시</button>
+            <button tyoe="button" id="product-order-div-button" class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">배송/반품/교환</button>
           </div>
           <div id="product-detail" class="flex justify-center"></div>
           <!-- 상품후기 -->
@@ -245,7 +245,7 @@
             </table>
           </div>
           <!-- 상품문의 -->
-          <div class="justify-center mt-12 text-black text-2xl font-bold self-start whitespace-nowrap font-['Inter']">상품 문의내역</div>
+          <div id="product-question" class="justify-center mt-12 text-black text-2xl font-bold self-start whitespace-nowrap font-['Inter']">상품 문의내역</div>
           <div class="mt-5 relative overflow-x-auto">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500">
               <thead class="text-xs items-center text-gray-700 uppercase bg-gray-50">
@@ -438,7 +438,6 @@
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">가격</label>
                   <input type="text" id="cart-modal-total-price" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="" disabled />
                 </div>
-
                 <div class="flex justify-between items-center">
                   <div class="text-xl mb-2 max-md:max-w-full font-['Inter']">
                     <strong>배송정보</strong>
@@ -473,13 +472,14 @@
           </form>
         </div>
         <!-- 토스 모달 -->
-        <div id="toss-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-100 md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <!-- <div id="toss-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-100 md:inset-0 h-[calc(100%-1rem)] max-h-full"> -->
+        <div id="toss-modal" class="justify-center items-center w-100 md:inset-0 h-[calc(100%-1rem)] max-h-full">
           <div class="wrapper w-100">
-            <div class="max-w-540 w-100">
+            <div class="w-100">
               <div id="payment-method" class="w-100"></div>
               <div id="agreement" class="w-100"></div>
-              <div class="btn-wrapper w-100">
-                <button id="payment-request-button" class="btn primary w-100">결제하기</button>
+              <div class="w-full">
+                <button type="button" id="payment-request-button" class="border btn primary w-full">결제하기</button>
               </div>
             </div>
           </div>

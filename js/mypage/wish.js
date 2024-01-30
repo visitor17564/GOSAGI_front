@@ -38,9 +38,9 @@ document.addEventListener('DOMContentLoaded', async function () {
               </div>
             </td>
             <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
-              <button class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">기부하러가기</button>
-              <button id="cart-btn-${wish.id}-${wish.product_id}" class="${pushCart}cart-btn h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">장바구니담기</button>
-              <button id="wish-delete-btn-${wish.id}" class="wish-delete-btn h-5 w-1/2 justify-center hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">찜 취소</button>
+              <a href="https://ilovegohyang.go.kr/items/details-main.html?code=G${wish.productCode}" target="blank" class="h-5 px-4 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg font-['Inter']">기부하러가기</a>
+              <button id="cart-btn-${wish.id}-${wish.product_id}" class="${pushCart}cart-btn h-5 w-1/2 px-3 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg font-['Inter']">장바구니담기</button>
+              <button id="wish-delete-btn-${wish.id}" class="wish-delete-btn h-5 w-1/2 justify-center hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg font-['Inter']">찜 취소</button>
             </td>
           </tr>
           `;

@@ -43,9 +43,11 @@ async function drawCartList() {
                 </div>
               </div>
             </th>
-            <td class="px-6 py-4 font-['Inter'] flex items-center justify-center">
+            <td>
+            <a class="px-6 py-4 font-['Inter'] flex items-center justify-center" href="http://localhost:5500/html/search/detail.html?productId=${cart.product_id}">
               <img src="${cart.productThumbnail}" class="aspect-square object-contain object-center w-32 overflow-hidden" />
               <div product-name class="w-full ml-5">${cart.productName}</div>
+            </a>
             </td>
             <td class="px-6 py-4 font-['Inter'] text-center">
               <form class="max-w-xs mx-auto">
