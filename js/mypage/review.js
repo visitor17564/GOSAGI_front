@@ -20,11 +20,12 @@ async function drawReviewList() {
         for (let e = 0; e <= review.rate - 1; e++) {
           starArr[e] = 'yellow-300';
         }
-        console.log(starArr);
+        console.log(review);
 
         let tempHtml = `
         <tr class="bg-white border-b">
-        <th class="px-6 py-4 font-['Inter'] text-center">${review.content}</th>
+        <th class="px-6 py-4 font-['Inter'] text-center">상품명, 썸네일이 안불러와져요</th>
+        <td class="px-6 py-4 font-['Inter'] text-center">${review.content}</td>
         <td class="px-6 py-4 font-['Inter']">
           <div class="flex mb-5 justify-center items-center">
             <svg class="w-4 h-4 ms-1 text-${starArr[0]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -88,7 +89,7 @@ document.addEventListener('click', async () => {
       let starNum = 0;
       review.data.data.rate === 5 ? (starNum = 0) : review.data.data.rate === 4 ? (starNum = 1) : review.data.data.rate === 3 ? (starNum = 2) : review.data.data.rate === 2 ? (starNum = 3) : (starNum = 4);
       stars[starNum].checked = true;
-    } catch (err) {}
+    } catch (err) { }
   }
 });
 
@@ -115,8 +116,8 @@ async function deleteReview(reviewId) {
       withCredentials: true,
     });
     alert('리뷰가 삭제되었습니다.');
-    drawReviewList();
-  } catch (err) {}
+    window.location.reload();
+  } catch (err) { }
 }
 
 async function fixReview(reviewId, rate, content) {
@@ -132,6 +133,6 @@ async function fixReview(reviewId, rate, content) {
       },
     );
     alert('리뷰가 수정되었습니다.');
-    drawReviewList();
-  } catch (err) {}
+    window.location.reload();
+  } catch (err) { }
 }

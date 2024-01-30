@@ -1,11 +1,11 @@
 const productQuestionButton = document.getElementById('product-question-button');
-console.log('안녕하쎄용 ~~');
 
 const thumbnail = document.getElementById('product-thumbnail');
 const basicInfo = document.getElementById('product-basic-info');
 
 const productDetail = document.getElementById('product-detail');
 const productTotalPrice = document.getElementById('product-total-price');
+const goToDonationButton = document.getElementById('go-to-donation');
 
 const productReview = document.getElementById('product-review');
 const wishDiv = document.getElementById('wish-div');
@@ -34,8 +34,6 @@ const cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
 
 const paymentBtn = document.getElementById('payment-btn');
 
-//
-
 const $questionTitle = document.getElementById('question-title');
 const $questionContent = document.getElementById('question-content');
 const $answerContent = document.getElementById('answer-content');
@@ -51,7 +49,6 @@ const $questionViewContent = document.getElementById('question-view-content');
 wishDiv.addEventListener('click', async function (event) {
   let clickedElementId = event.currentTarget.id;
   if (isMyWish === false) {
-    console.log('찜없음');
     try {
       await axios.post(`http://localhost:3000/wish`, { product_id: productId }, { withCredentials: true });
       alert('찜하기 성공');
@@ -61,7 +58,6 @@ wishDiv.addEventListener('click', async function (event) {
       alert('오류발생: ' + err);
     }
   } else if (isMyWish === true) {
-    console.log('찜있음');
     try {
       await axios.delete(`http://localhost:3000/wish/${myWishId}`, { withCredentials: true });
       alert('찜취소 성공');
@@ -78,7 +74,7 @@ export const generateProductCard = async (product, reviews) => {
   const detailContent = product.productContent[0].content;
   const imgFixedContent = detailContent.replaceAll('src="/upload', 'src="https://ilovegohyang.go.kr/upload');
   const embedFixedContent = imgFixedContent.replaceAll('watch?v=-', 'embed/');
-
+  goToDonationButton.href = `https://ilovegohyang.go.kr/items/details-main.html?code=G${product.code}`;
   let pushCart = '';
   if (product.store_id === 1 || product.store_id === 2) {
     pushCart = 'hidden ';
@@ -95,7 +91,10 @@ export const generateProductCard = async (product, reviews) => {
   thumbnail.innerHTML = `<img src="${product.productThumbnail[0].image_url}" class="aspect-square object-contain object-center w-full overflow-hidden max-md:max-w-full" />
   <div class="flex gap-5 flex-row overflow-auto mx-auto">
   </div>`;
-  console.log(product);
+  let starArr = ['gray-300', 'gray-300', 'gray-300', 'gray-300', 'gray-300'];
+  for (let e = 0; e <= review_average_rate - 1; e++) {
+    starArr[e] = 'yellow-300';
+  }
   // thumbnail.innerHTML = product.productThumbnail
   //   .map((Thumbnail) => {
   //     return `<div class="hidden duration-700 ease-in-out" data-carousel-item>
@@ -123,11 +122,21 @@ export const generateProductCard = async (product, reviews) => {
   </div>
   <div class="items-stretch flex gap-3 mt-3 self-start">
     <div class="justify-center items-stretch flex gap-1">
-      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/ef54c7d82651c6268e8ccb64862f2bfb330e69206475f1633c80e2c09f237a46?" class="aspect-[1.11] object-contain object-center w-5 fill-black overflow-hidden shrink-0 max-w-full" />
-      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/ef54c7d82651c6268e8ccb64862f2bfb330e69206475f1633c80e2c09f237a46?" class="aspect-[1.11] object-contain object-center w-5 fill-black overflow-hidden shrink-0 max-w-full" />
-      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/ef54c7d82651c6268e8ccb64862f2bfb330e69206475f1633c80e2c09f237a46?" class="aspect-[1.11] object-contain object-center w-5 fill-black overflow-hidden shrink-0 max-w-full" />
-      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/ef54c7d82651c6268e8ccb64862f2bfb330e69206475f1633c80e2c09f237a46?" class="aspect-[1.11] object-contain object-center w-5 fill-black overflow-hidden shrink-0 max-w-full" />
-      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/ef54c7d82651c6268e8ccb64862f2bfb330e69206475f1633c80e2c09f237a46?" class="aspect-[1.11] object-contain object-center w-5 fill-black overflow-hidden shrink-0 max-w-full" />
+    <svg class="w-4 h-4 ms-1 text-${starArr[0]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+  </svg>
+  <svg class="w-4 h-4 ms-1 text-${starArr[1]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+  </svg>
+  <svg class="w-4 h-4 ms-1 text-${starArr[2]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+  </svg>
+  <svg class="w-4 h-4 ms-1 text-${starArr[3]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+  </svg>
+  <svg class="w-4 h-4 ms-1 text-${starArr[4]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+  </svg>
       <div class="text-red-500 text-base font-['Inter']">&nbsp;${review_average_rate}</div>
     </div>
   </div>
@@ -150,29 +159,34 @@ export const generateProductReviews = async (reviews) => {
   const productReviewTable = document.getElementById('product-review-table');
   productReviewTable.innerHTML = reviews.data
     .map((review) => {
+      console.log(review);
+      let starArr = ['gray-300', 'gray-300', 'gray-300', 'gray-300', 'gray-300'];
+      for (let e = 0; e <= review.rate - 1; e++) {
+        starArr[e] = 'yellow-300';
+      }
       return `<tr class="bg-white border-b ">
       <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">
         <div class="flex mb-5 justify-center items-center">
-          <svg class="w-4 h-4 ms-1 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
-          <svg class="w-4 h-4 ms-1 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
-          <svg class="w-4 h-4 ms-1 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
-          <svg class="w-4 h-4 ms-1 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
-          <svg class="w-4 h-4 ms-1 text-gray-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
-        </div>
+        <svg class="w-4 h-4 ms-1 text-${starArr[0]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+        </svg>
+        <svg class="w-4 h-4 ms-1 text-${starArr[1]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+        </svg>
+        <svg class="w-4 h-4 ms-1 text-${starArr[2]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+        </svg>
+        <svg class="w-4 h-4 ms-1 text-${starArr[3]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+        </svg>
+        <svg class="w-4 h-4 ms-1 text-${starArr[4]}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+        </svg>
+      </div>
       </th>
-      <td class="px-6 py-4 font-['Inter'] text-center">장충동 왕족발 보싸아암</td>
-      <td class="px-6 py-4 font-['Inter'] text-center">정창일</td>
-      <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">2024-01-01</td>
+      <td class="px-6 py-4 font-['Inter'] text-center">${review.content}</td>
+      <td class="px-6 py-4 font-['Inter'] text-center">유저아이디 부르실?</td>
+      <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">${review.created_at.slice(0, 10)}</td>
     </tr>`;
     })
     .join('');
@@ -195,7 +209,6 @@ async function getUserId() {
 await getUserId();
 
 export const generateProductQuestions = async (questions) => {
-  console.log(questions);
   if (questions.length === 0) {
     return;
   }
@@ -372,7 +385,7 @@ async function createCart() {
       `http://localhost:3000/cart`,
       {
         product_id: productId,
-        quantity: quantity,
+        quantity: +quantity,
       },
       {
         withCredentials: true,
@@ -388,7 +401,6 @@ async function createCart() {
 // 수량 증가 버튼 함수
 async function quantityBtn() {
   const productPrice = document.getElementById('product-price');
-  console.log(productPrice);
   const productTotalPrice = document.getElementById('product-total-price');
 
   // 수량 증가 버튼
@@ -496,7 +508,6 @@ function toss() {
   // const $nicknameFix = document.getElementById('id-fix');
   const clientKey = 'test_ck_d46qopOB89xOpm5zBqZYrZmM75y0';
   const customerKey = '12345678'; // 고객 ID
-  console.log(productName.innerText);
   const button = document.getElementById('payment-request-button');
   const generateRandomString = () => window.btoa(Math.random()).slice(0, 20);
   // ------  결제위젯 초기화 ------
@@ -530,7 +541,6 @@ function toss() {
 // 주문 내역 저장 함수
 async function paymentProduct() {
   const deliveryRequest = document.getElementById('delivery-request');
-  console.log(deliveryRequest.value);
   try {
     // 주문 내역 저장 API
     const response = await axios.post(
@@ -557,6 +567,8 @@ async function paymentProduct() {
   }
 }
 
+
+
 // 문의 글 조회
 // 문의 글 상세 조회
 async function drawSelectQuestion() {
@@ -574,7 +586,6 @@ async function drawSelectQuestion() {
         });
 
         const question = response.data.data;
-        console.log(question.question.title);
         $questionViewTitle.value = question.question.title;
         $questionViewContent.value = question.question.content;
 
@@ -593,3 +604,15 @@ async function drawSelectQuestion() {
     });
   });
 }
+
+// 상품 문의 누르면 상품 문의로 스크롤이동
+document.getElementById('product-question-div-button').addEventListener('click', function () {
+  console.log("클릭됨");
+  document.getElementById('product-question').scrollIntoView({ behavior: 'smooth' });
+});
+
+// 상품 후기 누르면 상품 문의로 스크롤이동
+document.getElementById('product-review-div-button').addEventListener('click', function () {
+  console.log("후기 클릭됨");
+  document.getElementById('product-review').scrollIntoView({ behavior: 'smooth' });
+});
