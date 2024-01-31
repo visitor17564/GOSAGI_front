@@ -9,8 +9,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/toss.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- 주소 찾기 CDN -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 토스 결제 CDN-->
     <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+
     <script type="module" src="/js/mypage/common.js"></script>
     <script type="module" src="/js/mypage/cart.js"></script>
     <script type="module" src="../../js/mypage/auth.js"></script>
@@ -243,48 +246,47 @@
                     <input type="text" id="cart-modal-total-price" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="${productName}" disabled />
                   </div>
                 </div>
-                <div class="mb-5 w-full">
-                  <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수령인</label>
-                  <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                </div>
                 <div class="flex justify-between items-center">
                   <div class="text-xl mb-2 max-md:max-w-full font-['Inter']">
                     <strong>배송정보</strong>
                   </div>
+                  <button class="h-8 w-1/4 justify-center border border-orange-400 text-orange-400 text-center text-xl bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">직접 입력</button>
                   <button class="h-8 w-1/4 justify-center border border-orange-400 text-orange-400 text-center text-xl bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">배송지선택</button>
                 </div>
                 <div class="mb-5 w-full">
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수령인</label>
-                  <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input type="text" id="cart-modal-receiver" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="수령인을 입력해주세요" required />
                 </div>
                 <div class="mb-5 w-full">
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수령인 연락처</label>
-                  <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input type="text" id="cart-modal-phonenumber" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="연락처를 입력해주세요" required />
                 </div>
                 <div class="mb-5 w-full">
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">배송지주소</label>
                   <div class="flex">
-                    <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5" required />
-                    <button class="w-1/4 justify-center text-white text-center text-xl bg-orange-400 items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">검색</button>
+                    <input type="text" id="postcode" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/4 p-2.5" placeholder="우편번호를 입력해주세요" required disabled />
+                    <button type="button" id="address-search-btn" class="w-1/4 justify-center text-white text-center text-xl bg-orange-400 items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">주소 검색</button>
                   </div>
-                  <input type="text" id="text" class="mt-1 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input type="text" id="address" class="mt-1 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="배송지를 입력해주세요" required disabled />
+                  <input type="text" id="address-detail" class="mt-1 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="상세 주소를 입력해주세요" required />
                 </div>
                 <div class="mb-5 w-full">
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">배송시 요청사항</label>
-                  <input type="text" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                  <input type="text" id="delivery-request" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="배송 요청 사항을 입력해주세요" required />
                 </div>
-                <button id="payment-btn" data-modal-target="toss-modal" data-modal-toggle="toss-modal" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">결제하기</button>
+                <button type="button" id="payment-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">결제하기</button>
               </div>
             </div>
           </form>
         </div>
-        <div id="toss-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <!-- 토스 모달 -->
+        <div id="toss-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-100 md:inset-0 h-[calc(100%-1rem)] max-h-full">
           <div class="wrapper w-100">
-            <div class="max-w-540 w-100">
+            <div class="w-100">
               <div id="payment-method" class="w-100"></div>
               <div id="agreement" class="w-100"></div>
-              <div class="btn-wrapper w-100">
-                <button id="payment-request-button" class="btn primary w-100">결제하기</button>
+              <div class="w-full">
+                <button type="button" id="payment-request-button" class="border btn primary w-full">결제하기</button>
               </div>
             </div>
           </div>

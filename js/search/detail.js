@@ -23,28 +23,25 @@ const countProductName = document.getElementById('count-product-name');
 const addCartButton = document.getElementById('add-cart-button');
 const purchaseButton = document.getElementById('purchase-button');
 
-const postcode = document.getElementById('postcode');
 
 const tossModal = document.getElementById('toss-modal');
+
+const cartModalReceiver = document.getElementById('cart-modal-receiver');
+const cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
+
+const postcode = document.getElementById('postcode');
 const address = document.getElementById('address');
 const addressDetail = document.getElementById('address-detail');
 const addressSearchBtn = document.getElementById('address-search-btn');
-const cartModalRecipient = document.getElementById('cart-modal-recipient');
-const cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
+
 
 const paymentBtn = document.getElementById('payment-btn');
 
-const $questionTitle = document.getElementById('question-title');
-const $questionContent = document.getElementById('question-content');
 const $answerContent = document.getElementById('answer-content');
 
 const $questionViewModalAnswer = document.getElementById('question-view-modal-answer');
 const $questionViewTitle = document.getElementById('question-view-title');
 const $questionViewContent = document.getElementById('question-view-content');
-
-// document.addEventListener('DOMContentLoaded', async function () {
-//   await quantityBtn();
-// });
 
 wishDiv.addEventListener('click', async function (event) {
   let clickedElementId = event.currentTarget.id;
@@ -492,7 +489,7 @@ addressSearchBtn.addEventListener('click', () => {
 
 // 토스 결제 버튼 클릭 이벤트
 paymentBtn.addEventListener('click', function () {
-  if (cartModalRecipient.value && cartModalPhonenumber.value && postcode.value && address.value) {
+  if (cartModalReceiver.value && cartModalPhonenumber.value && postcode.value && address.value) {
     tossModal.classList.remove('hidden');
     toss();
   } else {
@@ -549,7 +546,7 @@ async function paymentProduct() {
         product_id: productId,
         status: '결제완료',
         quantity: quantity.value,
-        receiver: cartModalRecipient.value,
+        receiver: cartModalReceiver.value,
         receiver_phone_number: cartModalPhonenumber.value,
         post_code: postcode.value,
         delivery_name: '집',
