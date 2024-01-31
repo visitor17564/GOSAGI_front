@@ -91,7 +91,7 @@ async function createCart() {
         document.getElementById(`wish-id-${wishId}`).remove();
 
         alert(responseCart.data.message);
-        window.location.href = 'https://visitor17564.github.io/GOSAGI_front//html/mypage/cart.html';
+        window.location.href = 'https://visitor17564.github.io/GOSAGI_front/html/mypage/cart.html';
       } catch (err) {
         alert(responseCart.data.message);
       }

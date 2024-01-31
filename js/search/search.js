@@ -13,7 +13,7 @@ export async function searchProduct(keyword, page) {
     const response = await axios.get(`https://https.visitor.run/goods/keyword?keyword=${keyword}&page=1`, { withCredentials: true });
     if (response.data.data.length === 0) {
       alert('검색결과가 없습니다.');
-      window.location.href = `https://visitor17564.github.io/GOSAGI_front/index.html`;
+      window.location.href = `https://visitor17564.github.io/GOSAGI_front/`;
     }
     await generateProductCards(response.data.data, productWrap);
   } catch (err) {
@@ -25,5 +25,5 @@ export async function searchProduct(keyword, page) {
 searchButton.addEventListener('click', async () => {
   const keyword = await searchInput.value;
   const encodeKeyword = encodeURI(keyword);
-  window.location.href = `https://visitor17564.github.io/GOSAGI_front/index.html?keyword=${encodeKeyword}`;
+  window.location.href = `https://visitor17564.github.io/GOSAGI_front/?keyword=${encodeKeyword}`;
 });
