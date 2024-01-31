@@ -10,7 +10,7 @@ export async function searchProduct(keyword, page) {
     page = 1;
   }
   try {
-    const response = await axios.get(`http://52.79.88.29:3000/goods/keyword?keyword=${keyword}&page=1`, { withCredentials: true });
+    const response = await axios.get(`https://https.visitor.run/goods/keyword?keyword=${keyword}&page=1`, { withCredentials: true });
     if (response.data.data.length === 0) {
       alert('검색결과가 없습니다.');
       window.location.href = `https://visitor17564.github.io/GOSAGI_front/index.html`;

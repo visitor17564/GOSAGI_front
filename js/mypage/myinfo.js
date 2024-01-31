@@ -12,7 +12,7 @@ const $passwordEditBtn = document.getElementById('password-edit-btn');
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('http://52.79.88.29:3000/user', {
+    const response = await axios.get('https://https.visitor.run/user', {
       withCredentials: true,
     });
 
@@ -31,7 +31,7 @@ $nicknameEditBtn.addEventListener('click', async function (event) {
   try {
     // 내 정보 수정 API 실행
     const response = await axios.patch(
-      'http://52.79.88.29:3000/user',
+      'https://https.visitor.run/user',
       {
         nickname: $nickname.value,
       },
@@ -56,7 +56,7 @@ $passwordEditBtn.addEventListener('click', async function (event) {
   try {
     // 비밀번호 수정 API 실행
     const response = await axios.patch(
-      'http://52.79.88.29:3000/user/password',
+      'https://https.visitor.run/user/password',
       {
         currentPassword: $currentPassword.value,
         newPassword: $newPassword.value,

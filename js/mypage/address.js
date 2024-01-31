@@ -2,7 +2,7 @@ async function drawAddressList() {
   const addressWrapDiv = document.getElementById('address-wrap');
   try {
     // 리뷰 조회 API 실행
-    const response = await axios.get('http://52.79.88.29:3000/address/myAddress', {
+    const response = await axios.get('https://https.visitor.run/address/myAddress', {
       withCredentials: true,
     });
 
@@ -105,7 +105,7 @@ addAddressButton.addEventListener('click', async () => {
 async function addAddress(address_name, name, phone, post_code, address, detail_address) {
   try {
     await axios.post(
-      'http://52.79.88.29:3000/address',
+      'https://https.visitor.run/address',
       {
         address_name,
         name,
@@ -138,7 +138,7 @@ document.addEventListener('click', async () => {
   }
   if (String(clickedElementId).includes('fixAddress')) {
     try {
-      const address = await axios.get(`http://52.79.88.29:3000/address/myAddress/${addressId}`, {
+      const address = await axios.get(`https://https.visitor.run/address/myAddress/${addressId}`, {
         withCredentials: true,
       });
       console.log(address.data.data);
@@ -167,7 +167,7 @@ addressFixButton.addEventListener('click', async () => {
 async function fixAddress(address_name, name, phone, post_code, address, detail_address) {
   try {
     await axios.patch(
-      `http://52.79.88.29:3000/address/myAddress/${addressId}`,
+      `https://https.visitor.run/address/myAddress/${addressId}`,
       {
         address_name,
         name,
@@ -189,7 +189,7 @@ async function fixAddress(address_name, name, phone, post_code, address, detail_
 
 async function deleteAddress(addressId) {
   try {
-    await axios.delete(`http://52.79.88.29:3000/address/myAddress/${addressId}`, {
+    await axios.delete(`https://https.visitor.run/address/myAddress/${addressId}`, {
       withCredentials: true,
     });
     alert('주소가 삭제되었습니다.');

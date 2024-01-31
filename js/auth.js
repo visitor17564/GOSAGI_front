@@ -28,7 +28,7 @@ loginButton.addEventListener('click', () => {
 
 logoutButton.addEventListener('click', async () => {
   try {
-    const response = await axios.post(`http://52.79.88.29:3000/auth/logout`, {}, { withCredentials: true });
+    const response = await axios.post(`https://https.visitor.run/auth/logout`, {}, { withCredentials: true });
     alert('로그아웃 성공');
     window.location.href = 'https://visitor17564.github.io/GOSAGI_front/index.html'; // 수정할 URL로 변경 필요
   } catch (err) {
@@ -46,7 +46,7 @@ export async function signup() {
   try {
     // axios를 사용하여 로그인 API 실행
     const response = await axios.post(
-      'http://52.79.88.29:3000/user/signup',
+      'https://https.visitor.run/user/signup',
       {
         email,
         password,
@@ -72,7 +72,7 @@ export async function login() {
   try {
     // axios를 사용하여 로그인 API 실행
     const response = await axios.post(
-      'http://52.79.88.29:3000/auth/login',
+      'https://https.visitor.run/auth/login',
       {
         email,
         password,

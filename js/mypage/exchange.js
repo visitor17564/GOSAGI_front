@@ -91,7 +91,7 @@ async function drawOrderList(response) {
 async function getAllOrderList(daysQuery, statusQuery) {
   // 취소/반품목록 조회 API 실행
   const response = await axios.get(
-    `http://52.79.88.29:3000/order/return?${daysQuery}${statusQuery}`,
+    `https://https.visitor.run/order/return?${daysQuery}${statusQuery}`,
     {
       start_period: '2024-01-10',
       end_period: '2024-01-30',
@@ -115,7 +115,7 @@ const $90days = document.getElementById('90days');
 const $365days = document.getElementById('365days');
 
 // $searchButton.addEventListener('click', async function () {
-//   const response = await axios.get(`http://52.79.88.29:3000/order/return?`, {
+//   const response = await axios.get(`https://https.visitor.run/order/return?`, {
 //     withCredentials: true,
 //   });
 // });
