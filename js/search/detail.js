@@ -385,7 +385,7 @@ async function createCart() {
       },
     );
     alert(responseCart.data.message);
-    window.location.href = 'http://localhost:5500/html/mypage/cart.html';
+    window.location.href = 'https://visitor17564.github.io/GOSAGI_front/html/mypage/cart.html';
   } catch (err) {
     alert(responseCart.data.message);
   }
@@ -554,7 +554,7 @@ async function paymentProduct() {
       },
     );
 
-    window.location.href = "'http://localhost:5500/html/mypage/payment.html',";
+    window.location.href = "'https://visitor17564.github.io/GOSAGI_front/html/mypage/payment.html',";
   } catch (err) {
     alert(err.response.data.message);
   }

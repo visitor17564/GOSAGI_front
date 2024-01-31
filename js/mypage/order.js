@@ -89,7 +89,7 @@ async function drawOrderList(response) {
             ${order.createdAt.slice(0, 10)}
             </th>
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-center">
-                <img src="/sourse/image/sample.png"
+                <img src="./sourse/image/sample.png"
                 class="aspect-square object-contain object-center w-32 overflow-hidden" alt=""
                 />
                 <div product-name class="w-full ml-5">${order.product_name}</div>

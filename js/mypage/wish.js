@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         let tempHtml = `
           <tr id="wish-id-${wish.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-start">
-              <a class="flex justify-center items-center" href="http://localhost:5500/html/search/detail.html?productId=${wish.product_id}" >
+              <a class="flex justify-center items-center" href="https://visitor17564.github.io/GOSAGI_front/html/search/detail.html?productId=${wish.product_id}" >
                 <img src="${wish.productThumbnail}" class="aspect-square w-24 h-auto" />
                 <div class="w-full ml-5">${wish.productName}</div>
               </a>
@@ -91,7 +91,7 @@ async function createCart() {
         document.getElementById(`wish-id-${wishId}`).remove();
 
         alert(responseCart.data.message);
-        window.location.href = 'http://localhost:5500/html/mypage/cart.html';
+        window.location.href = 'https://visitor17564.github.io/GOSAGI_front//html/mypage/cart.html';
       } catch (err) {
         alert(responseCart.data.message);
       }

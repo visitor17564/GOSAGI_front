@@ -30,7 +30,7 @@ logoutButton.addEventListener('click', async () => {
   try {
     const response = await axios.post(`http://52.79.88.29:3000/auth/logout`, {}, { withCredentials: true });
     alert('로그아웃 성공');
-    window.location.href = 'http://localhost:5500/index.html'; // 수정할 URL로 변경 필요
+    window.location.href = 'https://visitor17564.github.io/GOSAGI_front/index.html'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('오류발생: ' + err);
@@ -59,7 +59,7 @@ export async function signup() {
     );
     alert('회원가입 성공: ' + response);
     // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = 'http://localhost:5500/index.html'; // 수정할 URL로 변경 필요
+    window.location.href = 'https://visitor17564.github.io/GOSAGI_front/index.html'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('회원가입 실패: ' + err);
@@ -83,7 +83,7 @@ export async function login() {
     );
     alert('로그인 성공: ' + response);
     // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = 'http://localhost:5500/index.html'; // 수정할 URL로 변경 필요
+    window.location.href = 'https://visitor17564.github.io/GOSAGI_front/index.html'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('로그인 실패: ' + err);
