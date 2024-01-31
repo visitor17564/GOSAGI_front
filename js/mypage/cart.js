@@ -17,9 +17,7 @@ const $postcode = document.getElementById('postcode');
 const $address = document.getElementById('address');
 const $deliveryRequest = document.getElementById('delivery-request');
 
-
 const tossModal = document.getElementById('toss-modal');
-
 
 document.addEventListener('DOMContentLoaded', async function () {
   await drawCartList();
@@ -33,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function drawCartList() {
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('http://localhost:3000/cart', {
+    const response = await axios.get('http://52.79.88.29:3000/cart', {
       withCredentials: true,
     });
 
@@ -159,7 +157,6 @@ async function drawSelectCart() {
   }
 }
 
-
 // 전체 선택
 $allSelectCheckbox.addEventListener('click', function () {
   selectAllCheckbox();
@@ -202,7 +199,7 @@ $selectDeleteBtn.addEventListener('click', async function (e) {
 
       // 장바구니 삭제 API;
       try {
-        const response = await axios.delete(`http://localhost:3000/cart/${cartId}`, {
+        const response = await axios.delete(`http://52.79.88.29:3000/cart/${cartId}`, {
           withCredentials: true,
         });
 
@@ -216,7 +213,6 @@ $selectDeleteBtn.addEventListener('click', async function (e) {
     console.log(err);
   }
 });
-
 
 // 수량 증가 버튼 함수
 async function quantityBtn() {
@@ -342,7 +338,7 @@ async function paymentProduct() {
     try {
       // 주문 내역 저장 API
       await axios.post(
-        `http://localhost:3000/order`,
+        `http://52.79.88.29:3000/order`,
         {
           product_id: productId,
           status: 0,
@@ -360,11 +356,11 @@ async function paymentProduct() {
       );
 
       // 장바구니 삭제 API
-      await axios.delete(`http://localhost:3000/cart/${cartId}`, {
+      await axios.delete(`http://52.79.88.29:3000/cart/${cartId}`, {
         withCredentials: true,
       });
 
-      window.location.href = "http://localhost:5500/html/mypage/order.html";
+      window.location.href = 'http://localhost:5500/html/mypage/order.html';
     } catch (err) {
       alert(err.response.data.message);
     }

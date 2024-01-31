@@ -10,10 +10,10 @@ export async function searchProduct(keyword, page) {
     page = 1;
   }
   try {
-    const response = await axios.get(`http://localhost:3000/goods/keyword?keyword=${keyword}&page=1`, { withCredentials: true });
+    const response = await axios.get(`http://52.79.88.29:3000/goods/keyword?keyword=${keyword}&page=1`, { withCredentials: true });
     if (response.data.data.length === 0) {
       alert('검색결과가 없습니다.');
-      window.location.href = `http://localhost:5500/html/index.html`;
+      window.location.href = `http://localhost:5500/index.html`;
     }
     await generateProductCards(response.data.data, productWrap);
   } catch (err) {
@@ -25,5 +25,5 @@ export async function searchProduct(keyword, page) {
 searchButton.addEventListener('click', async () => {
   const keyword = await searchInput.value;
   const encodeKeyword = encodeURI(keyword);
-  window.location.href = `http://localhost:5500/html/index.html?keyword=${encodeKeyword}`;
+  window.location.href = `http://localhost:5500/index.html?keyword=${encodeKeyword}`;
 });

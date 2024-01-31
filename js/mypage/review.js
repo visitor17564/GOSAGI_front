@@ -5,7 +5,7 @@ const reviewModalDiv = document.getElementById('review-modal-wrap');
 async function drawReviewList() {
   try {
     // 리뷰 조회 API 실행
-    const response = await axios.get('http://localhost:3000/review', {
+    const response = await axios.get('http://52.79.88.29:3000/review', {
       withCredentials: true,
     });
 
@@ -81,7 +81,7 @@ document.addEventListener('click', async () => {
   if (String(clickedElementId).includes('fixReview')) {
     const stars = document.getElementsByName('score');
     try {
-      const review = await axios.get(`http://localhost:3000/review/${reviewId}`, {
+      const review = await axios.get(`http://52.79.88.29:3000/review/${reviewId}`, {
         withCredentials: true,
       });
       const reviewContent = document.getElementById('review-content');
@@ -89,7 +89,7 @@ document.addEventListener('click', async () => {
       let starNum = 0;
       review.data.data.rate === 5 ? (starNum = 0) : review.data.data.rate === 4 ? (starNum = 1) : review.data.data.rate === 3 ? (starNum = 2) : review.data.data.rate === 2 ? (starNum = 3) : (starNum = 4);
       stars[starNum].checked = true;
-    } catch (err) { }
+    } catch (err) {}
   }
 });
 
@@ -112,18 +112,18 @@ reviewFixButton.addEventListener('click', async () => {
 
 async function deleteReview(reviewId) {
   try {
-    await axios.delete(`http://localhost:3000/review/${reviewId}`, {
+    await axios.delete(`http://52.79.88.29:3000/review/${reviewId}`, {
       withCredentials: true,
     });
     alert('리뷰가 삭제되었습니다.');
     window.location.reload();
-  } catch (err) { }
+  } catch (err) {}
 }
 
 async function fixReview(reviewId, rate, content) {
   try {
     await axios.patch(
-      `http://localhost:3000/review/${reviewId}`,
+      `http://52.79.88.29:3000/review/${reviewId}`,
       {
         rate,
         content,
@@ -134,5 +134,5 @@ async function fixReview(reviewId, rate, content) {
     );
     alert('리뷰가 수정되었습니다.');
     window.location.reload();
-  } catch (err) { }
+  } catch (err) {}
 }

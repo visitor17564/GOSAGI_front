@@ -12,7 +12,7 @@ const $passwordEditBtn = document.getElementById('password-edit-btn');
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('http://localhost:3000/user', {
+    const response = await axios.get('http://52.79.88.29:3000/user', {
       withCredentials: true,
     });
 
@@ -30,11 +30,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 $nicknameEditBtn.addEventListener('click', async function (event) {
   try {
     // 내 정보 수정 API 실행
-    const response = await axios.patch('http://localhost:3000/user', {
-      nickname: $nickname.value,
-    }, {
-      withCredentials: true,
-    });
+    const response = await axios.patch(
+      'http://52.79.88.29:3000/user',
+      {
+        nickname: $nickname.value,
+      },
+      {
+        withCredentials: true,
+      },
+    );
 
     // 수정된 정보 적용
     const userInfo = response.data.data;
@@ -51,16 +55,20 @@ $nicknameEditBtn.addEventListener('click', async function (event) {
 $passwordEditBtn.addEventListener('click', async function (event) {
   try {
     // 비밀번호 수정 API 실행
-    const response = await axios.patch('http://localhost:3000/user/password', {
-      currentPassword: $currentPassword.value,
-      newPassword: $newPassword.value
-    }, {
-      withCredentials: true,
-    });
+    const response = await axios.patch(
+      'http://52.79.88.29:3000/user/password',
+      {
+        currentPassword: $currentPassword.value,
+        newPassword: $newPassword.value,
+      },
+      {
+        withCredentials: true,
+      },
+    );
 
     // 입력한 정보들 초기화
-    $currentPassword.value = "";
-    $newPassword.value = "";
+    $currentPassword.value = '';
+    $newPassword.value = '';
 
     alert(response.data.message);
   } catch (err) {
@@ -68,4 +76,3 @@ $passwordEditBtn.addEventListener('click', async function (event) {
     alert(err.response.data.message);
   }
 });
-

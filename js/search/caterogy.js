@@ -72,7 +72,7 @@ export async function getProductByCategory(category, page) {
   console.log(category, page);
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`http://localhost:3000/goods/category/${category}?&page=${page}`);
+    const response = await axios.get(`http://52.79.88.29:3000/goods/category/${category}?&page=${page}`);
     return response.data.data;
   } catch (err) {
     // 오류 처리
@@ -92,7 +92,7 @@ const COUNT_PER_PAGE = 12;
 export async function getTotalPageCount(category) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`http://localhost:3000/goods/count/category/${category}`);
+    const response = await axios.get(`http://52.79.88.29:3000/goods/count/category/${category}`);
     return Math.ceil(response.data.data / COUNT_PER_PAGE);
   } catch (err) {
     // 오류 처리

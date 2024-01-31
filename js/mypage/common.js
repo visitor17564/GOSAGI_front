@@ -6,7 +6,7 @@ const $secessionBtn = document.getElementById('secession-btn');
 // document.addEventListener('DOMContentLoaded', async function () {
 //   try {
 //     // 회원정보 조회 API 실행
-//     const response = await axios.get('http://localhost:3000/user', {
+//     const response = await axios.get('http://52.79.88.29:3000/user', {
 //       withCredentials: true,
 //     });
 
@@ -15,23 +15,22 @@ const $secessionBtn = document.getElementById('secession-btn');
 //     // 오류 처리
 //     alert(`${err.response.data.message}`);
 //     if (err.response.data.message === "로그인을 진행해주세요.") {
-//       window.location.href = "http://localhost:5500/html/index.html";
+//       window.location.href = "http://localhost:5500/index.html";
 //     }
 //   }
 // });
 
-
 // 내 정보 수정
 $secessionBtn.addEventListener('click', async function (event) {
-  if (confirm("정말 탈퇴하시겠습니까?")) {
+  if (confirm('정말 탈퇴하시겠습니까?')) {
     try {
       // 회원 탈퇴 API 실행
-      const response = await axios.delete('http://localhost:3000/user', {
+      const response = await axios.delete('http://52.79.88.29:3000/user', {
         withCredentials: true,
       });
 
       alert(response.data.message);
-      window.location.href = "http://localhost:5500/html/index.html";
+      window.location.href = 'http://localhost:5500/index.html';
     } catch (err) {
       // 오류 처리
       alert(err.response.data.message);

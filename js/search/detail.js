@@ -45,7 +45,7 @@ wishDiv.addEventListener('click', async function (event) {
   let clickedElementId = event.currentTarget.id;
   if (isMyWish === false) {
     try {
-      await axios.post(`http://localhost:3000/wish`, { product_id: productId }, { withCredentials: true });
+      await axios.post(`http://52.79.88.29:3000/wish`, { product_id: productId }, { withCredentials: true });
       alert('찜하기 성공');
       const wish = await getProductWish(productId);
       generateProductWish(wish);
@@ -54,7 +54,7 @@ wishDiv.addEventListener('click', async function (event) {
     }
   } else if (isMyWish === true) {
     try {
-      await axios.delete(`http://localhost:3000/wish/${myWishId}`, { withCredentials: true });
+      await axios.delete(`http://52.79.88.29:3000/wish/${myWishId}`, { withCredentials: true });
       alert('찜취소 성공');
       const wish = await getProductWish(productId);
       generateProductWish(wish);
@@ -189,7 +189,7 @@ async function getUserId() {
   // 회원 로그인 id 조회 체크(닉네임으로 수정 필요 - 아영)
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('http://localhost:3000/user', {
+    const response = await axios.get('http://52.79.88.29:3000/user', {
       withCredentials: true,
     });
 
@@ -291,7 +291,7 @@ let productId = parseInt(searchParams.get('productId'));
 export async function getProduct(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`http://localhost:3000/goods/detail/${productId}`, { withCredentials: true });
+    const response = await axios.get(`http://52.79.88.29:3000/goods/detail/${productId}`, { withCredentials: true });
     return response.data.data;
   } catch (err) {
     // 오류 처리
@@ -302,7 +302,7 @@ export async function getProduct(productId) {
 export async function getProductReview(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const review = await axios.get(`http://localhost:3000/review/product/${productId}`, { withCredentials: true });
+    const review = await axios.get(`http://52.79.88.29:3000/review/product/${productId}`, { withCredentials: true });
     return review.data.data;
   } catch (err) {
     // 오류 처리
@@ -313,7 +313,7 @@ export async function getProductReview(productId) {
 export async function getProductQuestion(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const questions = await axios.get(`http://localhost:3000/question/productList/${productId}`, { withCredentials: true });
+    const questions = await axios.get(`http://52.79.88.29:3000/question/productList/${productId}`, { withCredentials: true });
     return questions.data.data;
   } catch (err) {
     // 오류 처리
@@ -324,7 +324,7 @@ export async function getProductQuestion(productId) {
 export async function getProductWish(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const wishCount = await axios.get(`http://localhost:3000/wish/${productId}`, { withCredentials: true });
+    const wishCount = await axios.get(`http://52.79.88.29:3000/wish/${productId}`, { withCredentials: true });
     return wishCount.data.data;
   } catch (err) {
     // 오류 처리
@@ -350,7 +350,7 @@ productQuestionButton.addEventListener('click', async () => {
   const isPrivate = document.getElementById('secret').checked;
   try {
     await axios.post(
-      `http://localhost:3000/question`,
+      `http://52.79.88.29:3000/question`,
       {
         productId,
         title,
@@ -375,7 +375,7 @@ async function createCart() {
   const quantity = document.getElementById('quantity').value;
   try {
     const responseCart = await axios.post(
-      `http://localhost:3000/cart`,
+      `http://52.79.88.29:3000/cart`,
       {
         product_id: productId,
         quantity: +quantity,
@@ -537,7 +537,7 @@ async function paymentProduct() {
   try {
     // 주문 내역 저장 API
     const response = await axios.post(
-      `http://localhost:3000/order`,
+      `http://52.79.88.29:3000/order`,
       {
         product_id: productId,
         status: '결제완료',
@@ -572,7 +572,7 @@ async function drawSelectQuestion() {
 
       try {
         // 문의 글 상세 조회 API 실행
-        const response = await axios.get(`http://localhost:3000/question/detail/${questionId}`, {
+        const response = await axios.get(`http://52.79.88.29:3000/question/detail/${questionId}`, {
           withCredentials: true,
         });
 

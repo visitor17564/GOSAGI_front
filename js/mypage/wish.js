@@ -5,7 +5,7 @@ const $wishList = document.getElementById('wish-list');
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('http://localhost:3000/wish', {
+    const response = await axios.get('http://52.79.88.29:3000/wish', {
       withCredentials: true,
     });
     const wishs = response.data.data.data;
@@ -72,12 +72,12 @@ async function createCart() {
       // 장바구니 추가 API
       try {
         // 찜에서 삭제 후 장바구니에 추가
-        const responseWish = await axios.delete(`http://localhost:3000/wish/${wishId}`, {
+        const responseWish = await axios.delete(`http://52.79.88.29:3000/wish/${wishId}`, {
           withCredentials: true,
         });
 
         const responseCart = await axios.post(
-          `http://localhost:3000/cart`,
+          `http://52.79.88.29:3000/cart`,
           {
             product_id: productId,
             quantity: 1,
@@ -110,7 +110,7 @@ async function deleteWish() {
       const wishId = e.target.id.split('-')[3]; // 찜 ID 추출
       // 찜 삭제 API
       try {
-        const response = await axios.delete(`http://localhost:3000/wish/${wishId}`, {
+        const response = await axios.delete(`http://52.79.88.29:3000/wish/${wishId}`, {
           withCredentials: true,
         });
 
