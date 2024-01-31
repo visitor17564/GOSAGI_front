@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="/js/main.js"></script>
+    <script type="module" src="/js/search/caterogy.js"></script>
     <script type="module" src="/js/auth.js"></script>
     <script type="module" src="/js/search/search.js"></script>
   </head>
@@ -109,7 +109,7 @@
                   <div class="flex justify-center w-3/5 px-5">
                     <a href="/html/index.html" title="all" class="justify-center text-center text-base grow whitespace-nowrap font-['Inter']"> 전체상품 </a>
                     <a href="/html/search/search-for-theme.html" title="theme" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 테마별 </a>
-                    <a href="/html/search/search-for-cartegory.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 품목별 </a>
+                    <a href="/html/search/search-for-category.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 품목별 </a>
                     <a href="/html/search/search-for-region.html" title="region" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 지역별 </a>
                     <a href="#" title="faq" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> FAQ </a>
                   </div>
@@ -126,13 +126,48 @@
               </div>
             </div>
           </div>
+          <!-- 카테고리 -->
+          <div class="flex justify-center mt-10">
+            <ul class="w-8/12 flex justify-center items-center gap-5">
+              <li>
+                <button id="tour-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                  <span><img src="/sourse/image/category/tour.png" alt="관광서비스" class="de-img" /></span> <span class="font-['Inter']">관광서비스</span>
+                </button>
+              </li>
+              <li>
+                <button id="food-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                  <span class="icon_img"><img src="/sourse/image/category/food.png" alt="농축산물" /></span> <span class="font-['Inter']">농축산물</span>
+                </button>
+              </li>
+              <li>
+                <button id="fish-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                  <span class="icon_img"><img src="/sourse/image/category/fish.png" alt="수산물" /> </span> <span class="font-['Inter']">수산물</span>
+                </button>
+              </li>
+              <li>
+                <button id="managed-food-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                  <span class="icon_img"><img src="/sourse/image/category/managefood.png" alt="가공식품" /> </span> <span class="font-['Inter']">가공식품</span>
+                </button>
+              </li>
+              <li>
+                <button id="live-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                  <span class="icon_img"><img src="/sourse/image/category/live.png" alt="생활용품" /> </span> <span class="font-['Inter']">생활용품</span>
+                </button>
+              </li>
+              <li>
+                <button id="coupon-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                  <span class="icon_img"><img src="/sourse/image/category/coupon.png" alt="지역상품권" /> </span> <span class="font-['Inter']">지역상품권</span>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </header>
       <!-- 카드뿌리기 -->
       <main class="flex-grow flex justify-center">
         <div class="justify-center w-8/12 mt-5">
           <!-- 카드 여따 뿌림 -->
-          <div id="product-categori-wrap" class="gap-0 flex flex-wrap"></div>
+          <div id="product-category-wrap" class="gap-0 flex flex-wrap"></div>
           <!-- 여기부터는 모달임 -->
           <!-- 회원가입 모달(선택)-->
           <div id="signup-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">

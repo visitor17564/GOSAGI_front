@@ -1,11 +1,10 @@
-import { searchProduct } from './search/search.js';
+import { searchProduct } from './search.js';
 
 let page = 1;
 
-const productWrap = document.getElementById('product-wrap');
+const productWrap = document.getElementById('product-region-wrap');
 
 export const generateProductCards = async (products, productWrap) => {
-  console.log(products);
   productWrap.innerHTML = products
     .map((product) => {
       const localesPoint = product.point.toLocaleString();
@@ -65,11 +64,10 @@ export const generateProductCards = async (products, productWrap) => {
     .join('');
 };
 
-export async function getProduct(page) {
+export async function getProductByCategory(location, page) {
   try {
     // axios를 사용하여 로그인 API 실행
-
-    const response = await axios.get(`http://localhost:3000/goods/?page=${page}`);
+    const response = await axios.get(`http://localhost:3000/goods/location?location=${location}&page=${page}`);
     return response.data.data;
   } catch (err) {
     // 오류 처리
@@ -95,9 +93,112 @@ if (decodeURI(window.location.search.split('=')[0]) === '?keyword' && decodeURI(
   const keyword = decodeURI(window.location.search.split('=')[1]);
   searchProduct(keyword);
 } else if (decodeURI(window.location.search.split('=')[0]) === '?productId') {
-} else if (window.location.href.includes('search')) {
-} else {
-  const products = await getProduct(page);
+} else if (window.location.href.includes('search-for-region')) {
+  let location = '경기도';
+  const products = await getProductByCategory(location, page);
   generateProductCards(products, productWrap);
-  setPageButtons();
 }
+
+const button1 = document.getElementById('경기도');
+const button2 = document.getElementById('서울특별시');
+const button3 = document.getElementById('부산광역시');
+const button4 = document.getElementById('경상남도');
+const button5 = document.getElementById('인천광역시');
+const button6 = document.getElementById('경상북도');
+const button7 = document.getElementById('대구광역시');
+const button8 = document.getElementById('충청남도');
+const button9 = document.getElementById('전라남도');
+const button10 = document.getElementById('전북특별자치도');
+const button11 = document.getElementById('충청북도');
+const button12 = document.getElementById('강원특별자치도');
+const button13 = document.getElementById('대전광역시');
+const button14 = document.getElementById('광주광역시');
+const button15 = document.getElementById('울산광역시');
+const button16 = document.getElementById('제주특별자치도');
+const button17 = document.getElementById('세종특별자치시');
+
+button1.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button2.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button3.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button4.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button5.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button6.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button7.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button8.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button9.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button10.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button11.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button12.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button13.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button14.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button15.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button16.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+button17.addEventListener('click', async (event) => {
+  let category = event.target.id;
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});

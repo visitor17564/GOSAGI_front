@@ -7,7 +7,7 @@ const productWrap = document.getElementById('product-wrap');
 
 export async function searchProduct(keyword) {
   try {
-    const response = await axios.get(`http://localhost:3000/goods/keyword?keyword=${keyword}`, { withCredentials: true });
+    const response = await axios.get(`http://localhost:3000/goods/keyword?keyword=${keyword}&page=1`, { withCredentials: true });
     if (response.data.data.length === 0) {
       alert('검색결과가 없습니다.');
       window.location.href = `http://localhost:5500/html/index.html`;

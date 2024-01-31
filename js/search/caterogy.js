@@ -1,8 +1,8 @@
-import { searchProduct } from './search/search.js';
+import { searchProduct } from './search.js';
 
 let page = 1;
 
-const productWrap = document.getElementById('product-wrap');
+const productWrap = document.getElementById('product-category-wrap');
 
 export const generateProductCards = async (products, productWrap) => {
   console.log(products);
@@ -65,11 +65,10 @@ export const generateProductCards = async (products, productWrap) => {
     .join('');
 };
 
-export async function getProduct(page) {
+export async function getProductByCategory(category, page) {
   try {
     // axios를 사용하여 로그인 API 실행
-
-    const response = await axios.get(`http://localhost:3000/goods/?page=${page}`);
+    const response = await axios.get(`http://localhost:3000/goods/category/${category}?&page=${page}`);
     return response.data.data;
   } catch (err) {
     // 오류 처리
@@ -95,9 +94,51 @@ if (decodeURI(window.location.search.split('=')[0]) === '?keyword' && decodeURI(
   const keyword = decodeURI(window.location.search.split('=')[1]);
   searchProduct(keyword);
 } else if (decodeURI(window.location.search.split('=')[0]) === '?productId') {
-} else if (window.location.href.includes('search')) {
-} else {
-  const products = await getProduct(page);
+} else if (window.location.href.includes('search-for-category')) {
+  let category = '농축산물';
+  const products = await getProductByCategory(category, page);
   generateProductCards(products, productWrap);
-  setPageButtons();
 }
+
+const tourButton = document.getElementById('tour-button');
+const foodButton = document.getElementById('food-button');
+const fishButton = document.getElementById('fish-button');
+const manageFoodButton = document.getElementById('managed-food-button');
+const liveButton = document.getElementById('live-button');
+const couponButton = document.getElementById('coupon-button');
+
+tourButton.addEventListener('click', async () => {
+  let category = '관광서비스';
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+
+foodButton.addEventListener('click', async () => {
+  let category = '농축산물';
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+
+fishButton.addEventListener('click', async () => {
+  let category = '수산물';
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+
+manageFoodButton.addEventListener('click', async () => {
+  let category = '가공식품';
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+
+liveButton.addEventListener('click', async () => {
+  let category = '생활용품';
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});
+
+couponButton.addEventListener('click', async () => {
+  let category = '지역상품권';
+  const products = await getProductByCategory(category, page);
+  generateProductCards(products, productWrap);
+});

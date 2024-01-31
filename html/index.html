@@ -109,7 +109,7 @@
                   <div class="flex justify-center w-3/5 px-5">
                     <a href="/html/index.html" title="all" class="justify-center text-center text-base grow whitespace-nowrap font-['Inter']"> 전체상품 </a>
                     <a href="/html/search/search-for-theme.html" title="theme" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 테마별 </a>
-                    <a href="/html/search/search-for-cartegory.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 품목별 </a>
+                    <a href="/html/search/search-for-category.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 품목별 </a>
                     <a href="/html/search/search-for-region.html" title="region" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 지역별 </a>
                     <a href="#" title="faq" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> FAQ </a>
                   </div>
@@ -133,6 +133,12 @@
         <div class="justify-center w-8/12 mt-5">
           <!-- 카드 여따 뿌림 -->
           <div id="product-wrap" class="gap-0 flex flex-wrap"></div>
+          <!-- 페이지네이션 -->
+          <div id="page-button-wrap" class="flex justify-center my-10">
+            <div id="prev-button">이전</div>
+            <div class="number-button-wrapper"><span class="number-button">1</span></div>
+            <div id="next-button">이후</div>
+          </div>
           <!-- 여기부터는 모달임 -->
           <!-- 회원가입 모달(선택)-->
           <div id="signup-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
