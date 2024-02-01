@@ -554,7 +554,7 @@ async function paymentProduct() {
       },
     );
 
-    window.location.href = "'http://localhost:5500/html/mypage/payment.html',";
+    window.location.href = 'http://localhost:5500/html/mypage/order.html';
   } catch (err) {
     alert(err.response.data.message);
   }

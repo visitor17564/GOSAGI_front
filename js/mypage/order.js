@@ -5,7 +5,6 @@ const $shippingCnt = document.getElementById('shipping-cnt');
 const $deliveryFinCnt = document.getElementById('delivery-fin-cnt');
 const $periodBtns = document.querySelectorAll('[period-btn ]');
 
-
 // 주문 목록 그리기
 document.addEventListener('DOMContentLoaded', async function () {
   await initalize();
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function initalize() {
   await getAllOrderList();
 }
-
 
 async function drawOrderList(response) {
   try {
@@ -49,14 +47,14 @@ async function drawOrderList(response) {
 
         if (order.status == 0) {
           // 주문 수정 === 배송지 수정
-          paymentFinCnt++, firstBtnText = '주문수정', firstBtnType = 'edit-order-btn', secondBtnText = '주문취소', secondBtnType = 'refund-completed-btn';
+          paymentFinCnt++, (firstBtnText = '주문수정'), (firstBtnType = 'edit-order-btn'), (secondBtnText = '주문취소'), (secondBtnType = 'refund-completed-btn');
           btnHtml = `
             <button  ${firstBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${firstBtnText}</button> 
             <button ${secondBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${secondBtnText}</button>
           `;
         }
         if (order.status == 2) {
-          deliveryFinCnt++, firstBtnText = '반품신청', firstBtnType = 'return-request-btn', secondBtnText = '교환신청', secondBtnType = 'exchange-request-btn', thirdBtnText = '구매확정', thirdBtnType = 'purchase-confirm-btn';
+          deliveryFinCnt++, (firstBtnText = '반품신청'), (firstBtnType = 'return-request-btn'), (secondBtnText = '교환신청'), (secondBtnType = 'exchange-request-btn'), (thirdBtnText = '구매확정'), (thirdBtnType = 'purchase-confirm-btn');
           btnHtml = `
             <button ${firstBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${firstBtnText}</button> 
             <button ${secondBtnType}  data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${secondBtnText}</button>
@@ -64,12 +62,24 @@ async function drawOrderList(response) {
             `;
         }
         if (order.status != 0 && order.status != 2) {
-          if (order.status == 1) { shippingCnt++, firstBtnText = '배송중'; }
-          if (order.status == 3) { firstBtnText = '구매확정', deliveryFinCnt++; }
-          if (order.status == 4) { firstBtnText = '주문취소', paymentCancelCnt++; }
-          if (order.status == 5) { firstBtnText = '반품신청', deliveryFinCnt++; }
-          if (order.status == 6) { firstBtnText = '반품완료', deliveryFinCnt++; }
-          if (order.status == 7) { firstBtnText = '교환신청', deliveryFinCnt++; }
+          if (order.status == 1) {
+            shippingCnt++, (firstBtnText = '배송중');
+          }
+          if (order.status == 3) {
+            (firstBtnText = '구매확정'), deliveryFinCnt++;
+          }
+          if (order.status == 4) {
+            (firstBtnText = '주문취소'), paymentCancelCnt++;
+          }
+          if (order.status == 5) {
+            (firstBtnText = '반품신청'), deliveryFinCnt++;
+          }
+          if (order.status == 6) {
+            (firstBtnText = '반품완료'), deliveryFinCnt++;
+          }
+          if (order.status == 7) {
+            (firstBtnText = '교환신청'), deliveryFinCnt++;
+          }
           btnHtml = `<button class="h-5 w-1/2 justify-center border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']" style="cursor: default;">${firstBtnText}</button>`;
         }
 
@@ -79,7 +89,7 @@ async function drawOrderList(response) {
             ${order.createdAt.slice(0, 10)}
             </th>
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-center">
-                <img src="/sourse/image/sample.png"
+                <img src="${order.product_thumbnail}"
                 class="aspect-square object-contain object-center w-32 overflow-hidden" alt=""
                 />
                 <div product-name class="w-full ml-5">${order.product_name}</div>
@@ -130,13 +140,13 @@ async function getAllOrderList() {
 
 // 기간 조회
 async function getPeriodOrderList() {
-  $periodBtns.forEach(button => {
+  $periodBtns.forEach((button) => {
     button.addEventListener('click', async () => {
       const $startDate = document.getElementById('start-date');
       const $endDate = document.getElementById('end-date');
 
       let periodType = button.id;
-      if (periodType === "select") {
+      if (periodType === 'select') {
         const start = new Date($startDate.value);
         const end = new Date($endDate.value);
 
@@ -147,7 +157,7 @@ async function getPeriodOrderList() {
         periodType = `${totalDays}days`;
       }
       // 주문 목록 기간 조회 API 실행
-      const response = await axios.get(`http://localhost:3000/order/period?period=${periodType}`, {
+      const response = await axios.get(`http://localhost:3000/order/?period=${periodType}`, {
         withCredentials: true,
       });
 
@@ -166,7 +176,6 @@ async function drawCart(orderId) {
     });
 
     const order = response.data.data;
-    console.log('order: ', order);
     // 상품 정보
     document.getElementById('order-modal-product-name').value = order.product_name;
     document.getElementById('order-modal-quantity').value = order.quantity;
@@ -184,12 +193,12 @@ async function drawCart(orderId) {
   } catch (err) {
     console.log(err);
   }
-};
+}
 
 // 주문 수정 버튼 클릭 이벤트
 async function editOrderBtnClick() {
   const $editOrderBtns = document.querySelectorAll('[edit-order-btn]');
-  $editOrderBtns.forEach(button => {
+  $editOrderBtns.forEach((button) => {
     button.addEventListener('click', async function () {
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
@@ -209,16 +218,20 @@ async function editOrderData(orderId) {
   document.getElementById('order-modal-order-edit-btn').addEventListener('click', async () => {
     try {
       // 배송지 수정 API 실행
-      const response = await axios.patch(`http://localhost:3000/order/address/${orderId}`, {
-        receiver: document.getElementById('order-modal-receiver').value,
-        receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
-        delivery_address: document.getElementById('address').value,
-        delivery_address_detail: document.getElementById('address-detail').value,
-        post_code: document.getElementById('postcode').value,
-        delivery_request: document.getElementById('delivery-request').value
-      }, {
-        withCredentials: true,
-      });
+      const response = await axios.patch(
+        `http://localhost:3000/order/address/${orderId}`,
+        {
+          receiver: document.getElementById('order-modal-receiver').value,
+          receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
+          delivery_address: document.getElementById('address').value,
+          delivery_address_detail: document.getElementById('address-detail').value,
+          post_code: document.getElementById('postcode').value,
+          delivery_request: document.getElementById('delivery-request').value,
+        },
+        {
+          withCredentials: true,
+        },
+      );
 
       alert(response.data.message);
     } catch (err) {
@@ -231,7 +244,7 @@ async function editOrderData(orderId) {
 // 주문 취소 버튼 클릭 아벤트
 async function refundCompletedBtnClick() {
   const $refundCompletedBtns = document.querySelectorAll('[refund-completed-btn]');
-  $refundCompletedBtns.forEach(button => {
+  $refundCompletedBtns.forEach((button) => {
     button.addEventListener('click', async function () {
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
@@ -252,11 +265,15 @@ async function refundCompleted(orderId) {
     if (confirm('주문을 취소하시겠습니까?')) {
       try {
         // 배송지 수정 API 실행
-        const response = await axios.patch(`http://localhost:3000/order/refund/${orderId}`, {
-          status: 4
-        }, {
-          withCredentials: true,
-        });
+        const response = await axios.patch(
+          `http://localhost:3000/order/refund/${orderId}`,
+          {
+            status: 4,
+          },
+          {
+            withCredentials: true,
+          },
+        );
 
         alert(response.data.message);
         location.reload();
@@ -273,11 +290,10 @@ async function refundCompleted(orderId) {
 // 반품 신청 버튼 클릭 이벤트
 async function returnRequestBtnClick() {
   const $returnRequestBtns = document.querySelectorAll('[return-request-btn]');
-  $returnRequestBtns.forEach(button => {
+  $returnRequestBtns.forEach((button) => {
     button.addEventListener('click', async function () {
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
-      console.log("반품 신청");
 
       // 버튼 변경
       document.getElementById('order-modal-btn').innerHTML = `<button type="button" id="order-modal-order-return-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">반품 신청하기</button>`;
@@ -289,25 +305,29 @@ async function returnRequestBtnClick() {
   });
 }
 
-// 반품 신청 
+// 반품 신청
 async function returnRequest(orderId) {
   document.getElementById('order-modal-order-return-btn').addEventListener('click', async () => {
     if (confirm('반품을 신청하시겠습니까?')) {
       try {
         // 배송지 수정 API 실행
-        const response = await axios.patch(`http://localhost:3000/order/return/${orderId}`, {
-          status: 5,
-          // toss_order_id: aagsfbbs,
-          receiver: document.getElementById('order-modal-receiver').value,
-          receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
-          delivery_address: document.getElementById('address').value,
-          delivery_address_detail: document.getElementById('address-detail').value,
-          post_code: document.getElementById('postcode').value,
-          delivery_request: document.getElementById('delivery-request').value
-          // after_service_request: 아묻따 반품!!!
-        }, {
-          withCredentials: true,
-        });
+        const response = await axios.patch(
+          `http://localhost:3000/order/return/${orderId}`,
+          {
+            status: 5,
+            // toss_order_id: aagsfbbs,
+            receiver: document.getElementById('order-modal-receiver').value,
+            receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
+            delivery_address: document.getElementById('address').value,
+            delivery_address_detail: document.getElementById('address-detail').value,
+            post_code: document.getElementById('postcode').value,
+            delivery_request: document.getElementById('delivery-request').value,
+            // after_service_request: 아묻따 반품!!!
+          },
+          {
+            withCredentials: true,
+          },
+        );
 
         alert(response.data.message);
         location.reload();
@@ -324,15 +344,14 @@ async function returnRequest(orderId) {
 // 교환 신청 버튼 클릭 이벤트
 async function exchangeRequestBtnClick() {
   const $exchangeRequestBtns = document.querySelectorAll('[exchange-request-btn]');
-  $exchangeRequestBtns.forEach(button => {
+  $exchangeRequestBtns.forEach((button) => {
     button.addEventListener('click', async function () {
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
-      console.log(" 교환신청");
+      console.log(' 교환신청');
 
       // 버튼 변경
       document.getElementById('order-modal-btn').innerHTML = `<button type="button" id="order-modal-order-exchange-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">교환 신청하기</button>`;
-
 
       const productId = await drawCart(orderId);
       console.log('productId1: ', productId);
@@ -347,21 +366,25 @@ async function exchangeRequest(orderId, productId) {
     if (confirm('새 상품으로 교환을 신청하시겠습니까?')) {
       try {
         // 배송지 수정 API 실행
-        const response = await axios.post(`http://localhost:3000/order/exchange/${orderId}`, {
-          status: 7,
-          product_id: productId, // prodcut_id 반환해주는 기능이 필요함
-          quantity: document.getElementById('order-modal-quantity').value,
-          toss_order_id: "test",
-          receiver: document.getElementById('order-modal-receiver').value,
-          receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
-          delivery_address: document.getElementById('address').value,
-          delivery_address_detail: document.getElementById('address-detail').value,
-          post_code: document.getElementById('postcode').value,
-          delivery_request: document.getElementById('delivery-request').value,
-          after_service_request: "test"
-        }, {
-          withCredentials: true,
-        });
+        const response = await axios.post(
+          `http://localhost:3000/order/exchange/${orderId}`,
+          {
+            status: 7,
+            product_id: productId, // prodcut_id 반환해주는 기능이 필요함
+            quantity: document.getElementById('order-modal-quantity').value,
+            toss_order_id: 'test',
+            receiver: document.getElementById('order-modal-receiver').value,
+            receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
+            delivery_address: document.getElementById('address').value,
+            delivery_address_detail: document.getElementById('address-detail').value,
+            post_code: document.getElementById('postcode').value,
+            delivery_request: document.getElementById('delivery-request').value,
+            after_service_request: 'test',
+          },
+          {
+            withCredentials: true,
+          },
+        );
 
         alert(response.data.message);
         location.reload();
@@ -378,7 +401,7 @@ async function exchangeRequest(orderId, productId) {
 // 구매 확정
 async function purchaseConfirm() {
   const $purchaseConfirmBtns = document.querySelectorAll('[purchase-confirm-btn]');
-  $purchaseConfirmBtns.forEach(button => {
+  $purchaseConfirmBtns.forEach((button) => {
     button.addEventListener('click', async function () {
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
@@ -386,11 +409,15 @@ async function purchaseConfirm() {
       if (confirm('구매를 확정하시겠습니까?')) {
         try {
           // 구매 확정 API 실행
-          const response = await axios.patch(`http://localhost:3000/order/confirm/${orderId}`, {
-            status: 3
-          }, {
-            withCredentials: true,
-          });
+          const response = await axios.patch(
+            `http://localhost:3000/order/confirm/${orderId}`,
+            {
+              status: 3,
+            },
+            {
+              withCredentials: true,
+            },
+          );
 
           alert(response.data.message);
           location.reload();
@@ -482,4 +509,3 @@ async function activateDelivertInfo() {
   document.getElementById('address-direct-btn').classList.remove('hidden');
   document.getElementById('address-select-btn').classList.remove('hidden');
 }
-
