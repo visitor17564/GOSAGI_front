@@ -23,7 +23,6 @@ const countProductName = document.getElementById('count-product-name');
 const addCartButton = document.getElementById('add-cart-button');
 const purchaseButton = document.getElementById('purchase-button');
 
-
 const tossModal = document.getElementById('toss-modal');
 
 const cartModalReceiver = document.getElementById('cart-modal-receiver');
@@ -33,7 +32,6 @@ const postcode = document.getElementById('postcode');
 const address = document.getElementById('address');
 const addressDetail = document.getElementById('address-detail');
 const addressSearchBtn = document.getElementById('address-search-btn');
-
 
 const paymentBtn = document.getElementById('payment-btn');
 
@@ -85,9 +83,7 @@ export const generateProductCard = async (product, reviews) => {
     review_average_rate = reviews.review_average_rate;
   }
 
-  thumbnail.innerHTML = `<img src="${product.productThumbnail[0].image_url}" class="aspect-square object-contain object-center w-full overflow-hidden max-md:max-w-full" />
-  <div class="flex gap-5 flex-row overflow-auto mx-auto">
-  </div>`;
+  thumbnail.innerHTML = `<img src="${product.thumbnail_image}" class="h-full w-full rounded-lg aspect-square object-contain object-center w-full overflow-hidden" />`;
   let starArr = ['gray-300', 'gray-300', 'gray-300', 'gray-300', 'gray-300'];
   for (let e = 0; e <= review_average_rate - 1; e++) {
     starArr[e] = 'yellow-300';
@@ -564,8 +560,6 @@ async function paymentProduct() {
   }
 }
 
-
-
 // 문의 글 조회
 // 문의 글 상세 조회
 async function drawSelectQuestion() {
@@ -604,12 +598,12 @@ async function drawSelectQuestion() {
 
 // 상품 문의 누르면 상품 문의로 스크롤이동
 document.getElementById('product-question-div-button').addEventListener('click', function () {
-  console.log("클릭됨");
+  console.log('클릭됨');
   document.getElementById('product-question').scrollIntoView({ behavior: 'smooth' });
 });
 
 // 상품 후기 누르면 상품 문의로 스크롤이동
 document.getElementById('product-review-div-button').addEventListener('click', function () {
-  console.log("후기 클릭됨");
+  console.log('후기 클릭됨');
   document.getElementById('product-review').scrollIntoView({ behavior: 'smooth' });
 });

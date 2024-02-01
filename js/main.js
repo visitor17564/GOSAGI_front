@@ -81,14 +81,20 @@ export async function setPageButtons() {
   const numberButtonWrapper = document.getElementById('page-button-wrap');
   numberButtonWrapper.innerHTML = ''; // 페이지 번호 wrapper 내부를 비워줌
   for (let i = 1; i <= (await getTotalPageCount()); i++) {
-    numberButtonWrapper.innerHTML += `<span class="number-button mx-3"> ${i} </span`;
+    numberButtonWrapper.innerHTML += `<button id="clicked-page-button:${i}" type="button" class="number-button mx-3 hover:text-red-300 focus:text-red-300 "> ${i} </button>`;
   }
 }
 
 const COUNT_PER_PAGE = 12;
 export async function getTotalPageCount() {
-  // return Math.ceil(data.length / COUNT_PER_PAGE);
-  return 12;
+  try {
+    // axios를 사용하여 로그인 API 실행
+    const response = await axios.get(`http://localhost:3000/goods/count/all`);
+    return Math.ceil(response.data.data / COUNT_PER_PAGE);
+  } catch (err) {
+    // 오류 처리
+    alert('오류발생: ' + err);
+  }
 }
 
 if (decodeURI(window.location.search.split('=')[0]) === '?keyword' && decodeURI(window.location.search.split('=')[1]) !== 'undefined') {
@@ -101,3 +107,13 @@ if (decodeURI(window.location.search.split('=')[0]) === '?keyword' && decodeURI(
   generateProductCards(products, productWrap);
   setPageButtons();
 }
+
+document.addEventListener('click', async () => {
+  let clickedElementId = event.target.id;
+  let buttonClicked = String(clickedElementId).includes('clicked-page-button');
+  if (buttonClicked) {
+    page = Number(String(clickedElementId).split(':')[1]);
+    const products = await getProduct(page);
+    generateProductCards(products, productWrap);
+  }
+});

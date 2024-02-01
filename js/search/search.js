@@ -5,7 +5,10 @@ const searchInput = document.getElementById('search-input');
 
 const productWrap = document.getElementById('product-wrap');
 
-export async function searchProduct(keyword) {
+export async function searchProduct(keyword, page) {
+  if (!page) {
+    page = 1;
+  }
   try {
     const response = await axios.get(`http://localhost:3000/goods/keyword?keyword=${keyword}&page=1`, { withCredentials: true });
     if (response.data.data.length === 0) {
