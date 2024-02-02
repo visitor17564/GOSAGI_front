@@ -12,6 +12,7 @@ const loginButton = document.getElementById('login-button');
 const logoutButton = document.getElementById('logout');
 
 let isLoggedIn = false;
+console.log(document.cookie);
 if (document.cookie.includes('authorization')) {
   isLoggedIn = true;
 } else {
@@ -30,7 +31,7 @@ logoutButton.addEventListener('click', async () => {
   try {
     const response = await axios.post(`https://https.visitor.run/auth/logout`, {}, { withCredentials: true });
     alert('로그아웃 성공');
-    window.location.href = 'https://visitor17564.github.io/GOSAGI_front/'; // 수정할 URL로 변경 필요
+    window.location.href = 'https://front.visitor.run/'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('오류발생: ' + err);
@@ -59,7 +60,7 @@ export async function signup() {
     );
     alert('회원가입 성공: ' + response);
     // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = 'https://visitor17564.github.io/GOSAGI_front/'; // 수정할 URL로 변경 필요
+    window.location.href = 'https://front.visitor.run/'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('회원가입 실패: ' + err);
@@ -83,7 +84,7 @@ export async function login() {
     );
     alert('로그인 성공: ' + response);
     // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = 'https://visitor17564.github.io/GOSAGI_front/'; // 수정할 URL로 변경 필요
+    window.location.href = 'https://front.visitor.run/'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('로그인 실패: ' + err);
