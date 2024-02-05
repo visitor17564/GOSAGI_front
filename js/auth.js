@@ -11,13 +11,7 @@ const signupButton = document.getElementById('signup-button');
 const loginButton = document.getElementById('login-button');
 const logoutButton = document.getElementById('logout');
 
-let isLoggedIn = false;
-console.log(document.cookie);
-if (document.cookie.includes('authorization')) {
-  isLoggedIn = true;
-} else {
-  isLoggedIn = false;
-}
+export let isLoggedIn = false;
 
 signupButton.addEventListener('click', () => {
   signup();
@@ -91,7 +85,7 @@ export async function login() {
   }
 }
 
-function updateLoginButton() {
+export function updateLoginButton() {
   if (isLoggedIn) {
     // 로그인 상태인 경우, 로그인 버튼을 숨깁니다.
     loginDiv.style.display = 'none';
@@ -114,5 +108,3 @@ function updateLoginButton() {
     logoutBar.style.display = 'none ';
   }
 }
-
-updateLoginButton(isLoggedIn);

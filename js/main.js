@@ -1,4 +1,5 @@
 import { searchProduct } from './search/search.js';
+import { isLoggedIn, updateLoginButton } from './auth.js';
 
 let page = 1;
 
@@ -70,6 +71,8 @@ export async function getProduct(page) {
     // axios를 사용하여 로그인 API 실행
 
     const response = await axios.get(`https://https.visitor.run/goods/?page=${page}`);
+    isLoggedIn = true;
+    updateLoginButton(isLoggedIn);
     return response.data.data;
   } catch (err) {
     // 오류 처리

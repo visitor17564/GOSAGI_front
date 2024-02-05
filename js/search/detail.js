@@ -292,6 +292,7 @@ export async function getProduct(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
     const response = await axios.get(`https://https.visitor.run/goods/detail/${productId}`, { withCredentials: true });
+
     return response.data.data;
   } catch (err) {
     // 오류 처리
