@@ -11,7 +11,22 @@ const signupButton = document.getElementById('signup-button');
 const loginButton = document.getElementById('login-button');
 const logoutButton = document.getElementById('logout');
 
-export let isLoggedIn = false;
+let isLoggedIn = false;
+
+document.addEventListener('DOMContentLoaded', async function () {
+  try {
+    // 회원정보 조회 API 실행
+    const response = await axios.get('https://https.visitor.run/user', {
+      withCredentials: true,
+    });
+    isLoggedIn = true;
+    updateLoginButton(isLoggedIn);
+    // 조회된 정보 적용
+  } catch (err) {
+    // 오류 처리
+    updateLoginButton(isLoggedIn);
+  }
+});
 
 signupButton.addEventListener('click', () => {
   signup();
@@ -78,7 +93,7 @@ export async function login() {
     );
     alert('로그인 성공: ' + response);
     // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = 'https://front.visitor.run/'; // 수정할 URL로 변경 필요
+    window.location.href = './'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('로그인 실패: ' + err);

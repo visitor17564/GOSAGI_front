@@ -1,12 +1,10 @@
 import { searchProduct } from './search/search.js';
-import { isLoggedIn, updateLoginButton } from './auth.js';
 
 let page = 1;
 
 const productWrap = document.getElementById('product-wrap');
 
 export const generateProductCards = async (products, productWrap) => {
-  console.log(products);
   productWrap.innerHTML = products
     .map((product) => {
       const localesPoint = product.point.toLocaleString();
@@ -69,10 +67,7 @@ export const generateProductCards = async (products, productWrap) => {
 export async function getProduct(page) {
   try {
     // axios를 사용하여 로그인 API 실행
-
     const response = await axios.get(`https://https.visitor.run/goods/?page=${page}`);
-    isLoggedIn = true;
-    updateLoginButton(isLoggedIn);
     return response.data.data;
   } catch (err) {
     // 오류 처리
