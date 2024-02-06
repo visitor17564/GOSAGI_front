@@ -555,7 +555,7 @@ async function paymentProduct() {
       },
     );
 
-    window.location.href = "'https://visitor17564.github.io/GOSAGI_front/html/mypage/payment.html',";
+    window.location.href = "'https://front.gosagi.com/html/mypage/payment.html',";
   } catch (err) {
     alert(err.response.data.message);
   }

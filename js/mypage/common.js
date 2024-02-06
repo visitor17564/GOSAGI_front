@@ -30,7 +30,7 @@ $secessionBtn.addEventListener('click', async function (event) {
       });
 
       alert(response.data.message);
-      window.location.href = 'https://visitor17564.github.io/GOSAGI_front/';
+      window.location.href = './';
     } catch (err) {
       // 오류 처리
       alert(err.response.data.message);

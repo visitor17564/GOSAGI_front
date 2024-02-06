@@ -89,7 +89,7 @@ async function drawOrderList(response) {
             ${order.createdAt.slice(0, 10)}
             </th>
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-center">
-                <img src="./sourse/image/sample.png"
+                <img src="${order.product_thumbnail}"
                 class="aspect-square object-contain object-center w-32 overflow-hidden" alt=""
                 />
                 <div product-name class="w-full ml-5">${order.product_name}</div>
@@ -176,7 +176,6 @@ async function drawCart(orderId) {
     });
 
     const order = response.data.data;
-    console.log('order: ', order);
     // 상품 정보
     document.getElementById('order-modal-product-name').value = order.product_name;
     document.getElementById('order-modal-quantity').value = order.quantity;
@@ -295,7 +294,6 @@ async function returnRequestBtnClick() {
     button.addEventListener('click', async function () {
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
-      console.log('반품 신청');
 
       // 버튼 변경
       document.getElementById('order-modal-btn').innerHTML = `<button type="button" id="order-modal-order-return-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">반품 신청하기</button>`;

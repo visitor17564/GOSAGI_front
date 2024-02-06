@@ -1,6 +1,5 @@
 const $orderList = document.getElementById('order-list');
 const $cancelFinCnt = document.getElementById('cancel-fin-cnt');
-const $exchangeFinCnt = document.getElementById('exchange-fin-cnt');
 const $refundFinCnt = document.getElementById('refund-fin-cnt');
 const $periodBtns = document.querySelectorAll('[period-btn ]');
 let daysQuery = '';
@@ -17,10 +16,10 @@ async function initalize() {
 async function drawOrderList(response) {
   try {
     const orders = response.data.data.data;
+    console.log(orders);
 
     let btnHtml;
     let cancelFinCnt = 0;
-    let exchangeFinCnt = 0;
     let refundFinCnt = 0;
     let status;
 
@@ -41,13 +40,14 @@ async function drawOrderList(response) {
         }
         btnHtml = `<button class="h-5 w-1/2 justify-center border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']" style="cursor: default;">${status}</button>`;
 
+        btnHtml = `<button class="h-5 w-1/2 justify-center border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']" style="cursor: default;">${status}</button>`;
         let tempHtml = `
           <tr id="${order.id}" class="bg-white border-b ">
             <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap font-['Inter']">
             ${order.createdAt.slice(0, 10)}
             </th>
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-center">
-                <img src="${order.product.thumbnail_image}"
+                <img src="${order.product_thumbnail}"
                 class="aspect-square object-contain object-center w-32 overflow-hidden" alt=""
                 />
                 <div class="w-full ml-5">${order.product_name}</div>
@@ -75,7 +75,6 @@ async function drawOrderList(response) {
 
       $cancelFinCnt.innerText = cancelFinCnt;
       $refundFinCnt.innerText = refundFinCnt;
-      $exchangeFinCnt.innerText = exchangeFinCnt;
     }
     if (orders.length === 0) {
       let tempHtml = '<div>주문 내역이 존재하지 않습니다</div>';
