@@ -26,7 +26,6 @@ async function drawOrderList(response) {
     if (orders.length >= 1) {
       $orderList.innerHTML = '';
       orders.forEach((order) => {
-        console.log(order);
         if (order.status == 4) {
           (status = '주문취소'), cancelFinCnt++;
         }
@@ -36,6 +35,10 @@ async function drawOrderList(response) {
         if (order.status == 6) {
           (status = '반품완료'), refundFinCnt++;
         }
+        if (order.status == 7) {
+          (status = '교환신청'), exchangeFinCnt++;
+        }
+        btnHtml = `<button class="h-5 w-1/2 justify-center border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']" style="cursor: default;">${status}</button>`;
 
         btnHtml = `<button class="h-5 w-1/2 justify-center border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']" style="cursor: default;">${status}</button>`;
         let tempHtml = `
@@ -86,9 +89,17 @@ async function drawOrderList(response) {
 // 취소/반품목록 조회
 async function getAllOrderList(daysQuery, statusQuery) {
   // 취소/반품목록 조회 API 실행
-  const response = await axios.get(`http://localhost:3000/order/return?${daysQuery}`, {
-    withCredentials: true,
-  });
+  const response = await axios.get(
+    `https://back.gosagi.com/order/return?${daysQuery}${statusQuery}`,
+    {
+      start_period: '2024-01-10',
+      end_period: '2024-01-30',
+    },
+    {
+      withCredentials: true,
+    },
+  );
+
   await drawOrderList(response);
 }
 
@@ -103,7 +114,7 @@ const $90days = document.getElementById('90days');
 const $365days = document.getElementById('365days');
 
 // $searchButton.addEventListener('click', async function () {
-//   const response = await axios.get(`http://localhost:3000/order/return?`, {
+//   const response = await axios.get(`https://back.gosagi.com/order/return?`, {
 //     withCredentials: true,
 //   });
 // });

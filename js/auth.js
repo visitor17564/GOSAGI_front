@@ -12,11 +12,21 @@ const loginButton = document.getElementById('login-button');
 const logoutButton = document.getElementById('logout');
 
 let isLoggedIn = false;
-if (document.cookie.includes('authorization')) {
-  isLoggedIn = true;
-} else {
-  isLoggedIn = false;
-}
+
+document.addEventListener('DOMContentLoaded', async function () {
+  try {
+    // 회원정보 조회 API 실행
+    const response = await axios.get('https://back.gosagi.com/user', {
+      withCredentials: true,
+    });
+    isLoggedIn = true;
+    updateLoginButton(isLoggedIn);
+    // 조회된 정보 적용
+  } catch (err) {
+    // 오류 처리
+    updateLoginButton(isLoggedIn);
+  }
+});
 
 signupButton.addEventListener('click', () => {
   signup();
@@ -28,9 +38,9 @@ loginButton.addEventListener('click', () => {
 
 logoutButton.addEventListener('click', async () => {
   try {
-    const response = await axios.post(`http://localhost:3000/auth/logout`, {}, { withCredentials: true });
+    const response = await axios.post(`https://back.gosagi.com/auth/logout`, {}, { withCredentials: true });
     alert('로그아웃 성공');
-    window.location.href = 'http://localhost:5500/html/index.html'; // 수정할 URL로 변경 필요
+    window.location.href = 'https://front.visitor.run/'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('오류발생: ' + err);
@@ -46,7 +56,7 @@ export async function signup() {
   try {
     // axios를 사용하여 로그인 API 실행
     const response = await axios.post(
-      'http://localhost:3000/user/signup',
+      'https://back.gosagi.com/user/signup',
       {
         email,
         password,
@@ -59,7 +69,7 @@ export async function signup() {
     );
     alert('회원가입 성공: ' + response);
     // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = 'http://localhost:5500/html/index.html'; // 수정할 URL로 변경 필요
+    window.location.href = 'https://front.visitor.run/'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('회원가입 실패: ' + err);
@@ -72,7 +82,7 @@ export async function login() {
   try {
     // axios를 사용하여 로그인 API 실행
     const response = await axios.post(
-      'http://localhost:3000/auth/login',
+      'https://back.gosagi.com/auth/login',
       {
         email,
         password,
@@ -83,14 +93,14 @@ export async function login() {
     );
     alert('로그인 성공: ' + response);
     // 성공 시, 원하는 페이지로 리디렉션
-    window.location.href = 'http://localhost:5500/html/index.html'; // 수정할 URL로 변경 필요
+    window.location.href = './'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
     alert('로그인 실패: ' + err);
   }
 }
 
-function updateLoginButton() {
+export function updateLoginButton() {
   if (isLoggedIn) {
     // 로그인 상태인 경우, 로그인 버튼을 숨깁니다.
     loginDiv.style.display = 'none';
@@ -113,5 +123,3 @@ function updateLoginButton() {
     logoutBar.style.display = 'none ';
   }
 }
-
-updateLoginButton(isLoggedIn);

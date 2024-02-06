@@ -18,7 +18,7 @@ const $deleteQuestionButton = document.getElementById('delete-question-button');
 async function drawQuestionList() {
   try {
     // 문의 목록 조회 API 실행
-    const response = await axios.get('http://localhost:3000/question/myList', {
+    const response = await axios.get('https://back.gosagi.com/question/myList', {
       withCredentials: true,
     });
     const questions = response.data.data;
@@ -28,9 +28,9 @@ async function drawQuestionList() {
       const category = question.question.product_id < 3 ? '이용문의' : '상품문의';
       const waitAnswer = question.status === '답변대기' ? '' : 'hidden ';
       const completeAnswer = question.status === '답변대기' ? 'hidden ' : '';
-      let isPrivate = "";
+      let isPrivate = '';
       if (question.question.is_private === false) {
-        isPrivate = "hidden";
+        isPrivate = 'hidden';
       }
 
       let tempHtml = `
@@ -74,7 +74,7 @@ async function drawSelectQuestion() {
 
       try {
         // 문의 글 상세 조회 API 실행
-        const response = await axios.get(`http://localhost:3000/question/detail/${questionId}`, {
+        const response = await axios.get(`https://back.gosagi.com/question/detail/${questionId}`, {
           withCredentials: true,
         });
 
@@ -119,7 +119,7 @@ export async function createQuestion() {
   try {
     // 문의 글 저장 API 실행
     const response = await axios.post(
-      `http://localhost:3000/question`,
+      `https://back.gosagi.com/question`,
       {
         isPrivate: $terms.checked,
         productId: 1,
@@ -144,7 +144,7 @@ async function deleteQuestion(questionId, title, content) {
     try {
       // 문의 글 삭제(수정) API 실행
       const response = await axios.patch(
-        `http://localhost:3000/question/${questionId}`,
+        `https://back.gosagi.com/question/${questionId}`,
         {
           isDeleted: true,
           title,
@@ -170,7 +170,7 @@ async function editQuestion(questionId) {
   try {
     // 문의 글 수정 API 실행
     const response = await axios.patch(
-      `http://localhost:3000/question/${questionId}`,
+      `https://back.gosagi.com/question/${questionId}`,
       {
         isDeleted: false,
         title: $questionTitle.value,

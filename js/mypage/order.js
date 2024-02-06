@@ -131,7 +131,7 @@ async function drawOrderList(response) {
 // 전체 조회
 async function getAllOrderList() {
   // 주문 목록 전체 조회 API 실행
-  const response = await axios.get('http://localhost:3000/order', {
+  const response = await axios.get('https://back.gosagi.com/order', {
     withCredentials: true,
   });
 
@@ -157,7 +157,7 @@ async function getPeriodOrderList() {
         periodType = `${totalDays}days`;
       }
       // 주문 목록 기간 조회 API 실행
-      const response = await axios.get(`http://localhost:3000/order/?period=${periodType}`, {
+      const response = await axios.get(`https://back.gosagi.com/order/period?period=${periodType}`, {
         withCredentials: true,
       });
 
@@ -171,7 +171,7 @@ async function drawCart(orderId) {
   // 주문 상세 내역 조회
   try {
     // 문의 글 상세 조회 API 실행
-    const response = await axios.get(`http://localhost:3000/order/${orderId}`, {
+    const response = await axios.get(`https://back.gosagi.com/order/${orderId}`, {
       withCredentials: true,
     });
 
@@ -219,7 +219,7 @@ async function editOrderData(orderId) {
     try {
       // 배송지 수정 API 실행
       const response = await axios.patch(
-        `http://localhost:3000/order/address/${orderId}`,
+        `https://back.gosagi.com/order/address/${orderId}`,
         {
           receiver: document.getElementById('order-modal-receiver').value,
           receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
@@ -266,7 +266,7 @@ async function refundCompleted(orderId) {
       try {
         // 배송지 수정 API 실행
         const response = await axios.patch(
-          `http://localhost:3000/order/refund/${orderId}`,
+          `https://back.gosagi.com/order/refund/${orderId}`,
           {
             status: 4,
           },
@@ -312,7 +312,7 @@ async function returnRequest(orderId) {
       try {
         // 배송지 수정 API 실행
         const response = await axios.patch(
-          `http://localhost:3000/order/return/${orderId}`,
+          `https://back.gosagi.com/order/return/${orderId}`,
           {
             status: 5,
             // toss_order_id: aagsfbbs,
@@ -367,7 +367,7 @@ async function exchangeRequest(orderId, productId) {
       try {
         // 배송지 수정 API 실행
         const response = await axios.post(
-          `http://localhost:3000/order/exchange/${orderId}`,
+          `https://back.gosagi.com/order/exchange/${orderId}`,
           {
             status: 7,
             product_id: productId, // prodcut_id 반환해주는 기능이 필요함
@@ -410,7 +410,7 @@ async function purchaseConfirm() {
         try {
           // 구매 확정 API 실행
           const response = await axios.patch(
-            `http://localhost:3000/order/confirm/${orderId}`,
+            `https://back.gosagi.com/order/confirm/${orderId}`,
             {
               status: 3,
             },
