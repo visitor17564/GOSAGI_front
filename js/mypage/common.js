@@ -6,7 +6,7 @@ const $secessionBtn = document.getElementById('secession-btn');
 // document.addEventListener('DOMContentLoaded', async function () {
 //   try {
 //     // 회원정보 조회 API 실행
-//     const response = await axios.get('https://https.visitor.run/user', {
+//     const response = await axios.get('https://back.gosagi.com/user', {
 //       withCredentials: true,
 //     });
 
@@ -25,7 +25,7 @@ $secessionBtn.addEventListener('click', async function (event) {
   if (confirm('정말 탈퇴하시겠습니까?')) {
     try {
       // 회원 탈퇴 API 실행
-      const response = await axios.delete('https://https.visitor.run/user', {
+      const response = await axios.delete('https://back.gosagi.com/user', {
         withCredentials: true,
       });
 

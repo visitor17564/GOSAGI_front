@@ -68,7 +68,7 @@ export const generateProductCards = async (products, productWrap) => {
 export async function getProductByLocation(location, page) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`https://https.visitor.run/goods/location?location=${location}&page=${page}`);
+    const response = await axios.get(`https://back.gosagi.com/goods/location?location=${location}&page=${page}`);
     return response.data.data;
   } catch (err) {
     // 오류 처리
@@ -88,7 +88,7 @@ const COUNT_PER_PAGE = 12;
 export async function getTotalPageCount(location) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`https://https.visitor.run/goods/count/location?location=${location}`);
+    const response = await axios.get(`https://back.gosagi.com/goods/count/location?location=${location}`);
     return Math.ceil(response.data.data / COUNT_PER_PAGE);
   } catch (err) {
     // 오류 처리

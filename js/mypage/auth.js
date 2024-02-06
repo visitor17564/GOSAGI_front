@@ -9,7 +9,7 @@ const logoutButton = document.getElementById('logout');
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('https://https.visitor.run/user', {
+    const response = await axios.get('https://back.gosagi.com/user', {
       withCredentials: true,
     });
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 logoutButton.addEventListener('click', async () => {
   try {
-    const response = await axios.post(`https://https.visitor.run/auth/logout`, {}, { withCredentials: true });
+    const response = await axios.post(`https://back.gosagi.com/auth/logout`, {}, { withCredentials: true });
     alert('로그아웃 성공');
     window.location.href = 'https://visitor17564.github.io/GOSAGI_front/'; // 수정할 URL로 변경 필요
   } catch (err) {

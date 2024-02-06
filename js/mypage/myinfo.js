@@ -12,7 +12,7 @@ const $passwordEditBtn = document.getElementById('password-edit-btn');
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('https://https.visitor.run/user', {
+    const response = await axios.get('https://back.gosagi.com/user', {
       withCredentials: true,
     });
 
@@ -31,7 +31,7 @@ $nicknameEditBtn.addEventListener('click', async function (event) {
   try {
     // 내 정보 수정 API 실행
     const response = await axios.patch(
-      'https://https.visitor.run/user',
+      'https://back.gosagi.com/user',
       {
         nickname: $nickname.value,
       },
@@ -56,7 +56,7 @@ $passwordEditBtn.addEventListener('click', async function (event) {
   try {
     // 비밀번호 수정 API 실행
     const response = await axios.patch(
-      'https://https.visitor.run/user/password',
+      'https://back.gosagi.com/user/password',
       {
         currentPassword: $currentPassword.value,
         newPassword: $newPassword.value,

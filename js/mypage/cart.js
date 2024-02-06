@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function drawCartList() {
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('https://https.visitor.run/cart', {
+    const response = await axios.get('https://back.gosagi.com/cart', {
       withCredentials: true,
     });
 
@@ -199,7 +199,7 @@ $selectDeleteBtn.addEventListener('click', async function (e) {
 
       // 장바구니 삭제 API;
       try {
-        const response = await axios.delete(`https://https.visitor.run/cart/${cartId}`, {
+        const response = await axios.delete(`https://back.gosagi.com/cart/${cartId}`, {
           withCredentials: true,
         });
 
@@ -338,7 +338,7 @@ async function paymentProduct() {
     try {
       // 주문 내역 저장 API
       await axios.post(
-        `https://https.visitor.run/order`,
+        `https://back.gosagi.com/order`,
         {
           product_id: productId,
           status: 0,
@@ -356,7 +356,7 @@ async function paymentProduct() {
       );
 
       // 장바구니 삭제 API
-      await axios.delete(`https://https.visitor.run/cart/${cartId}`, {
+      await axios.delete(`https://back.gosagi.com/cart/${cartId}`, {
         withCredentials: true,
       });
 

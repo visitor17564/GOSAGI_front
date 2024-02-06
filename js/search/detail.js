@@ -45,7 +45,7 @@ wishDiv.addEventListener('click', async function (event) {
   let clickedElementId = event.currentTarget.id;
   if (isMyWish === false) {
     try {
-      await axios.post(`https://https.visitor.run/wish`, { product_id: productId }, { withCredentials: true });
+      await axios.post(`https://back.gosagi.com/wish`, { product_id: productId }, { withCredentials: true });
       alert('찜하기 성공');
       const wish = await getProductWish(productId);
       generateProductWish(wish);
@@ -54,7 +54,7 @@ wishDiv.addEventListener('click', async function (event) {
     }
   } else if (isMyWish === true) {
     try {
-      await axios.delete(`https://https.visitor.run/wish/${myWishId}`, { withCredentials: true });
+      await axios.delete(`https://back.gosagi.com/wish/${myWishId}`, { withCredentials: true });
       alert('찜취소 성공');
       const wish = await getProductWish(productId);
       generateProductWish(wish);
@@ -189,7 +189,7 @@ async function getUserId() {
   // 회원 로그인 id 조회 체크(닉네임으로 수정 필요 - 아영)
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('https://https.visitor.run/user', {
+    const response = await axios.get('https://back.gosagi.com/user', {
       withCredentials: true,
     });
 
@@ -291,7 +291,7 @@ let productId = parseInt(searchParams.get('productId'));
 export async function getProduct(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`https://https.visitor.run/goods/detail/${productId}`, { withCredentials: true });
+    const response = await axios.get(`https://back.gosagi.com/goods/detail/${productId}`, { withCredentials: true });
 
     return response.data.data;
   } catch (err) {
@@ -303,7 +303,7 @@ export async function getProduct(productId) {
 export async function getProductReview(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const review = await axios.get(`https://https.visitor.run/review/product/${productId}`, { withCredentials: true });
+    const review = await axios.get(`https://back.gosagi.com/review/product/${productId}`, { withCredentials: true });
     return review.data.data;
   } catch (err) {
     // 오류 처리
@@ -314,7 +314,7 @@ export async function getProductReview(productId) {
 export async function getProductQuestion(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const questions = await axios.get(`https://https.visitor.run/question/productList/${productId}`, { withCredentials: true });
+    const questions = await axios.get(`https://back.gosagi.com/question/productList/${productId}`, { withCredentials: true });
     return questions.data.data;
   } catch (err) {
     // 오류 처리
@@ -325,7 +325,7 @@ export async function getProductQuestion(productId) {
 export async function getProductWish(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const wishCount = await axios.get(`https://https.visitor.run/wish/${productId}`, { withCredentials: true });
+    const wishCount = await axios.get(`https://back.gosagi.com/wish/${productId}`, { withCredentials: true });
     return wishCount.data.data;
   } catch (err) {
     // 오류 처리
@@ -351,7 +351,7 @@ productQuestionButton.addEventListener('click', async () => {
   const isPrivate = document.getElementById('secret').checked;
   try {
     await axios.post(
-      `https://https.visitor.run/question`,
+      `https://back.gosagi.com/question`,
       {
         productId,
         title,
@@ -376,7 +376,7 @@ async function createCart() {
   const quantity = document.getElementById('quantity').value;
   try {
     const responseCart = await axios.post(
-      `https://https.visitor.run/cart`,
+      `https://back.gosagi.com/cart`,
       {
         product_id: productId,
         quantity: +quantity,
@@ -538,7 +538,7 @@ async function paymentProduct() {
   try {
     // 주문 내역 저장 API
     const response = await axios.post(
-      `https://https.visitor.run/order`,
+      `https://back.gosagi.com/order`,
       {
         product_id: productId,
         status: '결제완료',
@@ -573,7 +573,7 @@ async function drawSelectQuestion() {
 
       try {
         // 문의 글 상세 조회 API 실행
-        const response = await axios.get(`https://https.visitor.run/question/detail/${questionId}`, {
+        const response = await axios.get(`https://back.gosagi.com/question/detail/${questionId}`, {
           withCredentials: true,
         });
 

@@ -5,7 +5,7 @@ const reviewModalDiv = document.getElementById('review-modal-wrap');
 async function drawReviewList() {
   try {
     // 리뷰 조회 API 실행
-    const response = await axios.get('https://https.visitor.run/review', {
+    const response = await axios.get('https://back.gosagi.com/review', {
       withCredentials: true,
     });
 
@@ -81,7 +81,7 @@ document.addEventListener('click', async () => {
   if (String(clickedElementId).includes('fixReview')) {
     const stars = document.getElementsByName('score');
     try {
-      const review = await axios.get(`https://https.visitor.run/review/${reviewId}`, {
+      const review = await axios.get(`https://back.gosagi.com/review/${reviewId}`, {
         withCredentials: true,
       });
       const reviewContent = document.getElementById('review-content');
@@ -112,7 +112,7 @@ reviewFixButton.addEventListener('click', async () => {
 
 async function deleteReview(reviewId) {
   try {
-    await axios.delete(`https://https.visitor.run/review/${reviewId}`, {
+    await axios.delete(`https://back.gosagi.com/review/${reviewId}`, {
       withCredentials: true,
     });
     alert('리뷰가 삭제되었습니다.');
@@ -123,7 +123,7 @@ async function deleteReview(reviewId) {
 async function fixReview(reviewId, rate, content) {
   try {
     await axios.patch(
-      `https://https.visitor.run/review/${reviewId}`,
+      `https://back.gosagi.com/review/${reviewId}`,
       {
         rate,
         content,
