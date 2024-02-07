@@ -1,11 +1,13 @@
-const loginDiv = document.getElementById('login');
+const loginDiv = document.getElementById('login-div');
 const loginBar = document.getElementById('login-bar');
-const signupDiv = document.getElementById('signup');
+const signupDiv = document.getElementById('signup-div');
 const signupBar = document.getElementById('signup-bar');
-const logoutDiv = document.getElementById('logout');
+const logoutDiv = document.getElementById('logout-div');
 const logoutBar = document.getElementById('logout-bar');
-const myPageDiv = document.getElementById('my-page');
+const myPageDiv = document.getElementById('my-page-div');
 const myPageBar = document.getElementById('my-page-bar');
+const cartDiv = document.getElementById('cart');
+const cartBar = document.getElementById('cart-bar');
 
 const signupButton = document.getElementById('signup-button');
 const loginButton = document.getElementById('login-button');
@@ -15,10 +17,12 @@ let isLoggedIn = false;
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
-    // 회원정보 조회 API 실행
-    const response = await axios.get('https://back.gosagi.com/user', {
+    // 장바구니조회 API 실행
+    const response = await axios.get('https://back.gosagi.com/cart', {
       withCredentials: true,
     });
+    const cartsCount = response.data.data.cart_count;
+    drawCartCount(cartsCount);
     isLoggedIn = true;
     updateLoginButton(isLoggedIn);
     // 조회된 정보 적용
@@ -43,7 +47,7 @@ logoutButton.addEventListener('click', async () => {
     location.reload(); // 새로고침
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 });
 
@@ -72,7 +76,7 @@ export async function signup() {
     location.reload(); // 새로고침
   } catch (err) {
     // 오류 처리
-    alert('회원가입 실패: ' + err);
+    alert('회원가입 실패: ' + err.response.data.message);
   }
 }
 
@@ -95,7 +99,7 @@ export async function login() {
     location.reload(); // 새로고침
   } catch (err) {
     // 오류 처리
-    alert('로그인 실패: ' + err);
+    alert('로그인 실패: ' + err.response.data.message);
   }
 }
 
@@ -110,15 +114,23 @@ export function updateLoginButton() {
     myPageBar.style.display = 'block';
     logoutDiv.style.display = 'block';
     logoutBar.style.display = 'block';
+    cartDiv.style.display = 'block';
+    cartBar.style.display = 'block';
   } else {
     // 로그인 상태가 아닌 경우, 로그인 버튼을 표시합니다.
-    loginDiv.style.display = 'block';
-    loginBar.style.display = 'block';
-    signupDiv.style.display = 'block';
-    signupBar.style.display = 'block';
+    // loginDiv.style.display = 'block';
+    // loginBar.style.display = 'block';
+    // signupDiv.style.display = 'block';
+    // signupBar.style.display = 'block';
     myPageDiv.style.display = 'none';
     myPageBar.style.display = 'none';
     logoutDiv.style.display = 'none';
     logoutBar.style.display = 'none ';
+    cartDiv.style.display = 'none';
+    cartBar.style.display = 'none';
   }
+}
+
+export function drawCartCount(cartsCount) {
+  cartDiv.innerHTML = `<button class="text-center text-white text-xs font-normal font-['Inter']"><a href="/html/mypage/cart.html">장바구니(${cartsCount})</a></button>`;
 }

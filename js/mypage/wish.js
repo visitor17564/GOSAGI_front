@@ -19,8 +19,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (wish.productStoreId === 1 || wish.productStoreId === 2) {
           pushCart = 'hidden ';
         }
+        let onlyForSale = 'hidden ';
+        if (wish.productPoint.toLocaleString() !== 0) {
+          onlyForSale = '';
+        }
+
         let tempHtml = `
-          <tr id="wish-id-${wish.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr id="wish-id-${wish.id}" class="bg-white border-b">
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-start">
               <a class="flex justify-center items-center" href="/html/search/detail.html?productId=${wish.product_id}" >
                 <img src="${wish.productThumbnail}" class="aspect-square w-24 h-auto" />
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async function () {
               </a>
             </td>
             <td class="px-6 py-4 font-['Inter'] text-center">
-              <div class="flex justify-end items-center">
+              <div class="${onlyForSale}flex justify-end items-center">
                 <div class="text-right">답례품 포인트가</div>
                 <div class="text-right ml-5 text-2xl">${wish.productPoint.toLocaleString()}</div>
               </div>
@@ -56,8 +61,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     deleteWish();
     createCart();
   } catch (err) {
-    console.log(err);
-    alert(`에러가 발생했습니다. 상세 내용은 관리에게 문의 바랍니다.`);
+    alert(err.response.data.message);
   }
 });
 
@@ -119,7 +123,7 @@ async function deleteWish() {
 
         alert(response.data.message);
       } catch (err) {
-        alert(err);
+        alert(err.response.data.message);
       }
     });
   });

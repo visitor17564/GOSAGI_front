@@ -76,7 +76,7 @@ export async function getProductByCategory(category, page) {
     return response.data.data;
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
@@ -96,7 +96,7 @@ export async function getTotalPageCount(category) {
     return Math.ceil(response.data.data / COUNT_PER_PAGE);
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 

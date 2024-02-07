@@ -18,7 +18,7 @@ export async function searchProduct(keyword, page) {
     await generateProductCards(response.data.data, productWrap);
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
