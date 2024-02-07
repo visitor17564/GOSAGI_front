@@ -19,28 +19,28 @@
           <!-- 최상단 헤더 -->
           <div class="w-full h-5 bg-zinc-800 flex items-center justify-center">
             <div class="w-8/12 relative justify-end inline-flex">
-              <div class="h-3.5 justify-end items-center gap-1 flex">
-                <div class="h-3.5 justify-between items-center flex">
-                  <button type="button" id="signup" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-xs font-normal font-['Inter']">회원가입</button>
+              <div class="h-3.5 flex justify-end items-center gap-1">
+                <div id="signup-div" class="justify-center items-center flex">
+                  <button type="button" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-xs font-normal font-['Inter']">회원가입</button>
                 </div>
-                <div id="signup-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="h-3.5 justify-between items-center flex">
-                  <button id="login" data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-xs font-normal font-['Inter']">로그인</button>
+                <div id="signup-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div id="login-div" class="justify-center items-center flex">
+                  <button data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-xs font-normal font-['Inter']">로그인</button>
                 </div>
-                <div id="login-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="h-3.5 justify-between items-center flex">
+                <div id="login-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div id="logout-div" class="justify-center items-center flex">
                   <button type="submit" id="logout" class="text-center text-white text-xs font-normal font-['Inter']">로그아웃</button>
                 </div>
-                <div id="logout-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="h-3.5 justify-between items-center flex">
-                  <button class="text-center text-white text-xs font-normal font-['Inter']"><a href="/html/mypage/cart.html">장바구니(0)</a></button>
+                <div id="logout-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div id="cart" class="justify-center items-center flex">
+                  <a href="/html/mypage/cart.html" class="text-center text-white text-xs font-normal font-['Inter']">장바구니(0)</a>
                 </div>
-                <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="justify-center items-center gap-2.5 flex">
-                  <button id="my-page" class="text-center text-white text-xs font-normal font-['Inter']"><a href="../mypage/myinfo.html">마이페이지 ▼</a></button>
+                <div id="cart-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div id="my-page-div" class="justify-center items-center gap-2.5 flex">
+                  <a href="../mypage/myinfo.html" class="text-center text-white text-xs font-normal font-['Inter']">마이페이지</a>
                 </div>
-                <div id="my-page-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="justify-center items-center gap-2.5 flex">
+                <div id="my-page-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div class="justify-center items-center flex">
                   <button class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</button>
                 </div>
               </div>
