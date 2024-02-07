@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           pushCart = 'hidden ';
         }
         let tempHtml = `
-          <tr id="wish-id-${wish.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr id="wish-id-${wish.id}" class="bg-white border-b">
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-start">
               <a class="flex justify-center items-center" href="/html/search/detail.html?productId=${wish.product_id}" >
                 <img src="${wish.productThumbnail}" class="aspect-square w-24 h-auto" />
