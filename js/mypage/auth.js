@@ -1,5 +1,7 @@
 const logoutButton = document.getElementById('logout');
 const $secessionBtn = document.getElementById('secession-btn');
+const cartDiv = document.getElementById('cart');
+console.log(cartDiv);
 
 document.addEventListener('DOMContentLoaded', async function () {
   try {
@@ -14,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   } catch (err) {
     alert('로그인을 진행해주세요');
     console.log(err);
-    // window.location.href = '/';
+    window.location.href = '/';
   }
 });
 
