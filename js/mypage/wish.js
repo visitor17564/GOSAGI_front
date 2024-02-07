@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (wish.productStoreId === 1 || wish.productStoreId === 2) {
           pushCart = 'hidden ';
         }
+        let onlyForSale = 'hidden ';
+        if (wish.productPoint.toLocaleString() !== 0) {
+          onlyForSale = '';
+        }
+
         let tempHtml = `
           <tr id="wish-id-${wish.id}" class="bg-white border-b">
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-start">
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async function () {
               </a>
             </td>
             <td class="px-6 py-4 font-['Inter'] text-center">
-              <div class="flex justify-end items-center">
+              <div class="${onlyForSale}flex justify-end items-center">
                 <div class="text-right">답례품 포인트가</div>
                 <div class="text-right ml-5 text-2xl">${wish.productPoint.toLocaleString()}</div>
               </div>
