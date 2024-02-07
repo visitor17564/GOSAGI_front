@@ -1,24 +1,6 @@
 const logoutButton = document.getElementById('logout');
 const $secessionBtn = document.getElementById('secession-btn');
 const cartDiv = document.getElementById('cart');
-console.log(cartDiv);
-
-document.addEventListener('DOMContentLoaded', async function () {
-  try {
-    // 장바구니조회 API 실행
-    const response = await axios.get('https://back.gosagi.com/cart', {
-      withCredentials: true,
-    });
-    const cartsCount = response.data.data.cart_count;
-    drawCartCount(cartsCount);
-    isLoggedIn = true;
-    // 조회된 정보 적용
-  } catch (err) {
-    alert('로그인을 진행해주세요');
-    console.log(err);
-    window.location.href = '/';
-  }
-});
 
 logoutButton.addEventListener('click', async () => {
   try {
@@ -52,3 +34,19 @@ $secessionBtn.addEventListener('click', async function (event) {
 export function drawCartCount(cartsCount) {
   cartDiv.innerHTML = `<button class="text-center text-white text-xs font-normal font-['Inter']"><a href="/html/mypage/cart.html">장바구니(${cartsCount})</a></button>`;
 }
+
+document.addEventListener('DOMContentLoaded', async function () {
+  try {
+    // 장바구니조회 API 실행
+    const response = await axios.get('https://back.gosagi.com/cart', {
+      withCredentials: true,
+    });
+    const cartsCount = response.data.data.cart_count;
+    drawCartCount(cartsCount);
+    // 조회된 정보 적용
+  } catch (err) {
+    alert('로그인을 진행해주세요');
+    console.log(err);
+    // window.location.href = '/';
+  }
+});
