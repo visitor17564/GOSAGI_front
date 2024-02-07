@@ -30,6 +30,6 @@ logoutButton.addEventListener('click', async () => {
     window.location.href = './'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 });

@@ -16,7 +16,7 @@ export async function getMostView() {
     generateProductCards(products, mostView);
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
@@ -29,7 +29,7 @@ export async function getMostWish() {
     generateProductCards(products, mostWish);
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
@@ -42,7 +42,7 @@ export async function getPopular() {
     generateProductCards(products, popular);
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
@@ -55,7 +55,7 @@ export async function getMostPurchase() {
     generateProductCards(products, mostPurchase);
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
@@ -68,7 +68,7 @@ export async function getMostRate() {
     generateProductCards(products, mostRate);
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 

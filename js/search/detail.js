@@ -50,7 +50,7 @@ wishDiv.addEventListener('click', async function (event) {
       const wish = await getProductWish(productId);
       generateProductWish(wish);
     } catch (err) {
-      alert('오류발생: ' + err);
+      alert('오류발생: ' + err.response.data.message);
     }
   } else if (isMyWish === true) {
     try {
@@ -59,7 +59,7 @@ wishDiv.addEventListener('click', async function (event) {
       const wish = await getProductWish(productId);
       generateProductWish(wish);
     } catch (err) {
-      alert('오류발생: ' + err);
+      alert('오류발생: ' + err.response.data.message);
     }
   }
 });
@@ -296,7 +296,7 @@ export async function getProduct(productId) {
     return response.data.data;
   } catch (err) {
     // 오류 처리
-    alert(err);
+    alert(err.response.data.message);
   }
 }
 
@@ -307,7 +307,7 @@ export async function getProductReview(productId) {
     return review.data.data;
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
@@ -318,7 +318,7 @@ export async function getProductQuestion(productId) {
     return questions.data.data;
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
@@ -329,7 +329,7 @@ export async function getProductWish(productId) {
     return wishCount.data.data;
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
@@ -363,7 +363,7 @@ productQuestionButton.addEventListener('click', async () => {
     alert('문의글 등록 성공');
     location.reload();
   } catch (err) {
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 });
 

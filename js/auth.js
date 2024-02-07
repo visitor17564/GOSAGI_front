@@ -43,7 +43,7 @@ logoutButton.addEventListener('click', async () => {
     location.reload(); // 새로고침
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 });
 
@@ -72,7 +72,7 @@ export async function signup() {
     location.reload(); // 새로고침
   } catch (err) {
     // 오류 처리
-    alert('회원가입 실패: ' + err);
+    alert('회원가입 실패: ' + err.response.data.message);
   }
 }
 
@@ -95,7 +95,7 @@ export async function login() {
     location.reload(); // 새로고침
   } catch (err) {
     // 오류 처리
-    alert('로그인 실패: ' + err);
+    alert('로그인 실패: ' + err.response.data.message);
   }
 }
 

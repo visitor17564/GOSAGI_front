@@ -56,8 +56,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     deleteWish();
     createCart();
   } catch (err) {
-    console.log(err);
-    alert(`에러가 발생했습니다. 상세 내용은 관리에게 문의 바랍니다.`);
+    alert(err.response.data.message);
   }
 });
 
@@ -119,7 +118,7 @@ async function deleteWish() {
 
         alert(response.data.message);
       } catch (err) {
-        alert(err);
+        alert(err.response.data.message);
       }
     });
   });
