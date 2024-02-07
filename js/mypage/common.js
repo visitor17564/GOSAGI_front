@@ -15,7 +15,7 @@ const $secessionBtn = document.getElementById('secession-btn');
 //     // 오류 처리
 //     alert(`${err.response.data.message}`);
 //     if (err.response.data.message === "로그인을 진행해주세요.") {
-//       window.location.href = "https://visitor17564.github.io/GOSAGI_front/";
+//       window.location.href = "./";
 //     }
 //   }
 // });
@@ -30,7 +30,7 @@ $secessionBtn.addEventListener('click', async function (event) {
       });
 
       alert(response.data.message);
-      window.location.href = 'https://visitor17564.github.io/GOSAGI_front/';
+      window.location.href = './';
     } catch (err) {
       // 오류 처리
       alert(err.response.data.message);
