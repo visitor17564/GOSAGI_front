@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     // 조회된 정보 적용
   } catch (err) {
     alert('로그인을 진행해주세요');
-    window.location.href = '/';
+    console.log(err);
+    // window.location.href = '/';
   }
 });
 
