@@ -19,18 +19,18 @@
           <div class="w-full h-5 bg-zinc-800 flex items-center justify-center">
             <div class="w-8/12 relative justify-end inline-flex">
               <div class="h-3.5 justify-end items-center gap-1 flex">
-                <div class="h-3.5 justify-between items-center flex">
-                  <button type="button" id="signup" class="text-center text-white text-xs font-normal font-['Inter']">회원가입</button>
+                <!-- <div class="h-3.5 justify-between items-center flex">
+                  <button type="button" id="signup" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-xs font-normal font-['Inter']">회원가입</button>
                 </div>
-                <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
+                <div id="signup-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
                 <div class="h-3.5 justify-between items-center flex">
-                  <button id="login" class="text-center text-white text-xs font-normal font-['Inter']">로그인</button>
+                  <button id="login" data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-xs font-normal font-['Inter']">로그인</button>
                 </div>
-                <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
+                <div id="login-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div> -->
                 <div class="h-3.5 justify-between items-center flex">
-                  <button class="text-center text-white text-xs font-normal font-['Inter']">로그아웃</button>
+                  <button type="submit" id="logout" class="text-center text-white text-xs font-normal font-['Inter']">로그아웃</button>
                 </div>
-                <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
+                <div id="logout-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
                 <div class="h-3.5 justify-between items-center flex">
                   <button class="text-center text-white text-xs font-normal font-['Inter']"><a href="./cart.html">장바구니(0)</a></button>
                 </div>
@@ -38,7 +38,7 @@
                 <div class="justify-center items-center gap-2.5 flex">
                   <button class="text-center text-white text-xs font-normal font-['Inter']"><a href="./myinfo.html">마이페이지 ▼</a></button>
                 </div>
-                <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
+                <div id="my-page-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
                 <div class="justify-center items-center gap-2.5 flex">
                   <button class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</button>
                 </div>
@@ -158,7 +158,7 @@
             </div>
 
             <!-- 결제내역(제목) -->
-            <div class="justify-center mt-12 text-black text-2xl font-bold self-start whitespace-nowrap font-['Inter']">주문내역/배송조회</div>
+            <div class="justify-center mt-12 text-black text-2xl font-bold self-start whitespace-nowrap font-['Inter']">취소/반품조회</div>
             <!-- 주문상태 -->
             <div class="items-center mt-5 border bg-white flex justify-between gap-5 px-16 py-8 border-solid border-neutral-200 max-md:flex-wrap max-md:px-5">
               <div class="items-stretch self-stretch flex grow basis-[0%] flex-col">
@@ -166,11 +166,6 @@
                 <div class="text-black text-base whitespace-nowrap mt-1.5 mx-auto">취소</div>
               </div>
               <div class="w-8 h-px -rotate-90 border border-stone-300" bis_skin_checked="1"></div>
-              <!-- <div class="items-center self-stretch flex grow basis-[0%] flex-col">
-                <div id="exchange-fin-cnt" class="text-stone-300 text-5xl whitespace-nowrap mx-auto max-md:text-4xl">0</div>
-                <div class="text-black text-base self-center whitespace-nowrap mt-1.5">교환</div>
-              </div>
-              <div class="w-8 h-px -rotate-90 border border-stone-300" bis_skin_checked="1"></div> -->
               <div class="items-stretch self-stretch flex grow basis-[0%] flex-col">
                 <div id="refund-fin-cnt" class="text-red-500 text-5xl whitespace-nowrap mx-auto max-md:text-4xl">0</div>
                 <div class="text-red-500 text-base whitespace-nowrap mt-1.5 mx-auto">반품</div>
