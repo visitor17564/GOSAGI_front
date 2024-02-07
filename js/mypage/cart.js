@@ -52,7 +52,7 @@ async function drawCartList() {
               </div>
             </th>
             <td>
-            <a class="px-6 py-4 font-['Inter'] flex items-center justify-center" href="./html/search/detail.html?productId=${cart.product_id}">
+            <a class="px-6 py-4 font-['Inter'] flex items-center justify-center" href="/html/search/detail.html?productId=${cart.product_id}">
               <img src="${cart.productThumbnail}" class="aspect-square object-contain object-center w-32 overflow-hidden" />
               <div product-name class="w-full ml-5">${cart.productName}</div>
             </a>
@@ -360,7 +360,7 @@ async function paymentProduct() {
         withCredentials: true,
       });
 
-      window.location.href = './html/mypage/order.html';
+      window.location.href = '/html/mypage/order.html';
     } catch (err) {
       alert(err.response.data.message);
     }
