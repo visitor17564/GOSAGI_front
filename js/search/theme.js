@@ -50,7 +50,7 @@ export async function getMostPurchase() {
   try {
     // axios를 사용하여 로그인 API 실행
 
-    const response = await axios.get(`https://back.gosagi.com/goods/bestProducts`, { withCredentials: true });
+    const response = await axios.get(`https://back.gosagi.com/goods/bestOrders`, { withCredentials: true });
     const products = response.data.data;
     generateProductCards(products, mostPurchase);
   } catch (err) {
@@ -63,7 +63,7 @@ export async function getMostRate() {
   try {
     // axios를 사용하여 로그인 API 실행
 
-    const response = await axios.get(`https://back.gosagi.com/goods/bestProducts`, { withCredentials: true });
+    const response = await axios.get(`https://back.gosagi.com/goods/reviewRate`, { withCredentials: true });
     const products = response.data.data;
     generateProductCards(products, mostRate);
   } catch (err) {

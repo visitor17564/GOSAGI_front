@@ -15,7 +15,7 @@ async function drawAddressList() {
           <p>${address.address_name}</p>
         </th>
         <td class="px-6 py-4 font-['Inter'] text-center">${address.name}</td>
-        <td class="px-6 py-4 font-['Inter'] text-center">${address.name}${address.detail_address}</td>
+        <td class="px-6 py-4 font-['Inter'] text-center">${address.address}${address.detail_address}</td>
         <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">${address.phone}</td>
         <td class="text-center px-6 py-3 gap-2 flex flex-col justify-center items-center">
           <button id="fixAddress:${address.id}" data-modal-target="fix-address-modal" data-modal-toggle="fix-address-modal" class="h-5 w-10 hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">수정</button>

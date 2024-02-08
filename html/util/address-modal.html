@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/js/util/address-modal.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <!-- 문의 내용 조회 -->
+    <div class="mt-5 relative overflow-x-auto">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs items-center text-gray-700 uppercase bg-gray-50">
+          <tr>
+            <th scope="col" class="text-center px-6 py-3 font-['Inter']">배송지명</th>
+            <th scope="col" class="text-center px-6 py-3 font-['Inter']">수령인</th>
+            <th scope="col" class="text-center px-6 py-3 font-['Inter']">주소</th>
+            <th scope="col" class="text-center px-6 py-3 font-['Inter']">연락처</th>
+            <th scope="col" class="text-center px-6 py-3 font-['Inter']">선택</th>
+          </tr>
+        </thead>
+        <tbody id="address-wrap"></tbody>
+      </table>
+      <div class="flex items-center justify-end">
+        <a href="/html/mypage/address.html" target="_blank" class="h-8 w-32 mt-10 mr-5 hover:bg-white hover:text-orange-400 border border-orange-400 text-white text-center bg-orange-400 items-center rounded-2xl max-md:max-w-full max-md:px-5 font-['Inter']">배송지 관리</a>
+      </div>
+    </div>
+  </body>
+</html>

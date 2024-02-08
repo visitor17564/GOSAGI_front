@@ -110,18 +110,7 @@ export function updateLoginButton() {
     loginBar.style.display = 'none';
     signupDiv.style.display = 'none';
     signupBar.style.display = 'none';
-    myPageDiv.style.display = 'block';
-    myPageBar.style.display = 'block';
-    logoutDiv.style.display = 'block';
-    logoutBar.style.display = 'block';
-    cartDiv.style.display = 'block';
-    cartBar.style.display = 'block';
   } else {
-    // 로그인 상태가 아닌 경우, 로그인 버튼을 표시합니다.
-    // loginDiv.style.display = 'block';
-    // loginBar.style.display = 'block';
-    // signupDiv.style.display = 'block';
-    // signupBar.style.display = 'block';
     myPageDiv.style.display = 'none';
     myPageBar.style.display = 'none';
     logoutDiv.style.display = 'none';
