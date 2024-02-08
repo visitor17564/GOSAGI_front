@@ -11,13 +11,15 @@ const $cartModalOrderListBottom = document.getElementById('cart-modal-order-list
 const $cartModalTotalPrice = document.getElementById('cart-modal-total-price');
 
 const $cartModalReceiver = document.getElementById('cart-modal-receiver');
-const $cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
+const $cartModalPhonenumber = document.getElementById('cart-modal-phone-number');
 
 const $postcode = document.getElementById('postcode');
 const $address = document.getElementById('address');
 const $deliveryRequest = document.getElementById('delivery-request');
 
 const tossModal = document.getElementById('toss-modal');
+
+const chooseAddress = document.getElementById('choose-address');
 
 document.addEventListener('DOMContentLoaded', async function () {
   await drawCartList();
@@ -116,19 +118,47 @@ $allBuyBtn.addEventListener('click', async function (e) {
 // 선택 장바구니 목록 조회
 async function drawSelectCart() {
   const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]:checked');
-  if ($allCheckboxes.length === 0) {
-    alert('선택된 상품이 없습니다.');
-    location.reload();
-    return;
-  }
   const $orderSelectInfo = document.querySelectorAll('[order-select-info]');
   $orderSelectInfo.forEach((element) => {
     element.remove();
   });
+  if ($allCheckboxes.length === 0) {
+    alert('선택된 상품이 없습니다.');
+    location.reload();
+    return;
+  } else if ($allCheckboxes.length === 1) {
+    try {
+      $allCheckboxes.forEach(async (checkbox) => {
+        const currentRow = checkbox.closest('tr'); // 가장 가까운 태그 조회
+        const cartId = currentRow.id;
+        const productName = currentRow.querySelector('[product-name]').innerHTML;
+        const quantity = currentRow.querySelector('[quantity]').value;
+        const productTotalPrice = currentRow.querySelector('[product-total-price]').innerHTML;
 
-  try {
-    $allCheckboxes.forEach(async (checkbox) => {
-      const currentRow = checkbox.closest('tr'); // 가장 가까운 태그 조회
+        let tempHtml = `
+          <div order-select-info class="mb-5 w-full">
+            <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">상품명</label>
+            <input cart-modal-product-name type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productName}" disabled />
+          </div>
+          <div order-select-info class="mb-5 w-full">
+            <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">가격</label>
+            <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productTotalPrice}" disabled />
+          </div>
+          <div order-select-info class="mb-5 w-full">
+            <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수량</label>
+            <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${quantity}" disabled />
+          </div>
+        `;
+
+        $cartModalOrderListBottom.insertAdjacentHTML('beforebegin', tempHtml);
+        $cartModalTotalPrice.value = $totalPrice.textContent;
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    try {
+      const currentRow = $allCheckboxes[0].closest('tr'); // 가장 가까운 태그 조회
       const cartId = currentRow.id;
       const productName = currentRow.querySelector('[product-name]').innerHTML;
       const quantity = currentRow.querySelector('[quantity]').value;
@@ -137,23 +167,14 @@ async function drawSelectCart() {
       let tempHtml = `
         <div order-select-info class="mb-5 w-full">
           <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">상품명</label>
-          <input cart-modal-product-name type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productName}" disabled />
-        </div>
-        <div order-select-info class="mb-5 w-full">
-          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">가격</label>
-          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productTotalPrice}" disabled />
-        </div>
-        <div order-select-info class="mb-5 w-full">
-          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수량</label>
-          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${quantity}" disabled />
+          <input cart-modal-product-name type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productName} 외 ${$allCheckboxes.length - 1}" disabled />
         </div>
       `;
-
       $cartModalOrderListBottom.insertAdjacentHTML('beforebegin', tempHtml);
       $cartModalTotalPrice.value = $totalPrice.textContent;
-    });
-  } catch (err) {
-    console.log(err);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
@@ -329,12 +350,10 @@ async function paymentProduct() {
   const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]:checked');
 
   $allCheckboxes.forEach(async (cart) => {
-    console.log('cart: ', cart);
     const currentRow = cart.closest('tr'); // 가장 가까운 태그 조회
     const cartId = currentRow.id;
     const productId = currentRow.title;
     const quantity = currentRow.querySelector('[quantity]');
-    console.log('quantity: ', quantity);
     try {
       // 주문 내역 저장 API
       await axios.post(
@@ -418,4 +437,8 @@ document.getElementById('address-search-btn').addEventListener('click', () => {
       addressDetail.focus();
     },
   }).open();
+});
+
+chooseAddress.addEventListener('click', function () {
+  window.open('/html/util/address-modal.html', '_blank', 'width=1500,height=500');
 });

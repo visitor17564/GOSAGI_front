@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src=".//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://js.tosspayments.com/v1/payment-widget"></script>
     <link rel="stylesheet" href="/css/toss.css" />
     <script type="module" src="/js/search/detail.js"></script>
@@ -22,26 +22,26 @@
           <!-- 최상단 헤더 -->
           <div class="w-full h-5 bg-zinc-800 flex items-center justify-center">
             <div class="w-8/12 relative justify-end inline-flex">
-              <div class="h-3.5 justify-end items-center gap-1 flex">
-                <div class="h-3.5 justify-between items-center flex">
-                  <button type="button" id="signup" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-xs font-normal font-['Inter']">회원가입</button>
+              <div class="h-3.5 flex justify-end items-center gap-1">
+                <div id="signup-div" class="justify-center items-center flex">
+                  <button type="button" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-xs font-normal font-['Inter']">회원가입</button>
                 </div>
-                <div id="signup-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="h-3.5 justify-between items-center flex">
-                  <button id="login" data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-xs font-normal font-['Inter']">로그인</button>
+                <div id="signup-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div id="login-div" class="justify-center items-center flex">
+                  <button data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-xs font-normal font-['Inter']">로그인</button>
                 </div>
-                <div id="login-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="h-3.5 justify-between items-center flex">
+                <div id="login-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div id="logout-div" class="justify-center items-center flex">
                   <button type="submit" id="logout" class="text-center text-white text-xs font-normal font-['Inter']">로그아웃</button>
                 </div>
-                <div id="logout-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="h-3.5 justify-between items-center flex"></div>
-                <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="justify-center items-center gap-2.5 flex">
-                  <button id="my-page" class="text-center text-white text-xs font-normal font-['Inter']"><a href="./myinfo.html">마이페이지 ▼</a></button>
+                <div id="logout-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div id="cart" class="justify-center items-center flex"></div>
+                <div id="cart-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div id="my-page-div" class="justify-center items-center gap-2.5 flex">
+                  <a href="/html/mypage//myinfo.html" class="text-center text-white text-xs font-normal font-['Inter']">마이페이지</a>
                 </div>
-                <div id="my-page-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="justify-center items-center gap-2.5 flex">
+                <div id="my-page-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
+                <div class="justify-center items-center flex">
                   <button class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</button>
                 </div>
               </div>
@@ -178,8 +178,6 @@
             <button tyoe="button" id="product-information-div-button" class="h-full text-black text-center items-center border bg-white grow justify-center border-solid border-red-500 font-['Inter']">상품정보</button>
             <button tyoe="button" id="product-review-div-button" class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">상품후기(0)</button>
             <button tyoe="button" id="product-question-div-button" class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">상품문의(0)</button>
-            <button tyoe="button" id="product-notice-div-button" class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">상품고시</button>
-            <button tyoe="button" id="product-order-div-button" class="h-full text-black text-center items-center border bg-neutral-100 grow justify-center border-solid border-zinc-300 font-['Inter']">배송/반품/교환</button>
           </div>
           <div id="product-detail" class="flex justify-center"></div>
           <!-- 상품후기 -->
@@ -392,11 +390,12 @@
                   <input type="text" id="cart-modal-total-price" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="" disabled />
                 </div>
                 <div class="flex justify-between items-center">
-                  <div class="text-xl mb-2 max-md:max-w-full font-['Inter']">
+                  <div class="w-1/2 text-xl mb-2 max-md:max-w-full font-['Inter']">
                     <strong>배송정보</strong>
                   </div>
-                  <button class="h-8 w-1/4 justify-center border border-orange-400 text-orange-400 text-center text-xl bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">직접 입력</button>
-                  <button class="h-8 w-1/4 justify-center border border-orange-400 text-orange-400 text-center text-xl bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">배송지선택</button>
+                  <div class="w-1/2 gap-3 flex justify-end items-center">
+                    <div id="choose-address" class="h-8 px-5 justify-center border border-orange-400 text-orange-400 bg-white hover:bg-orange-400 hover:text-white hover:cursor-pointer text-center text-xl items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">배송지선택</div>
+                  </div>
                 </div>
                 <div class="mb-5 w-full">
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수령인</label>
@@ -404,7 +403,7 @@
                 </div>
                 <div class="mb-5 w-full">
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수령인 연락처</label>
-                  <input type="text" id="cart-modal-phonenumber" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="연락처를 입력해주세요" required />
+                  <input type="text" id="cart-modal-phone-number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="연락처를 입력해주세요" required />
                 </div>
                 <div class="mb-5 w-full">
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">배송지주소</label>

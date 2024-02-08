@@ -1,4 +1,6 @@
 const productQuestionButton = document.getElementById('product-question-button');
+const productQuestionDivButton = document.getElementById('product-question-div-button');
+const productReviewDivButton = document.getElementById('product-review-div-button');
 
 const thumbnail = document.getElementById('product-thumbnail');
 const basicInfo = document.getElementById('product-basic-info');
@@ -41,6 +43,8 @@ const $questionViewModalAnswer = document.getElementById('question-view-modal-an
 const $questionViewTitle = document.getElementById('question-view-title');
 const $questionViewContent = document.getElementById('question-view-content');
 
+const chooseAddress = document.getElementById('choose-address');
+
 wishDiv.addEventListener('click', async function (event) {
   let clickedElementId = event.currentTarget.id;
   if (isMyWish === false) {
@@ -70,6 +74,7 @@ export const generateProductCard = async (product, reviews) => {
   const imgFixedContent = detailContent.replaceAll('src="/upload', 'src="https://ilovegohyang.go.kr/upload');
   const embedFixedContent = imgFixedContent.replaceAll('watch?v=-', 'embed/');
   goToDonationButton.href = `https://ilovegohyang.go.kr/items/details-main.html?code=G${product.code}`;
+  let goToDonation = '';
   let pushCart = '';
   if (product.store_id === 1 || product.store_id === 2) {
     pushCart = 'hidden ';
@@ -88,6 +93,10 @@ export const generateProductCard = async (product, reviews) => {
   for (let e = 0; e <= review_average_rate - 1; e++) {
     starArr[e] = 'yellow-300';
   }
+  if (product.point === 0) {
+    goToDonationButton.style.display = 'none';
+    goToDonation = 'hidden ';
+  }
   // thumbnail.innerHTML = product.productThumbnail
   //   .map((Thumbnail) => {
   //     return `<div class="hidden duration-700 ease-in-out" data-carousel-item>
@@ -98,7 +107,7 @@ export const generateProductCard = async (product, reviews) => {
   basicInfo.innerHTML = `<div id="product-name" class="text-black text-3xl font-bold max-md:max-w-full font-['Inter']">${product.name}</div>
   <div class="text-zinc-500 text-xl mt-3.5 max-md:max-w-full font-['Inter']">${product.description}</div>
   <div class="bg-stone-300 self-stretch shrink-0 h-px my-14"></div>
-  <div class="justify-center items-stretch flex gap-0 max-md:max-w-full max-md:flex-wrap max-md:mt-10">
+  <div class="${goToDonation}justify-center items-stretch flex gap-0 max-md:max-w-full max-md:flex-wrap max-md:mt-10">
     <div class="justify-center text-red-500 text-2xl font-bold whitespace-nowrap font-['Inter']">${product.point.toLocaleString()}</div>
     <div class="text-zinc-500 text-base mt-2.5 self-start font-['Inter']">&nbsp기부포인트&nbsp</div>
     <div class="text-zinc-500 text-base grow shrink basis-auto mt-2.5 self-start max-md:max-w-full">
@@ -134,7 +143,6 @@ export const generateProductCard = async (product, reviews) => {
     </div>
   </div>
   <div class="bg-stone-300 self-stretch shrink-0 h-px my-14"></div>
-  <div class="text-zinc-500 text-base self-start max-md:mt-10 font-['Inter']">판매자 : 판매자 샘플</div>
   <div class="text-zinc-500 text-base mt-2.5 self-start font-['Inter']">배송방법 : 택배(우체국택배)</div>
   <div class="text-zinc-500 text-base mt-2.5 self-start font-['Inter']">배송비 : 무료</div>
   
@@ -152,7 +160,6 @@ export const generateProductReviews = async (reviews) => {
   const productReviewTable = document.getElementById('product-review-table');
   productReviewTable.innerHTML = reviews.data
     .map((review) => {
-      console.log(review);
       let starArr = ['gray-300', 'gray-300', 'gray-300', 'gray-300', 'gray-300'];
       for (let e = 0; e <= review.rate - 1; e++) {
         starArr[e] = 'yellow-300';
@@ -304,6 +311,7 @@ export async function getProductReview(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
     const review = await axios.get(`https://back.gosagi.com/review/product/${productId}`, { withCredentials: true });
+    productReviewDivButton.innerText = `상품후기(${review.data.data.review_length})`;
     return review.data.data;
   } catch (err) {
     // 오류 처리
@@ -315,6 +323,7 @@ export async function getProductQuestion(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
     const questions = await axios.get(`https://back.gosagi.com/question/productList/${productId}`, { withCredentials: true });
+    productQuestionDivButton.innerText = `상품후기(${questions.data.data.length})`;
     return questions.data.data;
   } catch (err) {
     // 오류 처리
@@ -598,13 +607,15 @@ async function drawSelectQuestion() {
 }
 
 // 상품 문의 누르면 상품 문의로 스크롤이동
-document.getElementById('product-question-div-button').addEventListener('click', function () {
-  console.log('클릭됨');
+productQuestionDivButton.addEventListener('click', function () {
   document.getElementById('product-question').scrollIntoView({ behavior: 'smooth' });
 });
 
 // 상품 후기 누르면 상품 문의로 스크롤이동
-document.getElementById('product-review-div-button').addEventListener('click', function () {
-  console.log('후기 클릭됨');
+productReviewDivButton.addEventListener('click', function () {
   document.getElementById('product-review').scrollIntoView({ behavior: 'smooth' });
+});
+
+chooseAddress.addEventListener('click', function () {
+  window.open('/html/util/address-modal.html', '_blank', 'width=1500,height=500');
 });
