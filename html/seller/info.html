@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-    <script type="module" src="/js/seller/products.js"></script>
+    <script type="module" src="/js/seller/info.js"></script>
   </head>
   <body>
     <div class="flex flex-col min-h-screen">
@@ -49,7 +49,6 @@
                     <a href="/html/seller/info.html" title="all" class="justify-center text-center text-base grow whitespace-nowrap font-['Inter']"> 매장정보 </a>
                     <a href="/html/seller/products.html" title="all" class="justify-center text-center text-base grow whitespace-nowrap font-['Inter']"> 상품관리 </a>
                     <a href="/html/seller/orders.html" title="theme" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 주문관리 </a>
-                    <a href="/html/seller/shipment.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 배송관리 </a>
                     <a href="/html/seller/questions.html" title="region" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 문의관리 </a>
                     <a href="#" title="faq" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 매출관리 </a>
                   </div>
@@ -63,10 +62,66 @@
       <main class="flex-grow flex justify-center">
         <div class="justify-center w-8/12 mt-5">
           <!-- 카드 여따 뿌림 -->
-          <div id="product-wrap" class="gap-0 flex flex-wrap"></div>
-          <!-- 페이지네이션 -->
-          <div id="page-button-wrap" class="flex justify-center my-10">
-            <div class="number-button-wrapper"><span class="number-button">1</span></div>
+          <!-- 결제내역(제목) -->
+          <div class="justify-center mt-12 text-black text-2xl font-bold self-start whitespace-nowrap font-['Inter']">사업자정보</div>
+          <!-- 주문상태 -->
+          <div class="items-center mt-5 border bg-white flex justify-between gap-5 px-16 py-8 border-solid border-neutral-200 max-md:flex-wrap max-md:px-5">
+            <div class="items-stretch self-stretch flex grow basis-[0%] flex-col">
+              <div id="payment-fin-cnt" class="text-stone-300 text-5xl whitespace-nowrap mx-auto max-md:text-4xl">0</div>
+              <div class="text-black text-base whitespace-nowrap mt-1.5 mx-auto">결제완료</div>
+            </div>
+            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/802a1e0ca1bdf459ce031cefffd2b6cc277653715e6f5b9b51c25b67be715f9b?" class="aspect-[0.54] object-contain object-center w-[15px] stroke-[1.5px] stroke-neutral-200 overflow-hidden shrink-0 max-w-full my-auto" alt="" />
+            <div class="items-center self-stretch flex grow basis-[0%] flex-col">
+              <div id="shipping-cnt" class="text-stone-300 text-5xl whitespace-nowrap mx-auto max-md:text-4xl">0</div>
+              <div class="text-black text-base self-center whitespace-nowrap mt-1.5">상품배송중</div>
+            </div>
+            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/cab8d127154cf06c4ca253d65584fabc9d6cc64458196142a727c1b611dbd64b?" class="aspect-[0.5] object-contain object-center w-3.5 stroke-[1.5px] stroke-neutral-200 overflow-hidden shrink-0 max-w-full my-auto" alt="" />
+            <div class="items-stretch self-stretch flex grow basis-[0%] flex-col">
+              <div id="delivery-fin-cnt" class="text-red-500 text-5xl whitespace-nowrap mx-auto max-md:text-4xl">0</div>
+              <div class="text-red-500 text-base whitespace-nowrap mt-1.5 mx-auto">배송완료</div>
+            </div>
+            <!-- <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/802a1e0ca1bdf459ce031cefffd2b6cc277653715e6f5b9b51c25b67be715f9b?" class="aspect-[0.54] object-contain object-center w-[15px] stroke-[1.5px] stroke-neutral-200 overflow-hidden shrink-0 max-w-full my-auto" alt="" /> -->
+            <div class="w-8 h-px -rotate-90 border border-stone-300" bis_skin_checked="1"></div>
+            <div class="items-center self-stretch flex grow basis-[0%] flex-col">
+              <div id="payment-cancel-cnt" class="text-red-500 text-5xl whitespace-nowrap mx-auto max-md:text-4xl">0</div>
+              <div class="text-red-500 text-base self-center whitespace-nowrap mt-1.5">주문취소</div>
+            </div>
+          </div>
+          <!-- 사업자정보 -->
+          <div class="mt-5 relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+              <tr>
+                <th scope="col" class="text-left bg-gray-200 px-6 py-3 w-1/4 font-['Inter']">상호</th>
+                <td id="seller-name" scope="col" class="text-left px-6 py-3 w-8/12 font-['Inter']"></td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left bg-gray-200 px-6 py-3 w-1/4 font-['Inter']">사업자등록번호</th>
+                <td scope="row" class="text-left px-6 py-3 w-8/12 font-['Inter']">
+                  <div class="w-full">
+                    <input type="text" id="seller-number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" title="닉네임" />
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left bg-gray-200 px-6 py-3 w-1/4 font-['Inter']">소재지</th>
+                <td scope="row" class="text-left px-6 py-3 w-8/12 font-['Inter']">
+                  <div class="w-full">
+                    <input type="text" id="seller-address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" title="닉네임" />
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-left bg-gray-200 px-6 py-3 w-1/4 font-['Inter']">연락처</th>
+                <td scope="row" class="text-left px-6 py-3 w-8/12 font-['Inter']">
+                  <div class="w-full">
+                    <input type="text" id="seller-phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" title="닉네임" />
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <div class="flex items-center justify-end">
+              <button id="seller-edit-btn" class="h-8 w-32 mt-10 mr-5 justify-center hover:bg-white hover:text-orange-400 border border-orange-400 text-white text-center bg-orange-400 items-center rounded-2xl max-md:max-w-full max-md:px-5 font-['Inter']">정보 수정</button>
+            </div>
           </div>
           <!-- 여기부터는 모달임 -->
         </div>
