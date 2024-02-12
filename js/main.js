@@ -78,7 +78,8 @@ export async function getProduct(page) {
 export async function setPageButtons() {
   const numberButtonWrapper = document.getElementById('page-button-wrap');
   numberButtonWrapper.innerHTML = ''; // 페이지 번호 wrapper 내부를 비워줌
-  for (let i = 1; i <= (await getTotalPageCount()); i++) {
+  const count = await getTotalPageCount();
+  for (let i = 1; i <= count; i++) {
     numberButtonWrapper.innerHTML += `<button id="clicked-page-button:${i}" type="button" class="number-button mx-3 hover:text-red-300 focus:text-red-300 "> ${i} </button>`;
   }
 }
