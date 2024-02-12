@@ -4,6 +4,7 @@ const $paymentCancelCnt = document.getElementById('payment-cancel-cnt');
 const $shippingCnt = document.getElementById('shipping-cnt');
 const $deliveryFinCnt = document.getElementById('delivery-fin-cnt');
 const $periodBtns = document.querySelectorAll('[period-btn ]');
+const chooseAddress = document.getElementById('choose-address');
 
 // 주문 목록 그리기
 document.addEventListener('DOMContentLoaded', async function () {
@@ -24,7 +25,6 @@ async function initalize() {
 async function drawOrderList(response) {
   try {
     const orders = response.data.data.data;
-    console.log('orders: ', orders);
 
     let btnHtml;
     let paymentFinCnt = 0;
@@ -35,7 +35,6 @@ async function drawOrderList(response) {
     if (orders.length >= 1) {
       $orderList.innerHTML = '';
       orders.forEach((order) => {
-        console.log('order: ', order);
         // 버튼이 2개일 때
         // 배송 전(주문 취소/수정 가능)
         let firstBtnText = '';
@@ -47,7 +46,7 @@ async function drawOrderList(response) {
 
         if (order.status == 0) {
           // 주문 수정 === 배송지 수정
-          paymentFinCnt++, (firstBtnText = '주문수정'), (firstBtnType = 'edit-order-btn'), (secondBtnText = '주문취소'), (secondBtnType = 'refund-completed-btn');
+          paymentFinCnt++, (firstBtnText = '수정하기'), (firstBtnType = 'edit-order-btn'), (secondBtnText = '취소하기'), (secondBtnType = 'refund-completed-btn');
           btnHtml = `
             <button  ${firstBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${firstBtnText}</button> 
             <button ${secondBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${secondBtnText}</button>
@@ -120,7 +119,11 @@ async function drawOrderList(response) {
     }
     if (orders.length === 0) {
       let tempHtml = '<div>주문 내역이 존재하지 않습니다</div>';
-      $orderList.insertAdjacentHTML('beforeend', tempHtml);
+      $orderList.innerHTML = tempHtml;
+      $paymentFinCnt.innerText = 0;
+      $paymentCancelCnt.innerText = 0;
+      $shippingCnt.innerText = 0;
+      $deliveryFinCnt.innerText = 0;
     }
   } catch (err) {
     alert(err.response.data.message);
@@ -156,7 +159,7 @@ async function getPeriodOrderList() {
         periodType = `${totalDays}days`;
       }
       // 주문 목록 기간 조회 API 실행
-      const response = await axios.get(`https://back.gosagi.com/order/period?period=${periodType}`, {
+      const response = await axios.get(`https://back.gosagi.com/order/?period=${periodType}`, {
         withCredentials: true,
       });
 
@@ -181,8 +184,8 @@ async function drawCart(orderId) {
     document.getElementById('order-modal-total-price').value = order.quantity * order.product_price;
 
     // 배송 정보
-    document.getElementById('order-modal-receiver').value = order.receiver;
-    document.getElementById('order-modal-phonenumber').value = order.receiver_phone_number;
+    document.getElementById('modal-receiver').value = order.receiver;
+    document.getElementById('modal-phone-number').value = order.receiver_phone_number;
     document.getElementById('postcode').value = order.post_code;
     document.getElementById('address').value = order.delivery_address;
     document.getElementById('address-detail').value = order.delivery_address_detail;
@@ -220,8 +223,8 @@ async function editOrderData(orderId) {
       const response = await axios.patch(
         `https://back.gosagi.com/order/address/${orderId}`,
         {
-          receiver: document.getElementById('order-modal-receiver').value,
-          receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
+          receiver: document.getElementById('modal-receiver').value,
+          receiver_phone_number: document.getElementById('modal-phone-number').value,
           delivery_address: document.getElementById('address').value,
           delivery_address_detail: document.getElementById('address-detail').value,
           post_code: document.getElementById('postcode').value,
@@ -315,8 +318,8 @@ async function returnRequest(orderId) {
           {
             status: 5,
             // toss_order_id: aagsfbbs,
-            receiver: document.getElementById('order-modal-receiver').value,
-            receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
+            receiver: document.getElementById('modal-receiver').value,
+            receiver_phone_number: document.getElementById('modal-phone-number').value,
             delivery_address: document.getElementById('address').value,
             delivery_address_detail: document.getElementById('address-detail').value,
             post_code: document.getElementById('postcode').value,
@@ -347,13 +350,11 @@ async function exchangeRequestBtnClick() {
     button.addEventListener('click', async function () {
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
-      console.log(' 교환신청');
 
       // 버튼 변경
       document.getElementById('order-modal-btn').innerHTML = `<button type="button" id="order-modal-order-exchange-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">교환 신청하기</button>`;
 
       const productId = await drawCart(orderId);
-      console.log('productId1: ', productId);
       await activateDelivertInfo();
       await exchangeRequest(orderId, productId);
     });
@@ -372,8 +373,8 @@ async function exchangeRequest(orderId, productId) {
             product_id: productId, // prodcut_id 반환해주는 기능이 필요함
             quantity: document.getElementById('order-modal-quantity').value,
             toss_order_id: 'test',
-            receiver: document.getElementById('order-modal-receiver').value,
-            receiver_phone_number: document.getElementById('order-modal-phonenumber').value,
+            receiver: document.getElementById('modal-receiver').value,
+            receiver_phone_number: document.getElementById('modal-phone-number').value,
             delivery_address: document.getElementById('address').value,
             delivery_address_detail: document.getElementById('address-detail').value,
             post_code: document.getElementById('postcode').value,
@@ -484,8 +485,8 @@ document.getElementById('address-search-btn').addEventListener('click', () => {
 // 배송 정보 input 비활성화
 async function disabledDeliveryInfo() {
   // 배송 정보
-  document.getElementById('order-modal-receiver').disabled = true;
-  document.getElementById('order-modal-phonenumber').disabled = true;
+  document.getElementById('modal-receiver').disabled = true;
+  document.getElementById('modal-phone-number').disabled = true;
   document.getElementById('address-detail').disabled = true;
   document.getElementById('delivery-request').disabled = true;
 
@@ -498,8 +499,8 @@ async function disabledDeliveryInfo() {
 // 배송 정보 input 활성화
 async function activateDelivertInfo() {
   // 배송 정보
-  document.getElementById('order-modal-receiver').disabled = false;
-  document.getElementById('order-modal-phonenumber').disabled = false;
+  document.getElementById('modal-receiver').disabled = false;
+  document.getElementById('modal-phone-number').disabled = false;
   document.getElementById('address-detail').disabled = false;
   document.getElementById('delivery-request').disabled = false;
 
@@ -508,3 +509,7 @@ async function activateDelivertInfo() {
   document.getElementById('address-direct-btn').classList.remove('hidden');
   document.getElementById('address-select-btn').classList.remove('hidden');
 }
+
+chooseAddress.addEventListener('click', function () {
+  window.open('/html/util/address-modal.html', '_blank', 'width=1500,height=500');
+});
