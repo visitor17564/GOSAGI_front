@@ -28,7 +28,7 @@ const purchaseButton = document.getElementById('purchase-button');
 const tossModal = document.getElementById('toss-modal');
 
 const cartModalReceiver = document.getElementById('modal-receiver');
-const cartModalPhonenumber = document.getElementById('cart-modal-phone-number');
+const cartModalPhonenumber = document.getElementById('modal-phone-number');
 
 const postcode = document.getElementById('postcode');
 const address = document.getElementById('address');
@@ -533,6 +533,7 @@ function toss() {
       if (err === 'Error: 사용자가 결제를 취소하였습니다') {
         alert('결제가 취소되었습니다.');
       } else {
+        console.log(err);
         alert('결제 오류가 발생하였습니다.');
       }
     } finally {
