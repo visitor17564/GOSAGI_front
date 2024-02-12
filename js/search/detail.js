@@ -27,8 +27,8 @@ const purchaseButton = document.getElementById('purchase-button');
 
 const tossModal = document.getElementById('toss-modal');
 
-const cartModalReceiver = document.getElementById('cart-modal-receiver');
-const cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
+const cartModalReceiver = document.getElementById('modal-receiver');
+const cartModalPhonenumber = document.getElementById('cart-modal-phone-number');
 
 const postcode = document.getElementById('postcode');
 const address = document.getElementById('address');

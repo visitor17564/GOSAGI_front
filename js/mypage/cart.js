@@ -10,8 +10,8 @@ const $allSelectCheckbox = document.getElementById('all-select-checkbox');
 const $cartModalOrderListBottom = document.getElementById('cart-modal-order-list-bottom');
 const $cartModalTotalPrice = document.getElementById('cart-modal-total-price');
 
-const $cartModalReceiver = document.getElementById('cart-modal-receiver');
-const $cartModalPhonenumber = document.getElementById('cart-modal-phone-number');
+const $cartModalReceiver = document.getElementById('modal-receiver');
+const $cartModalPhonenumber = document.getElementById('modal-phone-number');
 
 const $postcode = document.getElementById('postcode');
 const $address = document.getElementById('address');
