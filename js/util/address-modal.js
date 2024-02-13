@@ -46,8 +46,8 @@ document.addEventListener('click', async () => {
     const address = await axios.get(`https://back.gosagi.com/address/myAddress/${addressId}`, {
       withCredentials: true,
     });
-    window.opener.document.getElementById('cart-modal-receiver').value = address.data.data.name;
-    window.opener.document.getElementById('cart-modal-phone-number').value = address.data.data.phone;
+    window.opener.document.getElementById('modal-receiver').value = address.data.data.name;
+    window.opener.document.getElementById('modal-phone-number').value = address.data.data.phone;
     window.opener.document.getElementById('postcode').value = address.data.data.post_code;
     window.opener.document.getElementById('address').value = address.data.data.address;
     window.opener.document.getElementById('address-detail').value = address.data.data.detail_address;

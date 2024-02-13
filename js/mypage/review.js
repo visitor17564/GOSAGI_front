@@ -13,6 +13,7 @@ async function drawReviewList() {
     if (reviews.review_count >= 1) {
       reviewDiv.innerHTML = '';
       reviews.reviews.forEach((review) => {
+        console.log(review);
         // const category = question.question.product_id < 3 ? '이용문의' : '상품문의';
         // const waitAnswer = question.status === '답변대기' ? '' : 'hidden ';
         // const completeAnswer = question.status === '답변대기' ? 'hidden ' : ''; 히히..
@@ -20,11 +21,12 @@ async function drawReviewList() {
         for (let e = 0; e <= review.rate - 1; e++) {
           starArr[e] = 'yellow-300';
         }
-        console.log(review);
 
         let tempHtml = `
         <tr class="bg-white border-b">
-        <th class="px-6 py-4 font-['Inter'] text-center">상품명, 썸네일이 안불러와져요</th>
+        <th class="px-6 py-4 font-['Inter'] flex items-center justify-center">
+          <img src="${review.order.product.thumbnail_image}" class="aspect-square object-contain object-center w-32 overflow-hidden" alt=""/>
+          <div product-name class="w-full ml-5">${review.order.product.name}</div></th>
         <td class="px-6 py-4 font-['Inter'] text-center">${review.content}</td>
         <td class="px-6 py-4 font-['Inter']">
           <div class="flex mb-5 justify-center items-center">
@@ -61,6 +63,7 @@ async function drawReviewList() {
     }
   } catch (err) {
     alert(err.response.data.message);
+    console.log(err);
   }
 }
 

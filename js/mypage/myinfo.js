@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     // 조회된 정보 적용
-    const userInfo = response.data.data;
+    const userInfo = response.data.data[0];
     $userId.innerText = userInfo.email;
     $nickname.value = userInfo.nickname;
   } catch (err) {

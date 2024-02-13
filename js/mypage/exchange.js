@@ -16,7 +16,6 @@ async function initalize() {
 async function drawOrderList(response) {
   try {
     const orders = response.data.data.data;
-    console.log(orders);
 
     let btnHtml;
     let cancelFinCnt = 0;
@@ -88,16 +87,9 @@ async function drawOrderList(response) {
 // 취소/반품목록 조회
 async function getAllOrderList(daysQuery, statusQuery) {
   // 취소/반품목록 조회 API 실행
-  const response = await axios.get(
-    `https://back.gosagi.com/order/return?${daysQuery}${statusQuery}`,
-    {
-      start_period: '2024-01-10',
-      end_period: '2024-01-30',
-    },
-    {
-      withCredentials: true,
-    },
-  );
+  const response = await axios.get(`https://back.gosagi.com/order/return?${daysQuery}${statusQuery}`, {
+    withCredentials: true,
+  });
 
   await drawOrderList(response);
 }

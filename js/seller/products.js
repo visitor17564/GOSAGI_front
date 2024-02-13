@@ -1,8 +1,14 @@
-import { searchProduct } from './search/search.js';
-
 let page = 1;
+let storeId;
 
 const productWrap = document.getElementById('product-wrap');
+
+document.addEventListener('DOMContentLoaded', async function () {
+  getStoreId();
+  const products = await getProduct(page);
+  generateProductCards(products, productWrap);
+  setPageButtons(storeId);
+});
 
 export const generateProductCards = async (products, productWrap) => {
   productWrap.innerHTML = products
@@ -67,7 +73,10 @@ export const generateProductCards = async (products, productWrap) => {
 export async function getProduct(page) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`https://back.gosagi.com/goods/?page=${page}`);
+    const response = await axios.get(`https://back.gosagi.com/goods/store/1?page=${page}`, {
+      withCredentials: true,
+    });
+    console.log(response);
     return response.data.data;
   } catch (err) {
     // 오류 처리
@@ -75,36 +84,25 @@ export async function getProduct(page) {
   }
 }
 
-export async function setPageButtons() {
+export async function setPageButtons(storeId) {
   const numberButtonWrapper = document.getElementById('page-button-wrap');
   numberButtonWrapper.innerHTML = ''; // 페이지 번호 wrapper 내부를 비워줌
-  const count = await getTotalPageCount();
+  const count = await getTotalPageCount(storeId);
   for (let i = 1; i <= count; i++) {
     numberButtonWrapper.innerHTML += `<button id="clicked-page-button:${i}" type="button" class="number-button mx-3 hover:text-red-300 focus:text-red-300 "> ${i} </button>`;
   }
 }
 
 const COUNT_PER_PAGE = 12;
-export async function getTotalPageCount() {
+export async function getTotalPageCount(storeId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`https://back.gosagi.com/goods/count/all`);
+    const response = await axios.get(`https://back.gosagi.com/goods/count/${storeId}`);
     return Math.ceil(response.data.data / COUNT_PER_PAGE);
   } catch (err) {
     // 오류 처리
     alert('오류발생: ' + err.response.data.message);
   }
-}
-
-if (decodeURI(window.location.search.split('=')[0]) === '?keyword' && decodeURI(window.location.search.split('=')[1]) !== 'undefined') {
-  const keyword = decodeURI(window.location.search.split('=')[1]);
-  searchProduct(keyword);
-} else if (decodeURI(window.location.search.split('=')[0]) === '?productId') {
-} else if (window.location.href.includes('search')) {
-} else {
-  const products = await getProduct(page);
-  generateProductCards(products, productWrap);
-  setPageButtons();
 }
 
 document.addEventListener('click', async () => {
@@ -116,3 +114,16 @@ document.addEventListener('click', async () => {
     generateProductCards(products, productWrap);
   }
 });
+
+async function getStoreId() {
+  try {
+    // 회원정보 조회 API 실행
+    const response = await axios.get('https://back.gosagi.com/user', {
+      withCredentials: true,
+    });
+    storeId = response.data.data[0].store[0].id;
+  } catch (err) {
+    // 오류 처리
+    alert('오류발생: ' + err.response.data.message);
+  }
+}

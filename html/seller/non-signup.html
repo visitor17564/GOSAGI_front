@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <script type="module" src="/js/seller/auth.js"></script>
+    <script type="module" src="/js/seller/find-seller.js"></script>
+  </head>
+  <body>
+    <div class="flex flex-col min-h-screen">
+      <header>
+        <div class="flex flex-col">
+          <!-- 최상단 헤더 -->
+          <div class="w-full h-5 bg-zinc-800 flex items-center justify-center"></div>
+          <!-- 로고 -->
+          <div class="w-full h-44 flex-col justify-center items-center gap-2.5 inline-flex">
+            <!-- 로고이미지 -->
+            <a href="/html/seller/info.html" title="main" class="h-24 justify-center items-center gap-2.5 flex">
+              <img class="w-64 h-64" src="/sourse/image/gola-seller.png" alt="logo" />
+            </a>
+            <!-- 사업자전용 미팅 -->
+            <div class="w-8/12 h-5 flex">
+              <div class="w-24 h-5 flex relative justify-center items-center">
+                <a href="/" class="w-24 h-5 flex justify-center items-center bg-gray-400 rounded-2xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+                    />
+                  </svg>
+                  <div class="w-14 h-4 text-black text-xs font-normal font-['Inter']">쇼핑몰가기</div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- 카드뿌리기 -->
+      <main class="flex-grow flex justify-center">
+        <div class="justify-center w-8/12 mt-5">
+          <!-- 카드 여따 뿌림 -->
+          <div class="h-full grid place-items-center">
+            <div></div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-32 h-32 text-gray-400">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+            </svg>
+            <div>
+              <div class="text-4xl text-gray-400 text-center font-['inter']">사업자정보가 없습니다</div>
+              <div class="text-4xl text-gray-400 text-center font-['inter']">사업자정보를 등록해주세요</div>
+            </div>
+            <button type="button" data-modal-target="signup-seller-modal" data-modal-toggle="signup-seller-modal" class="justify-center text-white text-center text-xl px-10 border border-orange-400 bg-orange-400 hover:bg-white hover:text-orange-400 items-center rounded-full max-md:max-w-full max-md:px-5 font-['Inter']">사업자정보 추가</button>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+          <!-- 여기부터는 모달임 -->
+          <!-- 회원가입(셀러등록) -->
+          <div id="signup-seller-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <form class="bg-white flex w-1/4 justify-center items-stretch">
+              <div class="border bg-white flex w-full flex-col items-center px-5 py-9 rounded-md border-solid border-zinc-300 max-md:max-w-full">
+                <div class="justify-center text-black text-center text-4xl font-bold font-['Inter']">사업자 정보 입력</div>
+                <div class="self-stretch flex w-full flex-col items-stretch mt-11 px-7 max-md:max-w-full max-md:mt-10 max-md:px-5">
+                  <div class="flex justify-end">
+                    <button type="button" id="find-seller" class="w-35 px-5 text-white text-center text-xl bg-orange-400 items-center rounded-full max-md:max-w-full max-md:px-5 font-['Inter']">사업자 검색</button>
+                  </div>
+                  <div class="mb-5 w-full">
+                    <label for="seller-name" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">상호</label>
+                    <input type="text" id="seller-name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="상호명" required />
+                  </div>
+                  <div class="mb-5 w-full">
+                    <label for="seller-number" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">사업자등록번호</label>
+                    <input type="text" id="seller-number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="000-00-00000" required />
+                  </div>
+                  <div class="mb-5 w-full">
+                    <label for="seller-address" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">소재지</label>
+                    <input type="text" id="seller-address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="사업장주소" required />
+                  </div>
+                  <div class="mb-5 w-full">
+                    <label for="seller-phone" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">소재지</label>
+                    <input type="text" id="seller-phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="사업장주소" required />
+                  </div>
+                  <div class="mb-5 w-full">
+                    <label for="signup-upload" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">사업자등록증</label>
+                    <input type="file" id="signup-nickname" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" required />
+                  </div>
+                  <button type="button" id="signup-button" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">사업자등록 신청하기</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+
+      <footer class="text-white mt-10">
+        <!-- 푸터 -->
+        <div class="items-center bg-zinc-800 flex flex-col justify-center">
+          <div class="flex w-8/12 max-w-full justify-between gap-5 items-start max-md:flex-wrap">
+            <div class="text-white text-base grow shrink basis-auto">
+              팀명 : 2거4조
+              <br />
+              소속 : 스파르타 내일배움캠프 Node.js 3기
+            </div>
+            <a href="https://github.com/ay0530/GOSAGI" aria-label="backend">
+              <img src="/sourse/image/git.png" class="aspect-square object-contain object-center w-[38px] overflow-hidden self-stretch shrink-0 max-w-full" alt="" />
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+  </body>
+</html>

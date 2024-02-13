@@ -4,13 +4,12 @@ const $paymentCancelCnt = document.getElementById('payment-cancel-cnt');
 const $shippingCnt = document.getElementById('shipping-cnt');
 const $deliveryFinCnt = document.getElementById('delivery-fin-cnt');
 const $periodBtns = document.querySelectorAll('[period-btn ]');
-const chooseAddress = document.getElementById('choose-address');
-const $createReviewBtn = document.getElementById('create-review');
-let orderId;
+let storeId;
 
 // 주문 목록 그리기
 document.addEventListener('DOMContentLoaded', async function () {
-  await initalize();
+  await getStoreId();
+  await initalize(storeId);
   await getPeriodOrderList();
   // 주문 상태 변경
   await editOrderBtnClick();
@@ -20,8 +19,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   // await purchaseConfirmBtnClick();
 });
 
-async function initalize() {
-  await getAllOrderList();
+async function initalize(storeId) {
+  await getAllOrderList(storeId);
 }
 
 async function drawOrderList(response) {
@@ -48,7 +47,7 @@ async function drawOrderList(response) {
 
         if (order.status == 0) {
           // 주문 수정 === 배송지 수정
-          paymentFinCnt++, (firstBtnText = '수정하기'), (firstBtnType = 'edit-order-btn'), (secondBtnText = '취소하기'), (secondBtnType = 'refund-completed-btn');
+          paymentFinCnt++, (firstBtnText = '주문수정'), (firstBtnType = 'edit-order-btn'), (secondBtnText = '주문취소'), (secondBtnType = 'refund-completed-btn');
           btnHtml = `
             <button  ${firstBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${firstBtnText}</button> 
             <button ${secondBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${secondBtnText}</button>
@@ -59,7 +58,7 @@ async function drawOrderList(response) {
           btnHtml = `
             <button ${firstBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${firstBtnText}</button> 
             <button ${secondBtnType}  data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${secondBtnText}</button>
-            <button ${thirdBtnType} id="add-review:${order.id}" data-modal-target="review-modal" data-modal-toggle="review-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${thirdBtnText}</button>
+            <button ${thirdBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${thirdBtnText}</button>
             `;
         }
         if (order.status != 0 && order.status != 2) {
@@ -133,9 +132,9 @@ async function drawOrderList(response) {
 }
 
 // 전체 조회
-async function getAllOrderList() {
+async function getAllOrderList(storeId) {
   // 주문 목록 전체 조회 API 실행
-  const response = await axios.get('https://back.gosagi.com/order', {
+  const response = await axios.get(`https://back.gosagi.com/order/store/${storeId}`, {
     withCredentials: true,
   });
 
@@ -512,43 +511,15 @@ async function activateDelivertInfo() {
   document.getElementById('address-select-btn').classList.remove('hidden');
 }
 
-chooseAddress.addEventListener('click', function () {
-  window.open('/html/util/address-modal.html', '_blank', 'width=1500,height=500');
-});
-
-document.addEventListener('click', async () => {
-  let clickedElementId = event.target.id;
-  let modalClicked = String(clickedElementId).includes('add-review');
-  if (modalClicked) {
-    orderId = Number(String(clickedElementId).split(':')[1]);
-  }
-  console.log(orderId);
-});
-
-$createReviewBtn.addEventListener('click', async function () {
-  const rate = document.querySelector('input[name="score"]:checked').value;
-  const content = document.getElementById('text').value;
+async function getStoreId() {
   try {
-    await axios.patch(
-      `https://back.gosagi.com/order/confirm/${orderId}`,
-      {
-        status: +3,
-      },
-      { withCredentials: true },
-    );
-    await axios.post(
-      `https://back.gosagi.com/review`,
-      {
-        order_id: orderId,
-        rate: +rate,
-        content,
-      },
-      { withCredentials: true },
-    );
-    alert('구매 확정이 완료되었습니다.');
-    location.reload(); // 새로고침
+    // 회원정보 조회 API 실행
+    const response = await axios.get('https://back.gosagi.com/user', {
+      withCredentials: true,
+    });
+    storeId = response.data.data[0].store[0].id;
   } catch (err) {
     // 오류 처리
     alert('오류발생: ' + err.response.data.message);
   }
-});
+}
