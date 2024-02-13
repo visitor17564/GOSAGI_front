@@ -10,16 +10,16 @@ const $allSelectCheckbox = document.getElementById('all-select-checkbox');
 const $cartModalOrderListBottom = document.getElementById('cart-modal-order-list-bottom');
 const $cartModalTotalPrice = document.getElementById('cart-modal-total-price');
 
-const $cartModalReceiver = document.getElementById('cart-modal-receiver');
-const $cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
+const $cartModalReceiver = document.getElementById('modal-receiver');
+const $cartModalPhonenumber = document.getElementById('modal-phone-number');
 
 const $postcode = document.getElementById('postcode');
 const $address = document.getElementById('address');
 const $deliveryRequest = document.getElementById('delivery-request');
 
-
 const tossModal = document.getElementById('toss-modal');
 
+const chooseAddress = document.getElementById('choose-address');
 
 document.addEventListener('DOMContentLoaded', async function () {
   await drawCartList();
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function drawCartList() {
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('http://localhost:3000/cart', {
+    const response = await axios.get('https://back.gosagi.com/cart', {
       withCredentials: true,
     });
 
@@ -54,7 +54,7 @@ async function drawCartList() {
               </div>
             </th>
             <td>
-            <a class="px-6 py-4 font-['Inter'] flex items-center justify-center" href="http://localhost:5500/html/search/detail.html?productId=${cart.product_id}">
+            <a class="px-6 py-4 font-['Inter'] flex items-center justify-center" href="/html/search/detail.html?productId=${cart.product_id}">
               <img src="${cart.productThumbnail}" class="aspect-square object-contain object-center w-32 overflow-hidden" />
               <div product-name class="w-full ml-5">${cart.productName}</div>
             </a>
@@ -63,13 +63,13 @@ async function drawCartList() {
               <form class="max-w-xs mx-auto">
                 <div class="relative flex items-center justify-center">
                   <button type="button" quantity-decrement="quantity" class="flex-shrink-0 bg-gray-100    hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100  focus:ring-2 focus:outline-none">
-                    <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                    <svg class="w-2.5 h-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                     </svg>
                   </button>
                   <input type="text" id="quantity" quantity class="flex-shrink-0 text-gray-900 border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="${cart.quantity}" required />
                   <button type="button" quantity-increment="quantity" class="flex-shrink-0 bg-gray-100    hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100  focus:ring-2 focus:outline-none">
-                    <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <svg class="w-2.5 h-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
                     </svg>
                   </button>
@@ -118,19 +118,47 @@ $allBuyBtn.addEventListener('click', async function (e) {
 // 선택 장바구니 목록 조회
 async function drawSelectCart() {
   const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]:checked');
-  if ($allCheckboxes.length === 0) {
-    alert('선택된 상품이 없습니다.');
-    location.reload();
-    return;
-  }
   const $orderSelectInfo = document.querySelectorAll('[order-select-info]');
   $orderSelectInfo.forEach((element) => {
     element.remove();
   });
+  if ($allCheckboxes.length === 0) {
+    alert('선택된 상품이 없습니다.');
+    location.reload();
+    return;
+  } else if ($allCheckboxes.length === 1) {
+    try {
+      $allCheckboxes.forEach(async (checkbox) => {
+        const currentRow = checkbox.closest('tr'); // 가장 가까운 태그 조회
+        const cartId = currentRow.id;
+        const productName = currentRow.querySelector('[product-name]').innerHTML;
+        const quantity = currentRow.querySelector('[quantity]').value;
+        const productTotalPrice = currentRow.querySelector('[product-total-price]').innerHTML;
 
-  try {
-    $allCheckboxes.forEach(async (checkbox) => {
-      const currentRow = checkbox.closest('tr'); // 가장 가까운 태그 조회
+        let tempHtml = `
+          <div order-select-info class="mb-5 w-full">
+            <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">상품명</label>
+            <input cart-modal-product-name type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productName}" disabled />
+          </div>
+          <div order-select-info class="mb-5 w-full">
+            <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">가격</label>
+            <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productTotalPrice}" disabled />
+          </div>
+          <div order-select-info class="mb-5 w-full">
+            <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수량</label>
+            <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${quantity}" disabled />
+          </div>
+        `;
+
+        $cartModalOrderListBottom.insertAdjacentHTML('beforebegin', tempHtml);
+        $cartModalTotalPrice.value = $totalPrice.textContent;
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    try {
+      const currentRow = $allCheckboxes[0].closest('tr'); // 가장 가까운 태그 조회
       const cartId = currentRow.id;
       const productName = currentRow.querySelector('[product-name]').innerHTML;
       const quantity = currentRow.querySelector('[quantity]').value;
@@ -139,26 +167,16 @@ async function drawSelectCart() {
       let tempHtml = `
         <div order-select-info class="mb-5 w-full">
           <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">상품명</label>
-          <input cart-modal-product-name type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productName}" disabled />
-        </div>
-        <div order-select-info class="mb-5 w-full">
-          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">가격</label>
-          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productTotalPrice}" disabled />
-        </div>
-        <div order-select-info class="mb-5 w-full">
-          <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">수량</label>
-          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${quantity}" disabled />
+          <input cart-modal-product-name type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-orange-400 block w-full p-2.5 " value="${productName} 외 ${$allCheckboxes.length - 1}" disabled />
         </div>
       `;
-
       $cartModalOrderListBottom.insertAdjacentHTML('beforebegin', tempHtml);
       $cartModalTotalPrice.value = $totalPrice.textContent;
-    });
-  } catch (err) {
-    console.log(err);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
-
 
 // 전체 선택
 $allSelectCheckbox.addEventListener('click', function () {
@@ -202,7 +220,7 @@ $selectDeleteBtn.addEventListener('click', async function (e) {
 
       // 장바구니 삭제 API;
       try {
-        const response = await axios.delete(`http://localhost:3000/cart/${cartId}`, {
+        const response = await axios.delete(`https://back.gosagi.com/cart/${cartId}`, {
           withCredentials: true,
         });
 
@@ -216,7 +234,6 @@ $selectDeleteBtn.addEventListener('click', async function (e) {
     console.log(err);
   }
 });
-
 
 // 수량 증가 버튼 함수
 async function quantityBtn() {
@@ -333,16 +350,14 @@ async function paymentProduct() {
   const $allCheckboxes = document.querySelectorAll('#cart-list input[type="checkbox"]:checked');
 
   $allCheckboxes.forEach(async (cart) => {
-    console.log('cart: ', cart);
     const currentRow = cart.closest('tr'); // 가장 가까운 태그 조회
     const cartId = currentRow.id;
     const productId = currentRow.title;
     const quantity = currentRow.querySelector('[quantity]');
-    console.log('quantity: ', quantity);
     try {
       // 주문 내역 저장 API
       await axios.post(
-        `http://localhost:3000/order`,
+        `https://back.gosagi.com/order`,
         {
           product_id: productId,
           status: 0,
@@ -360,11 +375,11 @@ async function paymentProduct() {
       );
 
       // 장바구니 삭제 API
-      await axios.delete(`http://localhost:3000/cart/${cartId}`, {
+      await axios.delete(`https://back.gosagi.com/cart/${cartId}`, {
         withCredentials: true,
       });
 
-      window.location.href = "http://localhost:5500/html/mypage/order.html";
+      window.location.href = '/html/mypage/order.html';
     } catch (err) {
       alert(err.response.data.message);
     }
@@ -422,4 +437,8 @@ document.getElementById('address-search-btn').addEventListener('click', () => {
       addressDetail.focus();
     },
   }).open();
+});
+
+chooseAddress.addEventListener('click', function () {
+  window.open('/html/util/address-modal.html', '_blank', 'width=1500,height=500');
 });

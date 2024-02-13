@@ -1,35 +1,58 @@
 const logoutButton = document.getElementById('logout');
+const $secessionBtn = document.getElementById('secession-btn');
+const $nicknameFix = document.getElementById('nickname-fix');
+const cartDiv = document.getElementById('cart');
 
-// if (!document.cookie.includes('authorization')) {
-//   alert('로그인 후 이용 가능합니다.');
-//   // window.location.href = 'http://localhost:5500/html/index.html';
-// }
-
-// 회원 로그인 여부 체크
-document.addEventListener('DOMContentLoaded', async function () {
+logoutButton.addEventListener('click', async () => {
   try {
-    // 회원정보 조회 API 실행
-    const response = await axios.get('http://localhost:3000/user', {
-      withCredentials: true,
-    });
-
-    $nicknameFix.innerText = response.data.data.nickname;
+    const response = await axios.post(`https://back.gosagi.com/auth/logout`, {}, { withCredentials: true });
+    alert('로그아웃 성공');
+    window.location.href = '/'; // 수정할 URL로 변경 필요
   } catch (err) {
     // 오류 처리
-    alert(`${err.response.data.message}`);
-    if (err.response.data.message === "로그인을 진행해주세요.") {
-      window.location.href = "http://localhost:5500/html/index.html";
+    alert('오류발생: ' + err.response.data.message);
+  }
+});
+
+// 회원탈퇴
+$secessionBtn.addEventListener('click', async function (event) {
+  if (confirm('정말 탈퇴하시겠습니까?')) {
+    try {
+      // 회원 탈퇴 API 실행
+      const response = await axios.delete('https://back.gosagi.com/user', {
+        withCredentials: true,
+      });
+
+      alert(response.data.message);
+      window.location.href = '/';
+    } catch (err) {
+      // 오류 처리
+      alert(err.response.data.message);
     }
   }
 });
 
-logoutButton.addEventListener('click', async () => {
+export function drawCartCount(cartsCount) {
+  cartDiv.innerHTML = `<button class="text-center text-white text-xs font-normal font-['Inter']"><a href="/html/mypage/cart.html">장바구니(${cartsCount})</a></button>`;
+}
+
+document.addEventListener('DOMContentLoaded', async function () {
   try {
-    const response = await axios.post(`http://localhost:3000/auth/logout`, {}, { withCredentials: true });
-    alert('로그아웃 성공');
-    window.location.href = 'http://localhost:5500/html/index.html'; // 수정할 URL로 변경 필요
+    // 장바구니조회 API 실행
+    const response = await axios.get('https://back.gosagi.com/cart', {
+      withCredentials: true,
+    });
+
+    const user = await axios.get('https://back.gosagi.com/user', {
+      withCredentials: true,
+    });
+    $nicknameFix.innerText = user.data.data[0].nickname;
+    const cartsCount = response.data.data.cart_count;
+    drawCartCount(cartsCount);
+    // 조회된 정보 적용
   } catch (err) {
-    // 오류 처리
-    alert('오류발생: ' + err);
+    alert('로그인을 진행해주세요');
+    console.log(err);
+    // window.location.href = '/';
   }
 });

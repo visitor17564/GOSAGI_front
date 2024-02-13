@@ -1,8 +1,6 @@
 // DOM 요소들
 const questionDiv = document.getElementById('question-wrap');
-const questionModalDiv = document.getElementById('question-modal-wrap');
 
-const $questionWriteBtn = document.getElementById('question-write-btn');
 const $questionType = document.getElementById('question-type');
 const $questionTitle = document.getElementById('question-title');
 const $questionContent = document.getElementById('question-content');
@@ -11,18 +9,24 @@ const $answerContent = document.getElementById('answer-content');
 
 const $questionModalAnswer = document.getElementById('question-modal-answer');
 
-const $fixQuestionButton = document.getElementById('fix-question-button');
-const $deleteQuestionButton = document.getElementById('delete-question-button');
+const $addAnswerButton = document.getElementById('add-answer-button');
+
+let page = 1;
+
+document.addEventListener('DOMContentLoaded', async function () {
+  const storeId = await getStoreId();
+  await drawQuestionList(storeId);
+  await drawSelectQuestion();
+});
 
 // 문의 목록 그리기
-async function drawQuestionList() {
+async function drawQuestionList(storeId) {
   try {
     // 문의 목록 조회 API 실행
-    const response = await axios.get('https://back.gosagi.com/question/myList', {
+    const response = await axios.get(`https://back.gosagi.com/question/storeList/${storeId}`, {
       withCredentials: true,
     });
     const questions = response.data.data;
-
     questionDiv.innerHTML = questions.length ? '' : '<div>문의 내역이 존재하지 않습니다</div>';
     questions.forEach((question) => {
       const category = question.question.product_id < 3 ? '이용문의' : '상품문의';
@@ -61,8 +65,6 @@ async function drawQuestionList() {
   }
 }
 
-drawQuestionList();
-
 // 문의 글 상세 조회
 async function drawSelectQuestion() {
   const $questionBtns = document.querySelectorAll('[question-detail-btn]');
@@ -85,21 +87,27 @@ async function drawSelectQuestion() {
         $questionType.innerText = question.question.product_id < 3 ? '이용문의' : '상품문의';
 
         if (!question.answer) {
-          $questionModalAnswer.classList.add('hidden');
-          $fixQuestionButton.classList.remove('hidden');
-          $questionTitle.disabled = false;
-          $questionContent.disabled = false;
+          $addAnswerButton.innerText = '답변달기';
+          $questionTitle.disabled = true;
+          $questionContent.disabled = true;
           $answerContent.value = '';
         } else {
-          $questionModalAnswer.classList.remove('hidden');
-          $fixQuestionButton.classList.add('hidden');
+          $addAnswerButton.innerText = '답변삭제';
           $questionTitle.disabled = true;
           $questionContent.disabled = true;
           $answerContent.value = question.answer.content;
+
+          $questionContent.disabled = true;
         }
 
-        $deleteQuestionButton.onclick = () => deleteQuestion(questionId, question.question.title, question.question.content);
-        $fixQuestionButton.onclick = () => editQuestion(questionId);
+        $addAnswerButton.onclick = () => {
+          if ($addAnswerButton.innerText === '답변달기') {
+            addAnswer(questionId);
+          } else {
+            const answerId = question.answer.id;
+            deleteAnswer(answerId);
+          }
+        };
       } catch (err) {
         console.log(err);
       }
@@ -107,75 +115,14 @@ async function drawSelectQuestion() {
   });
 }
 
-$questionWriteBtn.addEventListener('click', function () {
-  createQuestion();
-});
-
-// 문의 글 저장
-export async function createQuestion() {
-  const $questionWriteTitle = document.getElementById('question-write-title');
-  const $questionWriteContent = document.getElementById('question-write-content');
-  const $terms = document.getElementById('terms');
-  try {
-    // 문의 글 저장 API 실행
-    const response = await axios.post(
-      `https://back.gosagi.com/question`,
-      {
-        isPrivate: $terms.checked,
-        productId: 1,
-        title: $questionWriteTitle.value,
-        content: $questionWriteContent.value,
-      },
-      {
-        withCredentials: true,
-      },
-    );
-
-    alert(response.data.message);
-    drawQuestionList();
-  } catch (err) {
-    alert(err.response.data.message);
-  }
-}
-
-// 문의 글 삭제
-async function deleteQuestion(questionId, title, content) {
-  if (confirm('정말 삭제하시겠습니까?')) {
-    try {
-      // 문의 글 삭제(수정) API 실행
-      const response = await axios.patch(
-        `https://back.gosagi.com/question/${questionId}`,
-        {
-          isDeleted: true,
-          title,
-          content,
-        },
-        {
-          withCredentials: true,
-        },
-      );
-
-      alert(response.data.message);
-      // document.getElementById(`${questionId}`).remove();
-      window.location.reload();
-    } catch (err) {
-      alert(err.response.data.message);
-    }
-  }
-}
-
-// 문의 글 수정
-async function editQuestion(questionId) {
-  const $secret = document.getElementById('secret');
+// 답글달기
+async function addAnswer(questionId) {
   try {
     // 문의 글 수정 API 실행
-    const response = await axios.patch(
-      `https://back.gosagi.com/question/${questionId}`,
+    const response = await axios.post(
+      `https://back.gosagi.com/answer/${questionId}`,
       {
-        isDeleted: false,
-        title: $questionTitle.value,
-        content: $questionContent.value,
-        isPrivate: $secret.checked,
+        content: $answerContent.value,
       },
       {
         withCredentials: true,
@@ -183,10 +130,36 @@ async function editQuestion(questionId) {
     );
 
     alert(response.data.message);
-    // const currentRow = document.getElementById(`${questionId}`);
-    // currentRow.querySelector('[question-list-title]').innerText = $questionTitle.value;
     window.location.reload();
   } catch (err) {
     alert(err.response.data.message);
+  }
+}
+
+async function deleteAnswer(questionId) {
+  try {
+    // 문의 글 수정 API 실행
+    const response = await axios.delete(`https://back.gosagi.com/answer/${questionId}`, {
+      withCredentials: true,
+    });
+
+    alert(response.data.message);
+    window.location.reload();
+  } catch (err) {
+    alert(err.response.data.message);
+  }
+}
+
+async function getStoreId() {
+  try {
+    // 회원정보 조회 API 실행
+    const response = await axios.get('https://back.gosagi.com/user', {
+      withCredentials: true,
+    });
+    const storeId = response.data.data[0].store[0].id;
+    return storeId;
+  } catch (err) {
+    // 오류 처리
+    alert('오류발생: ' + err.response.data.message);
   }
 }

@@ -5,7 +5,7 @@ const reviewModalDiv = document.getElementById('review-modal-wrap');
 async function drawReviewList() {
   try {
     // 리뷰 조회 API 실행
-    const response = await axios.get('http://localhost:3000/review', {
+    const response = await axios.get('https://back.gosagi.com/review', {
       withCredentials: true,
     });
 
@@ -13,6 +13,7 @@ async function drawReviewList() {
     if (reviews.review_count >= 1) {
       reviewDiv.innerHTML = '';
       reviews.reviews.forEach((review) => {
+        console.log(review);
         // const category = question.question.product_id < 3 ? '이용문의' : '상품문의';
         // const waitAnswer = question.status === '답변대기' ? '' : 'hidden ';
         // const completeAnswer = question.status === '답변대기' ? 'hidden ' : ''; 히히..
@@ -20,11 +21,12 @@ async function drawReviewList() {
         for (let e = 0; e <= review.rate - 1; e++) {
           starArr[e] = 'yellow-300';
         }
-        console.log(review);
 
         let tempHtml = `
         <tr class="bg-white border-b">
-        <th class="px-6 py-4 font-['Inter'] text-center">상품명, 썸네일이 안불러와져요</th>
+        <th class="px-6 py-4 font-['Inter'] flex items-center justify-center">
+          <img src="${review.order.product.thumbnail_image}" class="aspect-square object-contain object-center w-32 overflow-hidden" alt=""/>
+          <div product-name class="w-full ml-5">${review.order.product.name}</div></th>
         <td class="px-6 py-4 font-['Inter'] text-center">${review.content}</td>
         <td class="px-6 py-4 font-['Inter']">
           <div class="flex mb-5 justify-center items-center">
@@ -60,8 +62,8 @@ async function drawReviewList() {
       reviewDiv.insertAdjacentHTML('beforeend', tempHtml);
     }
   } catch (err) {
-    console.log('err: ', err);
-    // alert(`에러가 발생했습니다. 상세 내용은 관리에게 문의 바랍니다.`);
+    alert(err.response.data.message);
+    console.log(err);
   }
 }
 
@@ -81,7 +83,7 @@ document.addEventListener('click', async () => {
   if (String(clickedElementId).includes('fixReview')) {
     const stars = document.getElementsByName('score');
     try {
-      const review = await axios.get(`http://localhost:3000/review/${reviewId}`, {
+      const review = await axios.get(`https://back.gosagi.com/review/${reviewId}`, {
         withCredentials: true,
       });
       const reviewContent = document.getElementById('review-content');
@@ -89,7 +91,7 @@ document.addEventListener('click', async () => {
       let starNum = 0;
       review.data.data.rate === 5 ? (starNum = 0) : review.data.data.rate === 4 ? (starNum = 1) : review.data.data.rate === 3 ? (starNum = 2) : review.data.data.rate === 2 ? (starNum = 3) : (starNum = 4);
       stars[starNum].checked = true;
-    } catch (err) { }
+    } catch (err) {}
   }
 });
 
@@ -112,18 +114,18 @@ reviewFixButton.addEventListener('click', async () => {
 
 async function deleteReview(reviewId) {
   try {
-    await axios.delete(`http://localhost:3000/review/${reviewId}`, {
+    await axios.delete(`https://back.gosagi.com/review/${reviewId}`, {
       withCredentials: true,
     });
     alert('리뷰가 삭제되었습니다.');
     window.location.reload();
-  } catch (err) { }
+  } catch (err) {}
 }
 
 async function fixReview(reviewId, rate, content) {
   try {
     await axios.patch(
-      `http://localhost:3000/review/${reviewId}`,
+      `https://back.gosagi.com/review/${reviewId}`,
       {
         rate,
         content,
@@ -134,5 +136,5 @@ async function fixReview(reviewId, rate, content) {
     );
     alert('리뷰가 수정되었습니다.');
     window.location.reload();
-  } catch (err) { }
+  } catch (err) {}
 }

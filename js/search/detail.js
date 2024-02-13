@@ -1,4 +1,8 @@
+import { addToRecentViewed } from '../util/recent-view.js';
+
 const productQuestionButton = document.getElementById('product-question-button');
+const productQuestionDivButton = document.getElementById('product-question-div-button');
+const productReviewDivButton = document.getElementById('product-review-div-button');
 
 const thumbnail = document.getElementById('product-thumbnail');
 const basicInfo = document.getElementById('product-basic-info');
@@ -25,8 +29,8 @@ const purchaseButton = document.getElementById('purchase-button');
 
 const tossModal = document.getElementById('toss-modal');
 
-const cartModalReceiver = document.getElementById('cart-modal-receiver');
-const cartModalPhonenumber = document.getElementById('cart-modal-phonenumber');
+const cartModalReceiver = document.getElementById('modal-receiver');
+const cartModalPhonenumber = document.getElementById('modal-phone-number');
 
 const postcode = document.getElementById('postcode');
 const address = document.getElementById('address');
@@ -41,25 +45,27 @@ const $questionViewModalAnswer = document.getElementById('question-view-modal-an
 const $questionViewTitle = document.getElementById('question-view-title');
 const $questionViewContent = document.getElementById('question-view-content');
 
+const chooseAddress = document.getElementById('choose-address');
+
 wishDiv.addEventListener('click', async function (event) {
   let clickedElementId = event.currentTarget.id;
   if (isMyWish === false) {
     try {
-      await axios.post(`http://localhost:3000/wish`, { product_id: productId }, { withCredentials: true });
+      await axios.post(`https://back.gosagi.com/wish`, { product_id: productId }, { withCredentials: true });
       alert('찜하기 성공');
       const wish = await getProductWish(productId);
       generateProductWish(wish);
     } catch (err) {
-      alert('오류발생: ' + err);
+      alert('오류발생: ' + err.response.data.message);
     }
   } else if (isMyWish === true) {
     try {
-      await axios.delete(`http://localhost:3000/wish/${myWishId}`, { withCredentials: true });
+      await axios.delete(`https://back.gosagi.com/wish/${myWishId}`, { withCredentials: true });
       alert('찜취소 성공');
       const wish = await getProductWish(productId);
       generateProductWish(wish);
     } catch (err) {
-      alert('오류발생: ' + err);
+      alert('오류발생: ' + err.response.data.message);
     }
   }
 });
@@ -70,6 +76,7 @@ export const generateProductCard = async (product, reviews) => {
   const imgFixedContent = detailContent.replaceAll('src="/upload', 'src="https://ilovegohyang.go.kr/upload');
   const embedFixedContent = imgFixedContent.replaceAll('watch?v=-', 'embed/');
   goToDonationButton.href = `https://ilovegohyang.go.kr/items/details-main.html?code=G${product.code}`;
+  let goToDonation = '';
   let pushCart = '';
   if (product.store_id === 1 || product.store_id === 2) {
     pushCart = 'hidden ';
@@ -83,10 +90,14 @@ export const generateProductCard = async (product, reviews) => {
     review_average_rate = reviews.review_average_rate;
   }
 
-  thumbnail.innerHTML = `<img src="${product.thumbnail_image}" class="h-full w-full rounded-lg aspect-square object-contain object-center w-full overflow-hidden" />`;
+  thumbnail.innerHTML = `<img src="${product.thumbnail_image}" class="h-full w-full rounded-lg aspect-square object-contain object-center overflow-hidden" />`;
   let starArr = ['gray-300', 'gray-300', 'gray-300', 'gray-300', 'gray-300'];
   for (let e = 0; e <= review_average_rate - 1; e++) {
     starArr[e] = 'yellow-300';
+  }
+  if (product.point === 0) {
+    goToDonationButton.style.display = 'none';
+    goToDonation = 'hidden ';
   }
   // thumbnail.innerHTML = product.productThumbnail
   //   .map((Thumbnail) => {
@@ -98,7 +109,7 @@ export const generateProductCard = async (product, reviews) => {
   basicInfo.innerHTML = `<div id="product-name" class="text-black text-3xl font-bold max-md:max-w-full font-['Inter']">${product.name}</div>
   <div class="text-zinc-500 text-xl mt-3.5 max-md:max-w-full font-['Inter']">${product.description}</div>
   <div class="bg-stone-300 self-stretch shrink-0 h-px my-14"></div>
-  <div class="justify-center items-stretch flex gap-0 max-md:max-w-full max-md:flex-wrap max-md:mt-10">
+  <div class="${goToDonation}justify-center items-stretch flex gap-0 max-md:max-w-full max-md:flex-wrap max-md:mt-10">
     <div class="justify-center text-red-500 text-2xl font-bold whitespace-nowrap font-['Inter']">${product.point.toLocaleString()}</div>
     <div class="text-zinc-500 text-base mt-2.5 self-start font-['Inter']">&nbsp기부포인트&nbsp</div>
     <div class="text-zinc-500 text-base grow shrink basis-auto mt-2.5 self-start max-md:max-w-full">
@@ -134,7 +145,6 @@ export const generateProductCard = async (product, reviews) => {
     </div>
   </div>
   <div class="bg-stone-300 self-stretch shrink-0 h-px my-14"></div>
-  <div class="text-zinc-500 text-base self-start max-md:mt-10 font-['Inter']">판매자 : 판매자 샘플</div>
   <div class="text-zinc-500 text-base mt-2.5 self-start font-['Inter']">배송방법 : 택배(우체국택배)</div>
   <div class="text-zinc-500 text-base mt-2.5 self-start font-['Inter']">배송비 : 무료</div>
   
@@ -152,7 +162,6 @@ export const generateProductReviews = async (reviews) => {
   const productReviewTable = document.getElementById('product-review-table');
   productReviewTable.innerHTML = reviews.data
     .map((review) => {
-      console.log(review);
       let starArr = ['gray-300', 'gray-300', 'gray-300', 'gray-300', 'gray-300'];
       for (let e = 0; e <= review.rate - 1; e++) {
         starArr[e] = 'yellow-300';
@@ -189,7 +198,7 @@ async function getUserId() {
   // 회원 로그인 id 조회 체크(닉네임으로 수정 필요 - 아영)
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('http://localhost:3000/user', {
+    const response = await axios.get('https://back.gosagi.com/user', {
       withCredentials: true,
     });
 
@@ -291,44 +300,47 @@ let productId = parseInt(searchParams.get('productId'));
 export async function getProduct(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`http://localhost:3000/goods/detail/${productId}`, { withCredentials: true });
+    const response = await axios.get(`https://back.gosagi.com/goods/detail/${productId}`, { withCredentials: true });
+
     return response.data.data;
   } catch (err) {
     // 오류 처리
-    alert(err);
+    alert(err.response.data.message);
   }
 }
 
 export async function getProductReview(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const review = await axios.get(`http://localhost:3000/review/product/${productId}`, { withCredentials: true });
+    const review = await axios.get(`https://back.gosagi.com/review/product/${productId}`, { withCredentials: true });
+    productReviewDivButton.innerText = `상품후기(${review.data.data.review_length})`;
     return review.data.data;
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
 export async function getProductQuestion(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const questions = await axios.get(`http://localhost:3000/question/productList/${productId}`, { withCredentials: true });
+    const questions = await axios.get(`https://back.gosagi.com/question/productList/${productId}`, { withCredentials: true });
+    productQuestionDivButton.innerText = `상품후기(${questions.data.data.length})`;
     return questions.data.data;
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
 export async function getProductWish(productId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const wishCount = await axios.get(`http://localhost:3000/wish/${productId}`, { withCredentials: true });
+    const wishCount = await axios.get(`https://back.gosagi.com/wish/${productId}`, { withCredentials: true });
     return wishCount.data.data;
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 }
 
@@ -342,6 +354,7 @@ await generateProductQuestions(questions);
 await generateProductReviews(reviews);
 await generateProductWish(wish);
 await quantityBtn();
+await addToRecentViewed(product.id, product.thumbnail_image);
 
 // 문의 글 저장
 productQuestionButton.addEventListener('click', async () => {
@@ -350,7 +363,7 @@ productQuestionButton.addEventListener('click', async () => {
   const isPrivate = document.getElementById('secret').checked;
   try {
     await axios.post(
-      `http://localhost:3000/question`,
+      `https://back.gosagi.com/question`,
       {
         productId,
         title,
@@ -362,7 +375,7 @@ productQuestionButton.addEventListener('click', async () => {
     alert('문의글 등록 성공');
     location.reload();
   } catch (err) {
-    alert('오류발생: ' + err);
+    alert('오류발생: ' + err.response.data.message);
   }
 });
 
@@ -375,7 +388,7 @@ async function createCart() {
   const quantity = document.getElementById('quantity').value;
   try {
     const responseCart = await axios.post(
-      `http://localhost:3000/cart`,
+      `https://back.gosagi.com/cart`,
       {
         product_id: productId,
         quantity: +quantity,
@@ -385,7 +398,7 @@ async function createCart() {
       },
     );
     alert(responseCart.data.message);
-    window.location.href = 'http://localhost:5500/html/mypage/cart.html';
+    window.location.href = '/html/mypage/cart.html';
   } catch (err) {
     alert(responseCart.data.message);
   }
@@ -523,6 +536,7 @@ function toss() {
       if (err === 'Error: 사용자가 결제를 취소하였습니다') {
         alert('결제가 취소되었습니다.');
       } else {
+        console.log(err);
         alert('결제 오류가 발생하였습니다.');
       }
     } finally {
@@ -537,7 +551,7 @@ async function paymentProduct() {
   try {
     // 주문 내역 저장 API
     const response = await axios.post(
-      `http://localhost:3000/order`,
+      `https://back.gosagi.com/order`,
       {
         product_id: productId,
         status: '결제완료',
@@ -554,7 +568,7 @@ async function paymentProduct() {
       },
     );
 
-    window.location.href = "'http://localhost:5500/html/mypage/payment.html',";
+    window.location.href = "'/html/mypage/payment.html',";
   } catch (err) {
     alert(err.response.data.message);
   }
@@ -572,7 +586,7 @@ async function drawSelectQuestion() {
 
       try {
         // 문의 글 상세 조회 API 실행
-        const response = await axios.get(`http://localhost:3000/question/detail/${questionId}`, {
+        const response = await axios.get(`https://back.gosagi.com/question/detail/${questionId}`, {
           withCredentials: true,
         });
 
@@ -597,13 +611,15 @@ async function drawSelectQuestion() {
 }
 
 // 상품 문의 누르면 상품 문의로 스크롤이동
-document.getElementById('product-question-div-button').addEventListener('click', function () {
-  console.log('클릭됨');
+productQuestionDivButton.addEventListener('click', function () {
   document.getElementById('product-question').scrollIntoView({ behavior: 'smooth' });
 });
 
 // 상품 후기 누르면 상품 문의로 스크롤이동
-document.getElementById('product-review-div-button').addEventListener('click', function () {
-  console.log('후기 클릭됨');
+productReviewDivButton.addEventListener('click', function () {
   document.getElementById('product-review').scrollIntoView({ behavior: 'smooth' });
+});
+
+chooseAddress.addEventListener('click', function () {
+  window.open('/html/util/address-modal.html', '_blank', 'width=1500,height=500');
 });

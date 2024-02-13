@@ -1,9 +1,14 @@
-import { searchProduct } from './search.js';
-
 let page = 1;
-let category = '관광서비스';
+let storeId;
 
-const productWrap = document.getElementById('product-category-wrap');
+const productWrap = document.getElementById('product-wrap');
+
+document.addEventListener('DOMContentLoaded', async function () {
+  getStoreId();
+  const products = await getProduct(page);
+  generateProductCards(products, productWrap);
+  setPageButtons(storeId);
+});
 
 export const generateProductCards = async (products, productWrap) => {
   productWrap.innerHTML = products
@@ -65,14 +70,13 @@ export const generateProductCards = async (products, productWrap) => {
     .join('');
 };
 
-export async function getProductByCategory(category, page) {
-  if (!page) {
-    page = 1;
-  }
-  console.log(category, page);
+export async function getProduct(page) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`https://back.gosagi.com/goods/category/${category}?&page=${page}`);
+    const response = await axios.get(`https://back.gosagi.com/goods/store/1?page=${page}`, {
+      withCredentials: true,
+    });
+    console.log(response);
     return response.data.data;
   } catch (err) {
     // 오류 처리
@@ -80,19 +84,20 @@ export async function getProductByCategory(category, page) {
   }
 }
 
-export async function setPageButtons(category) {
+export async function setPageButtons(storeId) {
   const numberButtonWrapper = document.getElementById('page-button-wrap');
   numberButtonWrapper.innerHTML = ''; // 페이지 번호 wrapper 내부를 비워줌
-  for (let i = 1; i <= (await getTotalPageCount(category)); i++) {
+  const count = await getTotalPageCount(storeId);
+  for (let i = 1; i <= count; i++) {
     numberButtonWrapper.innerHTML += `<button id="clicked-page-button:${i}" type="button" class="number-button mx-3 hover:text-red-300 focus:text-red-300 "> ${i} </button>`;
   }
 }
 
 const COUNT_PER_PAGE = 12;
-export async function getTotalPageCount(category) {
+export async function getTotalPageCount(storeId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`https://back.gosagi.com/goods/count/category/${category}`);
+    const response = await axios.get(`https://back.gosagi.com/goods/count/${storeId}`);
     return Math.ceil(response.data.data / COUNT_PER_PAGE);
   } catch (err) {
     // 오류 처리
@@ -100,77 +105,25 @@ export async function getTotalPageCount(category) {
   }
 }
 
-if (decodeURI(window.location.search.split('=')[0]) === '?keyword' && decodeURI(window.location.search.split('=')[1]) !== 'undefined') {
-  const keyword = decodeURI(window.location.search.split('=')[1]);
-  searchProduct(keyword);
-} else if (decodeURI(window.location.search.split('=')[0]) === '?productId') {
-} else if (window.location.href.includes('search-for-category')) {
-  const products = await getProductByCategory(category, page);
-  generateProductCards(products, productWrap);
-  setPageButtons(category);
-}
-
-const tourButton = document.getElementById('tour-button');
-const foodButton = document.getElementById('food-button');
-const fishButton = document.getElementById('fish-button');
-const manageFoodButton = document.getElementById('managed-food-button');
-const liveButton = document.getElementById('live-button');
-const couponButton = document.getElementById('coupon-button');
-
-tourButton.addEventListener('click', async () => {
-  category = '관광서비스';
-  page = 1;
-  const products = await getProductByCategory(category, page);
-  generateProductCards(products, productWrap);
-  setPageButtons(category);
-});
-
-foodButton.addEventListener('click', async () => {
-  category = '농축산물';
-  page = 1;
-  const products = await getProductByCategory(category, page);
-  await generateProductCards(products, productWrap);
-  await setPageButtons(test);
-});
-
-fishButton.addEventListener('click', async () => {
-  category = '수산물';
-  page = 1;
-  const products = await getProductByCategory(category, page);
-  generateProductCards(products, productWrap);
-  setPageButtons(category);
-});
-
-manageFoodButton.addEventListener('click', async () => {
-  category = '가공식품';
-  page = 1;
-  const products = await getProductByCategory(category, page);
-  generateProductCards(products, productWrap);
-  setPageButtons(category);
-});
-
-liveButton.addEventListener('click', async () => {
-  category = '생활용품';
-  page = 1;
-  const products = await getProductByCategory(category, page);
-  generateProductCards(products, productWrap);
-  setPageButtons(category);
-});
-
-couponButton.addEventListener('click', async () => {
-  category = '지역상품권';
-  page = 1;
-  const products = await getProductByCategory(category, page);
-  generateProductCards(products, productWrap);
-  setPageButtons(category);
-});
-
 document.addEventListener('click', async () => {
   let clickedElementId = event.target.id;
   let buttonClicked = String(clickedElementId).includes('clicked-page-button');
   if (buttonClicked) {
     page = Number(String(clickedElementId).split(':')[1]);
-    const products = await getProductByCategory(category, page);
+    const products = await getProduct(page);
     generateProductCards(products, productWrap);
   }
 });
+
+async function getStoreId() {
+  try {
+    // 회원정보 조회 API 실행
+    const response = await axios.get('https://back.gosagi.com/user', {
+      withCredentials: true,
+    });
+    storeId = response.data.data[0].store[0].id;
+  } catch (err) {
+    // 오류 처리
+    alert('오류발생: ' + err.response.data.message);
+  }
+}

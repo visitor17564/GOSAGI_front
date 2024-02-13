@@ -5,7 +5,7 @@ const $wishList = document.getElementById('wish-list');
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     // 회원정보 조회 API 실행
-    const response = await axios.get('http://localhost:3000/wish', {
+    const response = await axios.get('https://back.gosagi.com/wish', {
       withCredentials: true,
     });
     const wishs = response.data.data.data;
@@ -19,16 +19,21 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (wish.productStoreId === 1 || wish.productStoreId === 2) {
           pushCart = 'hidden ';
         }
+        let onlyForSale = 'hidden ';
+        if (wish.productPoint.toLocaleString() !== 0) {
+          onlyForSale = '';
+        }
+
         let tempHtml = `
-          <tr id="wish-id-${wish.id}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr id="wish-id-${wish.id}" class="bg-white border-b">
             <td class="px-6 py-4 font-['Inter'] flex items-center justify-start">
-              <a class="flex justify-center items-center" href="http://localhost:5500/html/search/detail.html?productId=${wish.product_id}" >
+              <a class="flex justify-center items-center" href="/html/search/detail.html?productId=${wish.product_id}" >
                 <img src="${wish.productThumbnail}" class="aspect-square w-24 h-auto" />
                 <div class="w-full ml-5">${wish.productName}</div>
               </a>
             </td>
             <td class="px-6 py-4 font-['Inter'] text-center">
-              <div class="flex justify-end items-center">
+              <div class="${onlyForSale}flex justify-end items-center">
                 <div class="text-right">답례품 포인트가</div>
                 <div class="text-right ml-5 text-2xl">${wish.productPoint.toLocaleString()}</div>
               </div>
@@ -56,8 +61,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     deleteWish();
     createCart();
   } catch (err) {
-    console.log(err);
-    alert(`에러가 발생했습니다. 상세 내용은 관리에게 문의 바랍니다.`);
+    alert(err.response.data.message);
   }
 });
 
@@ -72,12 +76,12 @@ async function createCart() {
       // 장바구니 추가 API
       try {
         // 찜에서 삭제 후 장바구니에 추가
-        const responseWish = await axios.delete(`http://localhost:3000/wish/${wishId}`, {
+        const responseWish = await axios.delete(`https://back.gosagi.com/wish/${wishId}`, {
           withCredentials: true,
         });
 
         const responseCart = await axios.post(
-          `http://localhost:3000/cart`,
+          `https://back.gosagi.com/cart`,
           {
             product_id: productId,
             quantity: 1,
@@ -91,7 +95,7 @@ async function createCart() {
         document.getElementById(`wish-id-${wishId}`).remove();
 
         alert(responseCart.data.message);
-        window.location.href = 'http://localhost:5500/html/mypage/cart.html';
+        window.location.href = '/html/mypage/cart.html';
       } catch (err) {
         alert(responseCart.data.message);
       }
@@ -110,7 +114,7 @@ async function deleteWish() {
       const wishId = e.target.id.split('-')[3]; // 찜 ID 추출
       // 찜 삭제 API
       try {
-        const response = await axios.delete(`http://localhost:3000/wish/${wishId}`, {
+        const response = await axios.delete(`https://back.gosagi.com/wish/${wishId}`, {
           withCredentials: true,
         });
 
@@ -119,7 +123,7 @@ async function deleteWish() {
 
         alert(response.data.message);
       } catch (err) {
-        alert(err);
+        alert(err.response.data.message);
       }
     });
   });

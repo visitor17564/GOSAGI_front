@@ -2,7 +2,7 @@ async function drawAddressList() {
   const addressWrapDiv = document.getElementById('address-wrap');
   try {
     // 리뷰 조회 API 실행
-    const response = await axios.get('http://localhost:3000/address/myAddress', {
+    const response = await axios.get('https://back.gosagi.com/address/myAddress', {
       withCredentials: true,
     });
 
@@ -15,7 +15,7 @@ async function drawAddressList() {
           <p>${address.address_name}</p>
         </th>
         <td class="px-6 py-4 font-['Inter'] text-center">${address.name}</td>
-        <td class="px-6 py-4 font-['Inter'] text-center">${address.name}${address.detail_address}</td>
+        <td class="px-6 py-4 font-['Inter'] text-center">${address.address}${address.detail_address}</td>
         <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">${address.phone}</td>
         <td class="text-center px-6 py-3 gap-2 flex flex-col justify-center items-center">
           <button id="fixAddress:${address.id}" data-modal-target="fix-address-modal" data-modal-toggle="fix-address-modal" class="h-5 w-10 hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">수정</button>
@@ -30,8 +30,7 @@ async function drawAddressList() {
       addressWrapDiv.insertAdjacentHTML('beforeend', tempHtml);
     }
   } catch (err) {
-    console.log('err: ', err);
-    // alert(`에러가 발생했습니다. 상세 내용은 관리에게 문의 바랍니다.`);
+    alert(`에러가 발생했습니다. 상세 내용은 관리에게 문의 바랍니다.`);
   }
 }
 
@@ -105,7 +104,7 @@ addAddressButton.addEventListener('click', async () => {
 async function addAddress(address_name, name, phone, post_code, address, detail_address) {
   try {
     await axios.post(
-      'http://localhost:3000/address',
+      'https://back.gosagi.com/address',
       {
         address_name,
         name,
@@ -138,7 +137,7 @@ document.addEventListener('click', async () => {
   }
   if (String(clickedElementId).includes('fixAddress')) {
     try {
-      const address = await axios.get(`http://localhost:3000/address/myAddress/${addressId}`, {
+      const address = await axios.get(`https://back.gosagi.com/address/myAddress/${addressId}`, {
         withCredentials: true,
       });
       console.log(address.data.data);
@@ -149,7 +148,7 @@ document.addEventListener('click', async () => {
       document.getElementById('fix-postcode').value = address.data.data.post_code;
       document.getElementById('fix-address').value = address.data.data.address;
       document.getElementById('fix-detail-address').value = address.data.data.detail_address;
-    } catch (err) { }
+    } catch (err) {}
   }
 });
 
@@ -167,7 +166,7 @@ addressFixButton.addEventListener('click', async () => {
 async function fixAddress(address_name, name, phone, post_code, address, detail_address) {
   try {
     await axios.patch(
-      `http://localhost:3000/address/myAddress/${addressId}`,
+      `https://back.gosagi.com/address/myAddress/${addressId}`,
       {
         address_name,
         name,
@@ -189,10 +188,10 @@ async function fixAddress(address_name, name, phone, post_code, address, detail_
 
 async function deleteAddress(addressId) {
   try {
-    await axios.delete(`http://localhost:3000/address/myAddress/${addressId}`, {
+    await axios.delete(`https://back.gosagi.com/address/myAddress/${addressId}`, {
       withCredentials: true,
     });
     alert('주소가 삭제되었습니다.');
     window.location.reload();
-  } catch (err) { }
+  } catch (err) {}
 }

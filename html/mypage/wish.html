@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="../../js/mypage/common.js"></script>
-    <script type="module" src="../../js/mypage/wish.js"></script>
-    <script type="module" src="../../js/mypage/auth.js"></script>
+    <script type="module" src="/js/mypage/auth.js"></script>
+    <script type="module" src="/js/mypage/wish.js"></script>
   </head>
   <body>
     <div class="flex flex-col min-h-screen">
@@ -19,24 +18,14 @@
           <div class="w-full h-5 bg-zinc-800 flex items-center justify-center">
             <div class="w-8/12 relative justify-end inline-flex">
               <div class="h-3.5 justify-end items-center gap-1 flex">
-                <!-- <div class="h-3.5 justify-between items-center flex">
-                  <button type="button" id="signup" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-xs font-normal font-['Inter']">회원가입</button>
-                </div>
-                <div id="signup-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="h-3.5 justify-between items-center flex">
-                  <button id="login" data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-xs font-normal font-['Inter']">로그인</button>
-                </div>
-                <div id="login-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div> -->
                 <div class="h-3.5 justify-between items-center flex">
                   <button type="submit" id="logout" class="text-center text-white text-xs font-normal font-['Inter']">로그아웃</button>
                 </div>
                 <div id="logout-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
-                <div class="h-3.5 justify-between items-center flex">
-                  <button class="text-center text-white text-xs font-normal font-['Inter']"><a href="/html/mypage/cart.html">장바구니(0)</a></button>
-                </div>
-                <div class="w-2 h-px -rotate-90 border border-zinc-500"></div>
+                <div id="cart" class="justify-center items-center flex"></div>
+                <div id="cart-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
                 <div class="justify-center items-center gap-2.5 flex">
-                  <button id="my-page" class="text-center text-white text-xs font-normal font-['Inter']"><a href="/html/mypage/myinfo.html">마이페이지 ▼</a></button>
+                  <button id="my-page" class="text-center text-white text-xs font-normal font-['Inter']"><a href="./myinfo.html">마이페이지 ▼</a></button>
                 </div>
                 <div id="my-page-bar" class="w-2 h-px -rotate-90 border border-zinc-500"></div>
                 <div class="justify-center items-center gap-2.5 flex">
@@ -48,13 +37,13 @@
           <!-- 로고 -->
           <div class="w-full h-44 flex-col justify-center items-center gap-2.5 inline-flex">
             <!-- 로고이미지 -->
-            <a href="/html/index.html" title="main" class="h-24 justify-center items-center gap-2.5 flex">
+            <a href="/" title="main" class="h-24 justify-center items-center gap-2.5 flex">
               <img class="w-64 h-64" src="/sourse/image/gola.png" alt="logo" />
             </a>
             <!-- 사업자전용 미팅 -->
-            <div class="w-8/12 h-5 flex-col flex">
-              <div class="w-24 h-5 relative items-center">
-                <div class="w-24 h-5 flex justify-center items-center bg-orange-300 rounded-2xl">
+            <div class="w-8/12 h-5 flex">
+              <div class="w-24 h-5 flex relative justify-center items-center">
+                <a href="/html/seller/non-signup.html" class="w-24 h-5 flex justify-center items-center bg-orange-300 rounded-2xl">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                     <path
                       stroke-linecap="round"
@@ -63,7 +52,7 @@
                     />
                   </svg>
                   <div class="w-14 h-4 text-black text-xs font-normal font-['Inter']">사업자전용</div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -106,7 +95,7 @@
                   </div>
                   <!-- 사이트메뉴 -->
                   <div class="flex justify-center w-3/5 px-5">
-                    <a href="/html/index.html" title="all" class="justify-center text-center text-base grow whitespace-nowrap font-['Inter']"> 전체상품 </a>
+                    <a href="/" title="all" class="justify-center text-center text-base grow whitespace-nowrap font-['Inter']"> 전체상품 </a>
                     <a href="/html/search/search-for-theme.html" title="theme" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 테마별 </a>
                     <a href="/html/search/search-for-category.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 품목별 </a>
                     <a href="/html/search/search-for-region.html" title="region" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 지역별 </a>
@@ -135,32 +124,32 @@
             <div class="bg-white border flex w-full flex-col pl-7 pr-9 py-3 border-solid border-neutral-400">
               <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap font-['Inter']">나의 쇼핑 정보</div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="/html/mypage/wish.html">내가 찜한 상품</a>
+                <a href="./wish.html">내가 찜한 상품</a>
               </div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="/html/mypage/cart.html">장바구니</a>
+                <a href="./cart.html">장바구니</a>
               </div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="/html/mypage/order.html">주문내역/배송조회</a>
+                <a href="./order.html">주문내역/배송조회</a>
               </div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="/html/mypage/exchange.html">취소/반품</a>
+                <a href="./exchange.html">취소/반품</a>
               </div>
               <div class="bg-stone-300 self-stretch shrink-0 h-px mt-2.5"></div>
               <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-3 font-['Inter']">나의 활동</div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="/html/mypage/question.html"> 1:1 문의내역</a>
+                <a href="./question.html"> 1:1 문의내역</a>
               </div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="/html/mypage/review.html">나의 상품후기</a>
+                <a href="./review.html">나의 상품후기</a>
               </div>
               <div class="bg-stone-300 self-stretch shrink-0 h-px mt-3.5"></div>
               <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-2.5 font-['Inter']">나의 정보</div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="/html/mypage/address.html">배송지 관리</a>
+                <a href="./address.html">배송지 관리</a>
               </div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="/html/mypage/myinfo.html">회원정보 수정</a>
+                <a href="./myinfo.html">회원정보 수정</a>
               </div>
               <button id="secession-btn" class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">회원탈퇴</button>
             </div>
