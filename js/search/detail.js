@@ -1,3 +1,5 @@
+import { addToRecentViewed } from '../util/recent-view.js';
+
 const productQuestionButton = document.getElementById('product-question-button');
 const productQuestionDivButton = document.getElementById('product-question-div-button');
 const productReviewDivButton = document.getElementById('product-review-div-button');
@@ -88,7 +90,7 @@ export const generateProductCard = async (product, reviews) => {
     review_average_rate = reviews.review_average_rate;
   }
 
-  thumbnail.innerHTML = `<img src="${product.thumbnail_image}" class="h-full w-full rounded-lg aspect-square object-contain object-center w-full overflow-hidden" />`;
+  thumbnail.innerHTML = `<img src="${product.thumbnail_image}" class="h-full w-full rounded-lg aspect-square object-contain object-center overflow-hidden" />`;
   let starArr = ['gray-300', 'gray-300', 'gray-300', 'gray-300', 'gray-300'];
   for (let e = 0; e <= review_average_rate - 1; e++) {
     starArr[e] = 'yellow-300';
@@ -352,6 +354,7 @@ await generateProductQuestions(questions);
 await generateProductReviews(reviews);
 await generateProductWish(wish);
 await quantityBtn();
+await addToRecentViewed(product.id, product.thumbnail_image);
 
 // 문의 글 저장
 productQuestionButton.addEventListener('click', async () => {
