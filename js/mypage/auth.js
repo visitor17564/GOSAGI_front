@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       withCredentials: true,
     });
     $nicknameFix.innerText = user.data.data[0].nickname;
+    console.log(user.data.data);
     const cartsCount = response.data.data.cart_count;
     drawCartCount(cartsCount);
     // 조회된 정보 적용
