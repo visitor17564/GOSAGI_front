@@ -46,8 +46,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     const user = await axios.get('https://back.gosagi.com/user', {
       withCredentials: true,
     });
-    $nicknameFix.innerText = user.data.data[0].nickname;
     console.log(user.data.data);
+    $nicknameFix.innerText = user.data.data[0].nickname;
+
     const cartsCount = response.data.data.cart_count;
     drawCartCount(cartsCount);
     // 조회된 정보 적용
