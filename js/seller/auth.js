@@ -18,7 +18,6 @@ export async function getUser() {
     }
   } catch (err) {
     // 오류 처리
-    alert(`${err.response}`);
-    window.location.href = '/';
+    console.log(err);
   }
 }

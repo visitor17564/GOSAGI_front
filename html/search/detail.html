@@ -14,6 +14,7 @@
     <script type="module" src="/js/search/detail.js"></script>
     <script type="module" src="/js/auth.js"></script>
     <script type="module" src="/js/search/search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
   </head>
   <body>
     <div class="flex flex-col min-h-screen">
@@ -38,7 +39,7 @@
                 <div id="cart" class="justify-center items-center flex"></div>
                 <div id="cart-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
                 <div id="my-page-div" class="justify-center items-center gap-2.5 flex">
-                  <a href="/html/mypage//myinfo.html" class="text-center text-white text-xs font-normal font-['Inter']">마이페이지</a>
+                  <a href="/html/mypage/myinfo.html" class="text-center text-white text-xs font-normal font-['Inter']">마이페이지</a>
                 </div>
                 <div id="my-page-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
                 <div class="justify-center items-center flex">
@@ -435,7 +436,13 @@
             </div>
           </div>
         </div>
-        <!-- 문의 모달 -->
+        <!-- 최근본 상품 -->
+        <div class="fixed top-72 left-48 w-48 bg-white shadow-md">
+          <div class="bg-white border flex w-full flex-col pl-7 pr-9 py-3 border-solid border-neutral-400">
+            <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap font-['Inter']">최근본 상품</div>
+            <div id="recent-view"></div>
+          </div>
+        </div>
       </main>
       <!-- 가장많은찜수 -->
       <footer class="text-white mt-10">
