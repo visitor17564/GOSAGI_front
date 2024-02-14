@@ -8,9 +8,12 @@ export async function getUser() {
     const response = await axios.get('https://back.gosagi.com/user', {
       withCredentials: true,
     });
-
+    let approvalStatus = 2;
     // 조회된 정보 적용
-    const approvalStatus = response.data.data[0].store[0].approval_status;
+    if (response.data.data[0].store[0]) {
+      approvalStatus = response.data.data[0].store[0].approval_status;
+    }
+
     if (approvalStatus === 1) {
       window.location.href = '/html/seller/info.html';
     } else if (approvalStatus === 0) {
