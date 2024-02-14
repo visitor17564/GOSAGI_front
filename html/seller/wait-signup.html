@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
-    <script type="module" src="/js/auth.js"></script>
+    <script type="module" src="/js/seller/wait-signup.js"></script>
   </head>
   <body>
     <div class="flex flex-col min-h-screen">
@@ -52,7 +52,7 @@
             <div>
               <div class="text-4xl text-gray-400 text-center font-['inter']">사업자 가입 승인 대기중입니다</div>
             </div>
-            <button type="button" class="justify-center text-white text-center text-xl px-10 border border-orange-400 bg-orange-400 hover:bg-white hover:text-orange-400 items-center rounded-full max-md:max-w-full max-md:px-5 font-['Inter']">신청 취소</button>
+            <button id="cancellation" type="button" class="justify-center text-white text-center text-xl px-10 border border-orange-400 bg-orange-400 hover:bg-white hover:text-orange-400 items-center rounded-full max-md:max-w-full max-md:px-5 font-['Inter']">신청 취소</button>
             <div></div>
             <div></div>
             <div></div>
@@ -61,42 +61,6 @@
           </div>
 
           <!-- 여기부터는 모달임 -->
-          <!-- 회원가입(직접입력) -->
-          <div id="signup-self-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <form class="bg-white flex w-1/4 justify-center items-stretch">
-              <div class="border bg-white flex w-full flex-col items-center px-5 py-9 rounded-md border-solid border-zinc-300 max-md:max-w-full">
-                <div class="justify-center text-black text-center text-4xl font-bold font-['Inter']">회원가입</div>
-                <div class="self-stretch flex w-full flex-col items-stretch mt-11 px-7 max-md:max-w-full max-md:mt-10 max-md:px-5">
-                  <div class="mb-5 w-full">
-                    <label for="signup-email" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">Your email</label>
-                    <input type="email" id="signup-email" autocomplete="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="test@test.com" required />
-                  </div>
-                  <div class="mb-5 w-full">
-                    <label for="signup-password" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">Your password</label>
-                    <input type="password" id="signup-password" autocomplete="new-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                  </div>
-                  <div class="mb-5 w-full">
-                    <label for="signup-repeat-password" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">Repeat password</label>
-                    <input type="password" id="signup-repeat-password" autocomplete="new-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                  </div>
-                  <div class="mb-5 w-full">
-                    <label for="signup-nickname" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">Your nickname</label>
-                    <input type="text" id="signup-nickname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
-                  </div>
-                  <div class="w-full flex items-start mb-5">
-                    <div class="flex items-center h-5">
-                      <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" required />
-                    </div>
-                    <label for="terms" class="ms-2 text-sm font-medium text-gray-900 font-['Inter']">
-                      <a href="#" class="text-blue-600 hover:underline font-['Inter']"> 이용약관 </a>
-                      에 동의합니다
-                    </label>
-                  </div>
-                  <button type="button" id="signup-button" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">회원가입</button>
-                </div>
-              </div>
-            </form>
-          </div>
         </div>
       </main>
 
