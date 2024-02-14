@@ -4,8 +4,8 @@ let storeId;
 const productWrap = document.getElementById('product-wrap');
 
 document.addEventListener('DOMContentLoaded', async function () {
-  getStoreId();
-  const products = await getProduct(page);
+  await getStoreId();
+  const products = await getProduct(page, storeId);
   generateProductCards(products, productWrap);
   setPageButtons(storeId);
 });
@@ -70,10 +70,10 @@ export const generateProductCards = async (products, productWrap) => {
     .join('');
 };
 
-export async function getProduct(page) {
+export async function getProduct(page, storeId) {
   try {
     // axios를 사용하여 로그인 API 실행
-    const response = await axios.get(`https://back.gosagi.com/goods/store/1?page=${page}`, {
+    const response = await axios.get(`https://back.gosagi.com/goods/store/${storeId}?page=${page}`, {
       withCredentials: true,
     });
     console.log(response);

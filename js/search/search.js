@@ -1,10 +1,13 @@
 import { generateProductCards } from '../main.js';
 
-const searchButton = document.getElementById('search-button');
-const searchInput = document.getElementById('search-input');
-
 const productWrap = document.getElementById('product-wrap');
 
+// ----------- document 이벤트 ----------
+// body가 클릭되었을 때
+document.body.addEventListener('click', async function (event) {
+  await clickSearchBtn();
+});
+// ---------- 메서드 ----------
 export async function searchProduct(keyword, page) {
   if (!page) {
     page = 1;
@@ -22,8 +25,13 @@ export async function searchProduct(keyword, page) {
   }
 }
 
-searchButton.addEventListener('click', async () => {
-  const keyword = await searchInput.value;
-  const encodeKeyword = encodeURI(keyword);
-  window.location.href = `/?keyword=${encodeKeyword}`;
-});
+async function clickSearchBtn() {
+  document.getElementById('search-button').addEventListener('click', () => {
+    const $searchInput = document.getElementById('search-input');
+
+    const keyword = $searchInput.value;
+    const encodeKeyword = encodeURI(keyword);
+    window.location.href = `/?keyword=${encodeKeyword}`;
+  });
+
+}
