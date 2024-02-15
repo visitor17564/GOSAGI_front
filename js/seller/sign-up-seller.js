@@ -1,4 +1,4 @@
-const $signUpBtn = document.getElementById('signup-button');
+const $signUpBtn = document.getElementById('signup-btn');
 
 $signUpBtn.addEventListener('click', async () => {
   const name = document.getElementById('seller-name').value;

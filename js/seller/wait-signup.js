@@ -1,4 +1,4 @@
-const $signUpBtn = document.getElementById('signup-button');
+const $signUpBtn = document.getElementById('signup-btn');
 const $cancellation = document.getElementById('cancellation');
 let storeId;
 

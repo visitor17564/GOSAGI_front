@@ -33,5 +33,4 @@ async function clickSearchBtn() {
     const encodeKeyword = encodeURI(keyword);
     window.location.href = `/?keyword=${encodeKeyword}`;
   });
-
 }
