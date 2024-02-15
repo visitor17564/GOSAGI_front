@@ -51,22 +51,22 @@ async function createHeaderHtml(isLoggedIn, cartsCount) {
     return `
     <div class="flex flex-col">
       <!-- 최상단 헤더 -->
-      <div class="w-full h-5 bg-zinc-800 flex items-center justify-center">
+      <div class="w-full h-8 bg-zinc-800 flex items-center justify-center">
         <div class="w-8/12 relative justify-end inline-flex">
           <div class="h-3.5 flex justify-end items-center gap-1">
             <div id="logout-div" class="justify-center items-center flex">
-              <button type="submit" id="logout-btn" class="text-center text-white text-xs font-normal font-['Inter']">로그아웃</button>
+              <button type="submit" id="logout-btn" class="text-center text-white text-sm font-normal font-['Inter']">로그아웃</button>
             </div>
             <div id="logout-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
             <div id="cart" class="justify-center items-center flex"></div>
-              <button class="text-center text-white text-xs font-normal font-['Inter']"><a href="/html/mypage/cart.html">장바구니(${cartsCount})</a></button>
+              <button class="text-center text-white text-sm font-normal font-['Inter']"><a href="/html/mypage/cart.html">장바구니(${cartsCount})</a></button>
             <div id="cart-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
             <div id="my-page-div" class="justify-center items-center gap-2.5 flex">
-              <a href="/html/mypage/myinfo.html" class="text-center text-white text-xs font-normal font-['Inter']">마이페이지</a>
+              <a href="/html/mypage/myinfo.html" class="text-center text-white text-sm font-normal font-['Inter']">마이페이지</a>
             </div>
             <div id="my-page-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
             <div class="justify-center items-center flex">
-              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</a>
+              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-sm font-normal font-['Inter']">홈페이지소개</a>
             </div>
           </div>
         </div>
@@ -77,20 +77,20 @@ async function createHeaderHtml(isLoggedIn, cartsCount) {
     return `
       <div class="flex flex-col">
         <!-- 최상단 헤더 -->
-        <div class="w-full h-5 bg-zinc-800 flex items-center justify-center">
+        <div class="w-full h-8 bg-zinc-800 flex items-center justify-center">
           <div class="w-8/12 relative justify-end inline-flex">
             <div class="h-3.5 flex justify-end items-center gap-1">
               <div id="signup-div" class="justify-center items-center flex">
-                <button type="button" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-xs font-normal font-['Inter']">회원가입</button>
+                <button type="button" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-sm font-normal font-['Inter']">회원가입</button>
               </div>
               <div id="signup-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
               <div id="login-div" class="justify-center items-center flex">
-                <button data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-xs font-normal font-['Inter']">로그인</button>
+                <button data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-sm font-normal font-['Inter']">로그인</button>
               </div>
               <div id="login-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
               
               <div class="justify-center items-center flex">
-                <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</a>
+                <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-sm font-normal font-['Inter']">홈페이지소개</a>
               </div>
             </div>
           </div>
