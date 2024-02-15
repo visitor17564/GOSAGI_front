@@ -66,7 +66,7 @@ async function createHeaderHtml(isLoggedIn, cartsCount) {
             </div>
             <div id="my-page-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
             <div class="justify-center items-center flex">
-              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-sm font-normal font-['Inter']">홈페이지소개</a>
+              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" target="_blank" class="text-center text-white text-sm font-normal font-['Inter']">홈페이지소개</a>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@ async function createHeaderHtml(isLoggedIn, cartsCount) {
               <div id="login-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
               
               <div class="justify-center items-center flex">
-                <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-sm font-normal font-['Inter']">홈페이지소개</a>
+                <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" target="_blank" class="text-center text-white text-sm font-normal font-['Inter']">홈페이지소개</a>
               </div>
             </div>
           </div>
