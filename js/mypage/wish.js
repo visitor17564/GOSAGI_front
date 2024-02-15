@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 <div class="text-right ml-5 text-2xl text-red-600"><strong>${wish.productPrice.toLocaleString()}</strong></div>
               </div>
             </td>
-            <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
+            <td class="flex-col w-1/5 px-6 py-4 font-['Inter'] text-center justify-center items-center">
               <a href="https://ilovegohyang.go.kr/items/details-main.html?code=G${wish.productCode}" target="blank" class="h-5 px-4 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg font-['Inter']">기부하러가기</a>
               <button id="cart-btn-${wish.id}-${wish.product_id}" class="${pushCart}cart-btn h-5 w-1/2 px-3 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg font-['Inter']">장바구니담기</button>
               <button id="wish-delete-btn-${wish.id}" class="wish-delete-btn h-5 w-1/2 justify-center hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg font-['Inter']">찜 취소</button>
@@ -75,10 +75,10 @@ async function createCart() {
       const productId = e.target.id.split('-')[3]; // 찜 ID 추출
       // 장바구니 추가 API
       try {
-        // 찜에서 삭제 후 장바구니에 추가
-        const responseWish = await axios.delete(`https://back.gosagi.com/wish/${wishId}`, {
-          withCredentials: true,
-        });
+        // // 찜에서 삭제 후 장바구니에 추가
+        // const responseWish = await axios.delete(`https://back.gosagi.com/wish/login/${wishId}`, {
+        //   withCredentials: true,
+        // });
 
         const responseCart = await axios.post(
           `https://back.gosagi.com/cart`,
@@ -91,8 +91,8 @@ async function createCart() {
           },
         );
 
-        // 장바구니에 추가한 상품 html 제거
-        document.getElementById(`wish-id-${wishId}`).remove();
+        // // 장바구니에 추가한 상품 html 제거
+        // document.getElementById(`wish-id-${wishId}`).remove();
 
         alert(responseCart.data.message);
         window.location.href = '/html/mypage/cart.html';
@@ -114,7 +114,7 @@ async function deleteWish() {
       const wishId = e.target.id.split('-')[3]; // 찜 ID 추출
       // 찜 삭제 API
       try {
-        const response = await axios.delete(`https://back.gosagi.com/wish/${wishId}`, {
+        const response = await axios.delete(`https://back.gosagi.com/wish/login/${wishId}`, {
           withCredentials: true,
         });
 
