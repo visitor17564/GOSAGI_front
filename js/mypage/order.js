@@ -236,8 +236,8 @@ async function editOrderData(orderId) {
           withCredentials: true,
         },
       );
-
       alert(response.data.message);
+      location.reload();
     } catch (err) {
       console.log('err: ', err);
       alert(err.response.data.message);

@@ -23,22 +23,26 @@ async function checkLoginStatus() {
 
 // 헤더 그리기
 async function drawHeader() {
-  checkLoginStatus().then(async ({ isLoggedIn, cartsCount }) => {
-    const headerHtml = await createHeaderHtml(isLoggedIn, cartsCount);
-    $header.insertAdjacentHTML('beforebegin', headerHtml);
+  checkLoginStatus()
+    .then(async ({ isLoggedIn, cartsCount }) => {
+      const headerHtml = await createHeaderHtml(isLoggedIn, cartsCount);
+      $header.insertAdjacentHTML('beforebegin', headerHtml);
 
-    // 이벤트 리스너 설정
-    if (isLoggedIn) {
-      document.getElementById('logout-btn').addEventListener('click', () => { logout(); });
-    } else {
-      document.getElementById('login-btn')?.addEventListener('click', () => login());
-      document.getElementById('signup-btn')?.addEventListener('click', () => signup());
-    }
+      // 이벤트 리스너 설정
+      if (isLoggedIn) {
+        document.getElementById('logout-btn').addEventListener('click', () => {
+          logout();
+        });
+      } else {
+        document.getElementById('login-btn')?.addEventListener('click', () => login());
+        document.getElementById('signup-btn')?.addEventListener('click', () => signup());
+      }
 
-    await drawMenuBtnList();
-  }).catch(err => {
-    console.error('헤더 로딩 실패 : ', err);
-  });
+      await drawMenuBtnList();
+    })
+    .catch((err) => {
+      console.error('헤더 로딩 실패 : ', err);
+    });
 }
 
 // 헤더 HTML 생성

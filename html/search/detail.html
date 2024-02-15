@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -160,7 +160,7 @@
                     에 동의합니다
                   </label>
                 </div>
-                <button type="button" id="signup-button" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">회원가입</button>
+                <button type="button" id="signup-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">회원가입</button>
               </div>
             </div>
           </form>
@@ -185,7 +185,7 @@
                   </div>
                   <label for="login-remember" class="ms-2 text-sm font-medium text-gray-900 font-['Inter']"> 내 정보 기억 </label>
                 </div>
-                <button type="button" id="login-button" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5">로그인</button>
+                <button type="button" id="login-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5">로그인</button>
                 <div class="text-xl mt-8 max-md:max-w-full font-['Inter']">SNS계정 간편 로그인</div>
                 <div class="items-stretch flex gap-2.5 mt-2.5 px-px max-md:max-w-full max-md:flex-wrap">
                   <a href="https://back.gosagi.com/auth/login/kakao">
@@ -231,7 +231,6 @@
           </form>
         </div>
         <!-- 질문 조회/수정/삭제모달-->
-        <div id="question-view-modal-wrap"></div>
         <div id="question-view-modal" tabindex="-1" question-view-modal aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
           <form class="bg-white flex w-1/4 justify-center items-stretch">
             <div class="border bg-white flex w-full flex-col items-center px-5 py-9 rounded-md border-solid border-zinc-300 max-md:max-w-full">

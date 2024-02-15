@@ -56,7 +56,7 @@ export async function signup() {
 
 // 로그아웃 버튼 클릭
 export async function logout() {
-  console.log("로그아웃");
+  console.log('로그아웃');
   try {
     const response = await axios.post(`https://back.gosagi.com/auth/logout`, {}, { withCredentials: true });
     alert('로그아웃 성공');
