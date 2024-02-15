@@ -66,7 +66,7 @@ async function createHeaderHtml(isLoggedIn, cartsCount) {
             </div>
             <div id="my-page-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
             <div class="justify-center items-center flex">
-              <button class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</button>
+              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</a>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@ async function createHeaderHtml(isLoggedIn, cartsCount) {
               <div id="login-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
               
               <div class="justify-center items-center flex">
-                <button class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</button>
+                <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</a>
               </div>
             </div>
           </div>
@@ -120,7 +120,7 @@ async function drawMenuBtnList() {
                 d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
               />
             </svg>
-            <div class="w-14 h-4 text-black text-xs font-normal font-['Inter']">사업자전용</div>
+            <div class="w-18 h-4 text-black text-xs font-normal font-['Inter']">사업자전용</div>
           </a>
         </div>
       </div>
@@ -168,7 +168,7 @@ async function drawMenuBtnList() {
               <a href="/html/search/search-for-theme.html" title="theme" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 테마별 </a>
               <a href="/html/search/search-for-category.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 품목별 </a>
               <a href="/html/search/search-for-region.html" title="region" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 지역별 </a>
-              <a href="#" title="faq" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> FAQ </a>
+              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" title="faq" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> FAQ </a>
             </div>
             <!-- 검색창 -->
             <div class="justify-between border w-1/5 flex gap-5 px-5 rounded-2xl border-solid border-zinc-300">
