@@ -81,9 +81,11 @@ async function drawOrderList(response) {
         }
         // 반품 사유 볼 수 있게 해야함
         if (order.status == 5) {
-          deliveryFinCnt++, (statusText = '반품신청'),
+          deliveryFinCnt++,
+            (statusText = '반품신청'),
             // (secondBtnText = '반품사유 조회'), (secondBtnType = '5'),
-            (thirdBtnText = '반품완료'), (thirdBtnType = `return-completed-btn-${order.id}`);
+            (thirdBtnText = '반품완료'),
+            (thirdBtnType = `return-completed-btn-${order.id}`);
         }
         // 반품 사유 볼 수 있게 해야함
         if (order.status == 6) {
@@ -237,12 +239,9 @@ async function changeOrderStatus(orderId, clickedElement) {
 async function getOrderDetail(orderId) {
   try {
     // 주문내역 상세 조회 API 실행
-    const response = await axios.get(
-      `https://back.gosagi.com/order/${orderId}`,
-      {
-        withCredentials: true,
-      },
-    );
+    const response = await axios.get(`https://back.gosagi.com/order/${orderId}`, {
+      withCredentials: true,
+    });
     const order = response.data.data;
 
     drawOrderDetail(order); // 주문 내역 뿌리기
