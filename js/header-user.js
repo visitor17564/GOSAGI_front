@@ -66,7 +66,7 @@ async function createHeaderHtml(isLoggedIn, cartsCount) {
             </div>
             <div id="my-page-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
             <div class="justify-center items-center flex">
-              <button class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</button>
+              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</a>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@ async function createHeaderHtml(isLoggedIn, cartsCount) {
               <div id="login-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
               
               <div class="justify-center items-center flex">
-                <button class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</button>
+                <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" class="text-center text-white text-xs font-normal font-['Inter']">홈페이지소개</a>
               </div>
             </div>
           </div>
@@ -168,7 +168,7 @@ async function drawMenuBtnList() {
               <a href="/html/search/search-for-theme.html" title="theme" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 테마별 </a>
               <a href="/html/search/search-for-category.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 품목별 </a>
               <a href="/html/search/search-for-region.html" title="region" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 지역별 </a>
-              <a href="#" title="faq" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> FAQ </a>
+              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" title="faq" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> FAQ </a>
             </div>
             <!-- 검색창 -->
             <div class="justify-between border w-1/5 flex gap-5 px-5 rounded-2xl border-solid border-zinc-300">
