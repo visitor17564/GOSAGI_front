@@ -20,7 +20,7 @@ export async function login() {
     location.reload(); // 새로고침
   } catch (err) {
     // 오류 처리
-    alert('로그인 실패: ' + err.response.data.message);
+    alert('계정을 확인해주세요');
   }
 }
 
