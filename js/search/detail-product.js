@@ -1,6 +1,8 @@
 import * as countDOM from './detail-count.js';
 
 export const generateProductCard = async (product, reviews) => {
+  // 타이틀 설정
+  document.title = `${product.name}`;
   // DOM 설정
   const goToDonationButton = document.getElementById('go-to-donation');
   const thumbnail = document.getElementById('product-thumbnail');
