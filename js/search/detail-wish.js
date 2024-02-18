@@ -53,7 +53,6 @@ export async function changeWish(userId, wishCount, productId) {
       if (wishCheck.isMyWish === false) {
         try {
           await axios.post(`https://back.gosagi.com/wish`, { product_id: productId }, { withCredentials: true });
-          alert('찜하기 성공');
           const reWishCheck = await checkIsMyWish(productId);
           const reWishCount = await getProductWishCount(productId);
           await generateProductWish(reWishCount, reWishCheck);
@@ -63,7 +62,6 @@ export async function changeWish(userId, wishCount, productId) {
       } else if (wishCheck.isMyWish === true) {
         try {
           await axios.delete(`https://back.gosagi.com/wish/login/${wishCheck.myWishId}`, { withCredentials: true });
-          alert('찜취소 성공');
           const reWishCheck = await checkIsMyWish(productId);
           const reWishCount = await getProductWishCount(productId);
           await generateProductWish(reWishCount, reWishCheck);
