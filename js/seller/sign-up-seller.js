@@ -1,4 +1,10 @@
+import * as modalAPI from '../util/open-close-modal.js';
+
 const $signUpBtn = document.getElementById('signup-btn');
+
+document.getElementById('open-signup-seller-modal').addEventListener('click', async () => {
+  await modalAPI.openModal('signup-seller-modal');
+});
 
 $signUpBtn.addEventListener('click', async () => {
   const name = document.getElementById('seller-name').value;

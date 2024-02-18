@@ -6,6 +6,7 @@ import * as countAPI from './detail-count.js';
 import * as authAPI from './detail-auth.js';
 import * as wishAPI from './detail-wish.js';
 import * as cartAPI from './detail-cart-order.js';
+import * as modalAPI from './detail-modal.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
   // 쿼리 스트링 가져오기
@@ -72,12 +73,22 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // 바로 구매 동작 리스너 추가
   cartAPI.purchaseButton.addEventListener('click', function () {
-    cartAPI.drawCart(userId);
+    if (userId) {
+      modalAPI.openModal('cart-modal');
+      cartAPI.drawCart(userId);
+    } else {
+      alert('로그인이 필요합니다.');
+    }
   });
 
   // 토스 결제 버튼 클릭 이벤트
   cartAPI.paymentBtn.addEventListener('click', function () {
-    cartAPI.paymentToss(productId);
+    if (userId) {
+      modalAPI.openModal('toss-modal');
+      cartAPI.paymentToss(productId);
+    } else {
+      alert('로그인이 필요합니다.');
+    }
   });
 
   // 상품 리뷰 불러오기
@@ -89,12 +100,20 @@ document.addEventListener('DOMContentLoaded', async function () {
   // 문의 남기기
   const $productQuestionButton = document.getElementById('product-question-button');
   $productQuestionButton.addEventListener('click', async () => {
-    console.log(userId);
     if (userId) {
       questionAPI.addQuestion(userId, productId);
     } else {
       alert('로그인이 필요합니다.');
-      location.reload();
+    }
+  });
+
+  // 상품문의모달
+  document.getElementById('open-question-modal').addEventListener('click', async function () {
+    if (userId) {
+      let modalId = 'question-modal';
+      modalAPI.openModal(modalId);
+    } else {
+      alert('로그인이 필요합니다.');
     }
   });
 });

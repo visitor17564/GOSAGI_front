@@ -1,3 +1,5 @@
+import * as modalAPI from '../util/open-close-modal.js';
+
 // DOM 요소들
 const $cartList = document.getElementById('cart-list');
 const $totalPrice = document.getElementById('total-price');
@@ -105,11 +107,13 @@ async function drawCartList() {
 // 선택 상품 구매
 // 여기 토스 결제 페이지랑 연동도 해야함
 $selectBuyBtn.addEventListener('click', async function (e) {
+  modalAPI.openModal('cart-modal');
   drawSelectCart();
 });
 
 // 전체 상품 구매
 $allBuyBtn.addEventListener('click', async function (e) {
+  modalAPI.openModal('cart-modal');
   $allSelectCheckbox.checked = true; // 상품 합계 가격 수정 함수 호출
   selectAllCheckbox();
   drawSelectCart();
@@ -298,7 +302,7 @@ async function updateTotalPrice() {
 // 토스 결제 버튼 클릭 이벤트
 document.getElementById('payment-btn').addEventListener('click', function () {
   if ($cartModalReceiver.value && $cartModalPhonenumber.value && $postcode.value && $address.value) {
-    tossModal.classList.remove('hidden');
+    modalAPI.openModal('toss-modal');
     toss();
   } else {
     alert('수령인, 연락처, 주소를 입력해주세요');

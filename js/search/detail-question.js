@@ -1,3 +1,5 @@
+import * as modalAPI from './detail-modal.js';
+
 // 문의 글 저장
 
 export async function addQuestion(userId, productId) {
@@ -37,6 +39,7 @@ export async function drawSelectQuestion() {
 
   $questionBtns.forEach((button) => {
     button.addEventListener('click', async function () {
+      modalAPI.openModal('question-view-modal');
       const currentRow = button.closest('tr');
       const questionId = currentRow.id;
 
@@ -47,7 +50,6 @@ export async function drawSelectQuestion() {
         });
 
         const question = response.data.data;
-        console.log(question);
         $questionViewTitle.value = question.question.title;
         $questionViewContent.value = question.question.content;
 
@@ -85,7 +87,7 @@ export const generateProductQuestions = async (questions, userId) => {
         if (question.status === '답변대기') {
           // 버튼이 있는경우 : 비밀글이고 내 글이거나 비밀글이 아닐 때
           if ((question.question.is_private === true && userId === question.question.user_id) || question.question.is_private === false) {
-            questionBtnHtml = `<button question-detail-btn data-modal-target="question-view-modal" data-modal-toggle="question-view-modal" class="h-5 w-1/2 justify-center text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기</button>`;
+            questionBtnHtml = `<button question-detail-btn class="h-5 w-1/2 justify-center text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기</button>`;
           }
           // 비밀글이고 내 글이 아닐 때
           if (question.question.is_private === true && userId !== question.question.user_id) {
@@ -97,7 +99,7 @@ export const generateProductQuestions = async (questions, userId) => {
         if (question.status !== '답변대기') {
           // 비밀글이고 내 글이거나 비밀글이 아닐 때
           if ((question.question.is_private === true && userId == question.question.user_id) || question.question.is_private === false) {
-            questionBtnHtml = `<button question-detail-btn data-modal-target="question-view-modal" data-modal-toggle="question-view-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white text-xs border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>`;
+            questionBtnHtml = `<button question-detail-btn class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white text-xs border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>`;
           }
           // 비밀글이고 내 글이 아닐 때
           if (question.question.is_private === true && userId != question.question.user_id) {
@@ -135,7 +137,7 @@ export const generateProductQuestions = async (questions, userId) => {
         if (question.status === '답변대기') {
           // 비밀글이 아닐 때
           if (question.question.is_private === false) {
-            questionBtnHtml = `<button question-detail-btn data-modal-target="question-view-modal" data-modal-toggle="question-view-modal" class="h-5 w-1/2 justify-center text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기</button>`;
+            questionBtnHtml = `<button question-detail-btn class="h-5 w-1/2 justify-center text-xs border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변대기</button>`;
           }
           // 비밀글일 때
           if (question.question.is_private === true) {
@@ -147,7 +149,7 @@ export const generateProductQuestions = async (questions, userId) => {
         if (question.status !== '답변대기') {
           // 비밀글이 아닐 때
           if (question.question.is_private === false) {
-            questionBtnHtml = `<button question-detail-btn data-modal-target="question-view-modal" data-modal-toggle="question-view-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white text-xs border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>`;
+            questionBtnHtml = `<button question-detail-btn class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white text-xs border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>`;
           }
           // 비밀글일때
           if (question.question.is_private === true) {
