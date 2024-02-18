@@ -1,4 +1,4 @@
-import { login, signup, logout } from './auth.js';
+import * as authAPI from './auth.js';
 
 // ---------- DOM ----------
 const $header = document.querySelector('header');
@@ -31,11 +31,14 @@ async function drawHeader() {
       // 이벤트 리스너 설정
       if (isLoggedIn) {
         document.getElementById('logout-btn').addEventListener('click', () => {
-          logout();
+          authAPI.logout();
         });
       } else {
-        document.getElementById('login-btn')?.addEventListener('click', () => login());
-        document.getElementById('signup-btn')?.addEventListener('click', () => signup());
+        document.getElementById('open-login-modal')?.addEventListener('click', () => authAPI.openLoginModal());
+        document.getElementById('open-signup-modal')?.addEventListener('click', () => authAPI.openSignupModal());
+        document.getElementById('open-signup-custom-modal')?.addEventListener('click', () => authAPI.openSignupCustomModal());
+        document.getElementById('login-btn')?.addEventListener('click', () => authAPI.login());
+        document.getElementById('signup-btn')?.addEventListener('click', () => authAPI.signup());
       }
 
       await drawMenuBtnList();
@@ -81,11 +84,11 @@ async function createHeaderHtml(isLoggedIn, cartsCount) {
           <div class="w-8/12 relative justify-end inline-flex">
             <div class="h-3.5 flex justify-end items-center gap-1">
               <div id="signup-div" class="justify-center items-center flex">
-                <button type="button" data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="text-center text-white text-sm font-normal font-['Inter']">회원가입</button>
+                <button type="button" id="open-signup-modal" class="text-center text-white text-sm font-normal font-['Inter']">회원가입</button>
               </div>
               <div id="signup-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
               <div id="login-div" class="justify-center items-center flex">
-                <button data-modal-target="login-modal" data-modal-toggle="login-modal" class="text-center text-white text-sm font-normal font-['Inter']">로그인</button>
+                <button type="button" id="open-login-modal" class="text-center text-white text-sm font-normal font-['Inter']">로그인</button>
               </div>
               <div id="login-bar" class="w-2 -rotate-90 border border-zinc-500"></div>
               
@@ -168,7 +171,7 @@ async function drawMenuBtnList() {
               <a href="/html/search/search-for-theme.html" title="theme" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 테마별 </a>
               <a href="/html/search/search-for-category.html" title="category" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 품목별 </a>
               <a href="/html/search/search-for-region.html" title="region" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> 지역별 </a>
-              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" title="faq" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> FAQ </a>
+              <a href="https://lanlanlooo.notion.site/1112584491d84cdfa087ae31424e8c9f?pvs=4" title="faq" target="_blank" class="justify-center text-black text-center text-base grow whitespace-nowrap font-['Inter']"> FAQ </a>
             </div>
             <!-- 검색창 -->
             <div class="justify-between border w-1/5 flex gap-5 px-5 rounded-2xl border-solid border-zinc-300">

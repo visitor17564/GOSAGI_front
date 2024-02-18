@@ -1,3 +1,5 @@
+import * as modalAPI from '../util/open-close-modal.js';
+
 const $orderList = document.getElementById('order-list');
 const $paymentFinCnt = document.getElementById('payment-fin-cnt');
 const $paymentCancelCnt = document.getElementById('payment-cancel-cnt');
@@ -50,16 +52,16 @@ async function drawOrderList(response) {
           // 주문 수정 === 배송지 수정
           paymentFinCnt++, (firstBtnText = '수정하기'), (firstBtnType = 'edit-order-btn'), (secondBtnText = '취소하기'), (secondBtnType = 'refund-completed-btn');
           btnHtml = `
-            <button  ${firstBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${firstBtnText}</button> 
-            <button ${secondBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${secondBtnText}</button>
+            <button  ${firstBtnType} class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${firstBtnText}</button> 
+            <button ${secondBtnType} class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${secondBtnText}</button>
           `;
         }
         if (order.status == 2) {
           deliveryFinCnt++, (firstBtnText = '반품신청'), (firstBtnType = 'return-request-btn'), (secondBtnText = '교환신청'), (secondBtnType = 'exchange-request-btn'), (thirdBtnText = '구매확정'), (thirdBtnType = 'purchase-confirm-btn');
           btnHtml = `
-            <button ${firstBtnType} data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${firstBtnText}</button> 
-            <button ${secondBtnType}  data-modal-target="order-edit-modal" data-modal-toggle="order-edit-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${secondBtnText}</button>
-            <button ${thirdBtnType} id="add-review:${order.id}" data-modal-target="review-modal" data-modal-toggle="review-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${thirdBtnText}</button>
+            <button ${firstBtnType} class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${firstBtnText}</button> 
+            <button ${secondBtnType} class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${secondBtnText}</button>
+            <button ${thirdBtnType} id="add-review:${order.id}" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">${thirdBtnText}</button>
             `;
         }
         if (order.status != 0 && order.status != 2) {
@@ -204,6 +206,7 @@ async function editOrderBtnClick() {
   const $editOrderBtns = document.querySelectorAll('[edit-order-btn]');
   $editOrderBtns.forEach((button) => {
     button.addEventListener('click', async function () {
+      modalAPI.openModal('order-edit-modal');
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
 
@@ -250,6 +253,7 @@ async function refundCompletedBtnClick() {
   const $refundCompletedBtns = document.querySelectorAll('[refund-completed-btn]');
   $refundCompletedBtns.forEach((button) => {
     button.addEventListener('click', async function () {
+      modalAPI.openModal('order-edit-modal');
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
 
@@ -405,6 +409,7 @@ async function purchaseConfirm() {
   const $purchaseConfirmBtns = document.querySelectorAll('[purchase-confirm-btn]');
   $purchaseConfirmBtns.forEach((button) => {
     button.addEventListener('click', async function () {
+      modalAPI.openModal('review-modal');
       const currentRow = button.closest('tr');
       const orderId = currentRow.id;
 

@@ -1,5 +1,5 @@
 export const addCartButton = document.getElementById('add-cart-button');
-export const purchaseButton = document.getElementById('purchase-button');
+export const purchaseButton = document.getElementById('open-purchase-modal');
 export const addressSearchBtn = document.getElementById('address-search-btn');
 export const paymentBtn = document.getElementById('payment-btn');
 export const chooseAddress = document.getElementById('choose-address');

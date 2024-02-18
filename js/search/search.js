@@ -1,4 +1,4 @@
-import { generateProductCards } from '../main.js';
+import { generateProductCards } from '../main-product.js';
 
 const productWrap = document.getElementById('product-wrap');
 
@@ -26,11 +26,17 @@ export async function searchProduct(keyword, page) {
 }
 
 async function clickSearchBtn() {
+  const $searchInput = document.getElementById('search-input');
   document.getElementById('search-button').addEventListener('click', () => {
-    const $searchInput = document.getElementById('search-input');
-
     const keyword = $searchInput.value;
     const encodeKeyword = encodeURI(keyword);
     window.location.href = `/?keyword=${encodeKeyword}`;
+  });
+  $searchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      const keyword = $searchInput.value;
+      const encodeKeyword = encodeURI(keyword);
+      window.location.href = `/?keyword=${encodeKeyword}`;
+    }
   });
 }

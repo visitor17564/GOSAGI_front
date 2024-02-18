@@ -4,7 +4,5 @@ export async function getUserId() {
       withCredentials: true,
     });
     return response.data.data[0].id;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }

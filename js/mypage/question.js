@@ -1,3 +1,5 @@
+import * as modalAPI from '../util/open-close-modal.js';
+
 // DOM 요소들
 const questionDiv = document.getElementById('question-wrap');
 const questionModalDiv = document.getElementById('question-modal-wrap');
@@ -46,9 +48,9 @@ async function drawQuestionList() {
         </td>
         <td class="px-6 py-4 font-['Inter'] text-center">${question.question.created_at.slice(0, 10)}</td>
         <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
-          <button question-detail-btn data-modal-target="question-modal" data-modal-toggle="question-modal" class="${completeAnswer}h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>
+          <button question-detail-btn class="${completeAnswer}h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">답변완료</button>
           <button class="${waitAnswer}h-5 w-1/2 justify-center  border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']" style="cursor: default;">답변대기중</button>
-          <button question-detail-btn data-modal-target="question-modal" data-modal-toggle="question-modal" class="${waitAnswer}h-5 w-1/2 justify-center hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">상세보기</button>
+          <button question-detail-btn class="${waitAnswer}h-5 w-1/2 justify-center hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">상세보기</button>
         </td>
       </tr>`;
 
@@ -69,6 +71,7 @@ async function drawSelectQuestion() {
 
   $questionBtns.forEach((button) => {
     button.addEventListener('click', async function () {
+      modalAPI.openModal('question-modal');
       const currentRow = button.closest('tr');
       const questionId = currentRow.id;
 
@@ -190,3 +193,7 @@ async function editQuestion(questionId) {
     alert(err.response.data.message);
   }
 }
+
+document.getElementById('open-question-write-modal').addEventListener('click', async function () {
+  modalAPI.openModal('question-write-modal');
+});

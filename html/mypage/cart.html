@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>장바구니</title>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
@@ -42,7 +42,7 @@
               <div class="bg-stone-300 self-stretch shrink-0 h-px mt-2.5"></div>
               <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-3 font-['Inter']">나의 활동</div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="./question.html"> 1:1 문의내역</a>
+                <a href="./question.html">1:1 문의내역</a>
               </div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
                 <a href="./review.html">나의 상품후기</a>
@@ -109,14 +109,14 @@
               <div id="total-price" class="text-right mr-5 text-4xl text-red-600"><strong></strong></div>
             </div>
             <div class="flex items-center justify-center">
-              <button id="select-payment-btn" data-modal-target="cart-modal" data-modal-toggle="cart-modal" class="h-16 w-32 mt-5 mr-5 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">선택상품 구매</button>
-              <button id="all-payment-btn" data-modal-target="cart-modal" data-modal-toggle="cart-modal" class="h-16 w-32 mt-5 mr-5 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-white text-center bg-orange-400 items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">전체상품 구매</button>
+              <button id="select-payment-btn" class="h-16 w-32 mt-5 mr-5 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">선택상품 구매</button>
+              <button id="all-payment-btn" class="h-16 w-32 mt-5 mr-5 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-white text-center bg-orange-400 items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">전체상품 구매</button>
             </div>
           </div>
         </div>
         <!-- 여기부터는 모달임 -->
         <!-- 주문 정보 입력 모달-->
-        <div id="cart-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id="cart-modal" class="hidden fixed top-0 left-0 w-full h-full justify-center items-center">
           <form class="bg-white flex w-1/3 justify-center items-stretch">
             <div class="border bg-white flex w-full flex-col items-center px-5 py-9 rounded-md border-solid border-zinc-300 max-md:max-w-full">
               <div class="justify-center text-black text-center text-4xl font-bold font-['Inter']">주문하기</div>
@@ -161,13 +161,13 @@
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">배송시 요청사항</label>
                   <input type="text" id="delivery-request" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="배송 요청 사항을 입력해주세요" required />
                 </div>
-                <button type="button" id="payment-btn" data-modal-target="toss-modal" data-modal-toggle="toss-modal" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">결제하기</button>
+                <button type="button" id="payment-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">결제하기</button>
               </div>
             </div>
           </form>
         </div>
         <!-- 토스 모달 -->
-        <div id="toss-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-100 md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id="toss-modal" class="hidden fixed top-0 left-0 w-full h-full justify-center items-center">
           <div class="wrapper w-1/2">
             <div class="w-100">
               <div id="payment-method" class="w-100"></div>

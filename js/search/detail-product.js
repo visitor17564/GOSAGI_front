@@ -1,6 +1,8 @@
 import * as countDOM from './detail-count.js';
 
 export const generateProductCard = async (product, reviews) => {
+  // 타이틀 설정
+  document.title = `${product.name}`;
   // DOM 설정
   const goToDonationButton = document.getElementById('go-to-donation');
   const thumbnail = document.getElementById('product-thumbnail');
@@ -8,7 +10,7 @@ export const generateProductCard = async (product, reviews) => {
   const productDetail = document.getElementById('product-detail');
   const productTotalPrice = document.getElementById('product-total-price');
   const addCartButton = document.getElementById('add-cart-button');
-  const purchaseButton = document.getElementById('purchase-button');
+  const purchaseButton = document.getElementById('open-purchase-modal');
   const countDiv = document.getElementById('count-div');
 
   const donateValue = Math.ceil(product.point / 3) * 10;

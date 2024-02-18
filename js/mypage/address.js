@@ -1,3 +1,5 @@
+import * as modalAPI from '../util/open-close-modal.js';
+
 async function drawAddressList() {
   const addressWrapDiv = document.getElementById('address-wrap');
   try {
@@ -18,7 +20,7 @@ async function drawAddressList() {
         <td class="px-6 py-4 font-['Inter'] text-center">${address.address}${address.detail_address}</td>
         <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">${address.phone}</td>
         <td class="text-center px-6 py-3 gap-2 flex flex-col justify-center items-center">
-          <button id="fixAddress:${address.id}" data-modal-target="fix-address-modal" data-modal-toggle="fix-address-modal" class="h-5 w-10 hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">수정</button>
+          <button id="fixAddress:${address.id}" class="h-5 w-10 hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">수정</button>
           <button id="deleteAddress:${address.id}" class="h-5 w-10 hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">삭제</button>
         </td>
       </tr>`;
@@ -137,6 +139,7 @@ document.addEventListener('click', async () => {
   }
   if (String(clickedElementId).includes('fixAddress')) {
     try {
+      modalAPI.openModal('fix-address-modal');
       const address = await axios.get(`https://back.gosagi.com/address/myAddress/${addressId}`, {
         withCredentials: true,
       });
@@ -195,3 +198,7 @@ async function deleteAddress(addressId) {
     window.location.reload();
   } catch (err) {}
 }
+
+document.getElementById('open-address-modal').addEventListener('click', async () => {
+  modalAPI.openModal('add-address-modal');
+});

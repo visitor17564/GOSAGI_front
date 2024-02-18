@@ -1,5 +1,5 @@
 import { searchProduct } from './search.js';
-import { generateProductCards } from '../main.js';
+import { generateProductCards } from '../main-product.js';
 
 const mostView = document.getElementById('most-view');
 const mostWish = document.getElementById('most-wish');

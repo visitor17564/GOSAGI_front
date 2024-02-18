@@ -24,6 +24,25 @@ export async function login() {
   }
 }
 
+// 로그인 모달
+export async function openLoginModal() {
+  const $loginModal = document.getElementById('login-modal');
+  $loginModal.classList.remove('hidden');
+  $loginModal.classList.add('flex');
+  $loginModal.classList.add('bg-gray-500/75');
+  document.addEventListener('click', (event) => {
+    if (event.target.id === 'login-modal') {
+      closeLoginModal();
+    }
+  });
+}
+
+export async function closeLoginModal() {
+  const $loginModal = document.getElementById('login-modal');
+  $loginModal.classList.add('hidden');
+  $loginModal.classList.remove('flex');
+}
+
 // 회원가입
 export async function signup() {
   const email = document.getElementById('signup-email').value;
@@ -52,6 +71,45 @@ export async function signup() {
     // 오류 처리
     alert('회원가입 실패: ' + err.response.data.message);
   }
+}
+
+// 회원가입(선택) 모달
+export async function openSignupModal() {
+  const $signupModal = document.getElementById('signup-modal');
+  $signupModal.classList.remove('hidden');
+  $signupModal.classList.add('flex');
+  $signupModal.classList.add('bg-gray-500/75');
+  document.addEventListener('click', (event) => {
+    if (event.target.id === 'signup-modal') {
+      closeSignupModal();
+    }
+  });
+}
+
+export async function closeSignupModal() {
+  const $signupModal = document.getElementById('signup-modal');
+  $signupModal.classList.add('hidden');
+  $signupModal.classList.remove('flex');
+}
+
+// 회원가입(직접입력) 모달
+export async function openSignupCustomModal() {
+  closeSignupModal();
+  const $signupModal = document.getElementById('signup-custom-modal');
+  $signupModal.classList.remove('hidden');
+  $signupModal.classList.add('flex');
+  $signupModal.classList.add('bg-gray-500/75');
+  document.addEventListener('click', (event) => {
+    if (event.target.id === 'signup-custom-modal') {
+      closeSignupCustomModal();
+    }
+  });
+}
+
+export async function closeSignupCustomModal() {
+  const $signupModal = document.getElementById('signup-custom-modal');
+  $signupModal.classList.add('hidden');
+  $signupModal.classList.remove('flex');
 }
 
 // 로그아웃 버튼 클릭

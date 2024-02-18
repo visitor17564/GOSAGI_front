@@ -1,3 +1,5 @@
+import * as modalAPI from '../util/open-close-modal.js';
+
 // DOM 요소들
 const reviewDiv = document.getElementById('product-review-wrap');
 const reviewModalDiv = document.getElementById('review-modal-wrap');
@@ -13,7 +15,6 @@ async function drawReviewList() {
     if (reviews.review_count >= 1) {
       reviewDiv.innerHTML = '';
       reviews.reviews.forEach((review) => {
-        console.log(review);
         // const category = question.question.product_id < 3 ? '이용문의' : '상품문의';
         // const waitAnswer = question.status === '답변대기' ? '' : 'hidden ';
         // const completeAnswer = question.status === '답변대기' ? 'hidden ' : ''; 히히..
@@ -49,7 +50,7 @@ async function drawReviewList() {
         </td>
         <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">${review.created_at.slice(0, 10)}</td>
         <td class="w-1/5 px-6 py-4 font-['Inter'] text-center flex-col justify-center items-center">
-          <button id="fixReview:${review.id}" data-modal-target="review-modal" data-modal-toggle="review-modal" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">수정</button>
+          <button id="fixReview:${review.id}" class="h-5 w-1/2 justify-center hover:bg-orange-400 hover:text-white border border-orange-400 text-orange-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">수정</button>
           <button id="deleteReview:${review.id}" class="h-5 w-1/2 justify-center hover:bg-gray-400 hover:text-white border border-gray-400 text-gray-400 text-center bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">삭제</button>
         </td>
       </tr>
@@ -81,6 +82,7 @@ document.addEventListener('click', async () => {
     deleteReview(reviewId);
   }
   if (String(clickedElementId).includes('fixReview')) {
+    modalAPI.openModal('review-modal');
     const stars = document.getElementsByName('score');
     try {
       const review = await axios.get(`https://back.gosagi.com/review/${reviewId}`, {

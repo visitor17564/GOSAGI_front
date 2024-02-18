@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>1:1 문의내역</title>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
@@ -40,7 +40,7 @@
               <div class="bg-stone-300 self-stretch shrink-0 h-px mt-2.5"></div>
               <div class="justify-center text-black text-base font-bold self-start whitespace-nowrap mt-3 font-['Inter']">나의 활동</div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
-                <a href="./question.html"> 1:1 문의내역</a>
+                <a href="./question.html">1:1 문의내역</a>
               </div>
               <div class="justify-center text-black text-sm self-start whitespace-nowrap mt-2 font-['Inter']">
                 <a href="./review.html">나의 상품후기</a>
@@ -71,7 +71,7 @@
                 님 환영합니다.
               </div>
             </div>
-            <!-- 1:1 문의내역 -->
+            <!--1:1 문의내역 -->
             <div class="justify-center mt-12 text-black text-2xl font-bold self-start whitespace-nowrap font-['Inter']">1:1 문의내역</div>
             <div class="mt-5 relative overflow-x-auto">
               <table class="table-auto w-full text-sm text-left rtl:text-right text-gray-500">
@@ -89,13 +89,13 @@
             </div>
             <div class="mr-5 text-right text-gray-400 font-['Inter'] text-sm">* 상품문의는 상품 개별페이지에서 작성 가능합니다.</div>
             <div class="flex items-center justify-end">
-              <button data-modal-target="question-write-modal" data-modal-toggle="question-write-modal" class="h-8 w-32 mt-10 mr-5 justify-center hover:bg-white hover:text-orange-400 border border-orange-400 text-white text-center bg-orange-400 items-center rounded-2xl max-md:max-w-full max-md:px-5 font-['Inter']">이용문의</button>
+              <button id="open-question-write-modal" class="h-8 w-32 mt-10 mr-5 justify-center hover:bg-white hover:text-orange-400 border border-orange-400 text-white text-center bg-orange-400 items-center rounded-2xl max-md:max-w-full max-md:px-5 font-['Inter']">이용문의</button>
             </div>
           </div>
         </div>
         <!-- 여기부터는 모달임 -->
         <!-- 이용문의작성 모달 -->
-        <div id="question-write-modal" tabindex="-1" question-write-modal aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id="question-write-modal" class="hidden fixed top-0 left-0 w-full h-full justify-center items-center">
           <form class="bg-white flex w-1/3 justify-center items-stretch">
             <div class="border bg-white flex w-full flex-col items-center px-5 py-9 rounded-md border-solid border-zinc-300 max-md:max-w-full">
               <div class="justify-center text-black text-center text-4xl font-bold font-['Inter']">이용문의 작성</div>
@@ -104,11 +104,11 @@
                   <div class="h-8 w-1/4 justify-center border border-orange-400 text-orange-400 text-center text-xl bg-white items-center rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">이용문의</div>
                 </div>
                 <div class="mb-5 w-full">
-                  <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">제목</label>
+                  <label for="question-write-title" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">제목</label>
                   <input type="text" id="question-write-title" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="mb-5 w-full">
-                  <label for="text" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">내용</label>
+                  <label for="question-write-content" class="block mb-2 text-sm font-medium text-gray-900 font-['Inter']">내용</label>
                   <input type="text" id="question-write-content" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                 </div>
                 <div class="w-full flex items-start mb-5">
@@ -117,7 +117,7 @@
                   </div>
                   <label for="terms" class="ms-2 text-sm font-medium text-gray-900 font-['Inter']"> 비밀글 </label>
                 </div>
-                <button id="question-write-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">이용문의 작성</button>
+                <button type="button" id="question-write-btn" class="w-full justify-center text-white text-center text-xl bg-orange-400 items-center py-6 rounded-lg max-md:max-w-full max-md:px-5 font-['Inter']">이용문의 작성</button>
               </div>
             </div>
           </form>
