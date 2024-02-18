@@ -35,6 +35,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('product-review').scrollIntoView({ behavior: 'smooth' });
   });
 
+  document.getElementById('go-to-first').addEventListener('click', function () {
+    window.scrollTo(0, 0, { behavior: 'smooth' });
+  });
+
   // 상품 카운트 활성화
   await countAPI.quantityBtn();
   await addToRecentViewed(product.id, product.thumbnail_image);
