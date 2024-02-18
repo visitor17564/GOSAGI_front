@@ -22,32 +22,32 @@
           <div class="flex justify-center mt-10">
             <ul class="w-8/12 flex justify-center items-center gap-5">
               <li>
-                <button id="tour-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                <button id="select-category-관광서비스" class="category-button p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
                   <span><img src="/sourse/image/category/tour.png" alt="관광서비스" class="de-img" /></span> <span class="font-['Inter']">관광서비스</span>
                 </button>
               </li>
               <li>
-                <button id="food-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                <button id="select-category-농축산물" class="category-button p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
                   <span class="icon_img"><img src="/sourse/image/category/food.png" alt="농축산물" /></span> <span class="font-['Inter']">농축산물</span>
                 </button>
               </li>
               <li>
-                <button id="fish-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                <button id="select-category-수산물" class="category-button p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
                   <span class="icon_img"><img src="/sourse/image/category/fish.png" alt="수산물" /> </span> <span class="font-['Inter']">수산물</span>
                 </button>
               </li>
               <li>
-                <button id="managed-food-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                <button id="select-category-가공식품" class="category-button p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
                   <span class="icon_img"><img src="/sourse/image/category/managefood.png" alt="가공식품" /> </span> <span class="font-['Inter']">가공식품</span>
                 </button>
               </li>
               <li>
-                <button id="live-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                <button id="select-category-생활용품" class="category-button p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
                   <span class="icon_img"><img src="/sourse/image/category/live.png" alt="생활용품" /> </span> <span class="font-['Inter']">생활용품</span>
                 </button>
               </li>
               <li>
-                <button id="coupon-button" class="p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
+                <button id="select-category-지역상품권" class="category-button p-4 hover:bg-orange-300 focus:bg-orange-300 rounded-2xl">
                   <span class="icon_img"><img src="/sourse/image/category/coupon.png" alt="지역상품권" /> </span> <span class="font-['Inter']">지역상품권</span>
                 </button>
               </li>
@@ -61,8 +61,10 @@
           <!-- 카드 여따 뿌림 -->
           <div id="product-category-wrap" class="gap-0 flex flex-wrap"></div>
           <!-- 페이지네이션 -->
-          <div id="page-button-wrap" class="flex justify-center my-10">
-            <div class="number-button-wrapper"><span class="number-button">1</span></div>
+          <div class="number-button-wrapper flex justify-center items-center">
+            <button id="previous-button" class="hover:text-red-400">이전</button>
+            <div id="page-button-wrap" class="flex justify-center my-10"></div>
+            <button id="next-button" class="hover:text-red-400">다음</button>
           </div>
           <!-- 여기부터는 모달임 -->
           <!-- 회원가입 모달(선택)-->

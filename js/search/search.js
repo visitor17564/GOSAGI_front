@@ -1,4 +1,4 @@
-import { generateProductCards } from '../main.js';
+import { generateProductCards } from '../main-product.js';
 
 const productWrap = document.getElementById('product-wrap');
 
