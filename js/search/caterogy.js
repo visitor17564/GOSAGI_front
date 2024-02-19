@@ -50,6 +50,7 @@ categoryBtn.forEach((button) => {
     const products = await getProductByCategory(category, page);
     await generateProductCards(products, productWrap);
     countUrl = await makeCountUrl(category);
+    pageGroup = 1;
     await setPageButtons(pageGroup, countUrl);
   });
 });
