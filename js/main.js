@@ -20,27 +20,26 @@ if (decodeURI(window.location.search.split('=')[0]) === '?keyword' && decodeURI(
   const products = await getProduct(page);
   generateProductCards(products, productWrap);
   setPageButtons(pageGroup, url);
+  // 페이지네이션 버튼 클릭시 로직
+  document.addEventListener('click', async () => {
+    let clickedElementId = event.target.id;
+    let buttonClicked = String(clickedElementId).includes('clicked-page-button');
+    if (buttonClicked) {
+      const numberButtons = document.querySelectorAll('.number-button');
+      const filteredElements = Array.from(numberButtons).filter((element) => element.classList.contains('text-red-300'));
+
+      // `filteredElements`에는 `text-red-300` 클래스가 있는 요소만 포함됩니다.
+      filteredElements.forEach((element) => {
+        element.classList.remove('text-red-300');
+      });
+      // .classList.add('text-black');
+      event.target.classList.add('text-red-300');
+      page = Number(String(clickedElementId).split(':')[1]);
+      const products = await getProduct(page);
+      generateProductCards(products, productWrap);
+    }
+  });
 }
-
-// 페이지네이션 버튼 클릭시 로직
-document.addEventListener('click', async () => {
-  let clickedElementId = event.target.id;
-  let buttonClicked = String(clickedElementId).includes('clicked-page-button');
-  if (buttonClicked) {
-    const numberButtons = document.querySelectorAll('.number-button');
-    const filteredElements = Array.from(numberButtons).filter((element) => element.classList.contains('text-red-300'));
-
-    // `filteredElements`에는 `text-red-300` 클래스가 있는 요소만 포함됩니다.
-    filteredElements.forEach((element) => {
-      element.classList.remove('text-red-300');
-    });
-    // .classList.add('text-black');
-    event.target.classList.add('text-red-300');
-    page = Number(String(clickedElementId).split(':')[1]);
-    const products = await getProduct(page);
-    generateProductCards(products, productWrap);
-  }
-});
 
 previousBtn.addEventListener('click', async () => {
   pageGroup--;

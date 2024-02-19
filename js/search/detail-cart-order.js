@@ -27,8 +27,11 @@ export async function createCart(userId, productId) {
           withCredentials: true,
         },
       );
-      alert(responseCart.data.message);
-      window.location.href = '/html/mypage/cart.html';
+      const result = confirm('장바구니에 담았습니다. 장바구니로 이동할까요?');
+      if (result) {
+        window.location.href = '/html/mypage/cart.html';
+      } else {
+      }
     } catch (err) {
       console.log(err);
       alert(responseCart.data.message);
