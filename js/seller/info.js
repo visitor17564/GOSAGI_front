@@ -223,7 +223,8 @@ async function getStoreInfo() {
     document.getElementById('seller-phone').value = response.data.data[0].store[0].phone_number;
   } catch (err) {
     // 오류 처리
-    alert('오류발생: ' + err.response.data.message);
+    alert('판매자 등록 후 이용해 주세요');
+    location.href = '/html/seller/non-signup.html';
   }
 }
 

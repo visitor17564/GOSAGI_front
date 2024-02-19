@@ -46,6 +46,7 @@ document.addEventListener('click', async () => {
     const products = await getProductByLocation(location, page);
     await generateProductCards(products, productWrap);
     countUrl = await makeCountUrl(location);
+    pageGroup = 1;
     await setPageButtons(pageGroup, countUrl);
   }
 });
